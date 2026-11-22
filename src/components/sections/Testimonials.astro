@@ -1,0 +1,70 @@
+---
+/**
+ * Depoimentos: lê src/data/testimonials.ts.
+ * Enquanto a lista estiver vazia, a seção NÃO é renderizada.
+ */
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { testimonials } from '@/data/testimonials';
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+---
+
+{testimonials.length > 0 && (
+  <Section id="depoimentos">
+    <SectionHeading
+      id="depoimentos-title"
+      eyebrow="Depoimentos"
+      title="Quem já trabalhou com a gente"
+      highlight="recomenda"
+    />
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {testimonials.map((t, i) => (
+        <li data-reveal data-reveal-delay={(i % 3) * 90}>
+          <figure class="glass flex h-full flex-col rounded-2xl p-7">
+            <svg
+              viewBox="0 0 32 24"
+              class="h-6 w-8 text-eyebrow"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M0 24V14C0 6 4 1 12 0v5c-4 1-6 4-6 8h6v11H0Zm18 0V14c0-8 4-13 12-14v5c-4 1-6 4-6 8h6v11H18Z" />
+            </svg>
+            <blockquote class="mt-5 flex-1 leading-relaxed text-body">
+              <p>{t.quote}</p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-3 border-t border-line pt-5">
+              {t.avatar ? (
+                <img
+                  src={t.avatar}
+                  alt=""
+                  width="44"
+                  height="44"
+                  loading="lazy"
+                  class="h-11 w-11 rounded-full object-cover"
+                />
+              ) : (
+                <span
+                  class="grid h-11 w-11 place-items-center rounded-full bg-button-gradient font-display text-sm font-bold text-white"
+                  aria-hidden="true"
+                >
+                  {initials(t.name)}
+                </span>
+              )}
+              <span>
+                <span class="block font-display font-semibold text-heading">{t.name}</span>
+                <span class="block text-sm text-muted">{t.role}</span>
+              </span>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </Section>
+)}

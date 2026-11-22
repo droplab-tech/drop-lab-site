@@ -1,0 +1,296 @@
+@import 'tailwindcss';
+
+/* Variante `dark:` controlada pelo atributo data-theme (botão de tema) */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+@custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
+
+/* ============================================================
+   TOKENS DE TEMA
+   Cada tema define as mesmas variáveis. Os componentes usam só
+   os tokens semânticos (bg, surface, heading, body…), então a troca
+   de tema não exige classes duplicadas.
+   Contraste verificado (WCAG AA ≥ 4.5:1 para texto normal).
+   ============================================================ */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #05070d;
+  --bg-2: #0b1120;
+  --surface: #0f172a;
+  --surface-glass: rgb(15 23 42 / 0.55);
+  --border: rgb(148 163 184 / 0.14);
+  --border-strong: rgb(148 163 184 / 0.28);
+  --heading: #f8fafc; /* 19.3:1 sobre --bg */
+  --body: #94a3b8; /* 7.9:1 sobre --bg | 6.9:1 sobre --surface */
+  --muted: #8291a7; /* 6.0:1 sobre --bg (o #64748B daria só 4.2:1) */
+  --eyebrow: #22d3ee; /* 10.6:1 */
+  --link: #5cb2ff;
+  --text-gradient: linear-gradient(135deg, #22d3ee 0%, #3b8bff 60%, #6aa8ff 100%);
+  --glow: rgb(10 108 255 / 0.35);
+  --glow-2: rgb(34 211 238 / 0.18);
+  --grid-line: rgb(255 255 255 / 0.035);
+  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+  --heading-weight: 600;
+  --input-bg: rgb(5 7 13 / 0.6);
+  --error: #fb7185;
+  --success: #34d399;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f8fd;
+  --bg-2: #eaf0f9;
+  --surface: #ffffff;
+  --surface-glass: rgb(255 255 255 / 0.7);
+  --border: rgb(15 23 42 / 0.1);
+  --border-strong: rgb(15 23 42 / 0.2);
+  --heading: #0b1220; /* 17.9:1 sobre --bg */
+  --body: #3d4b60; /* 8.7:1 */
+  --muted: #55657b; /* 5.8:1 */
+  --eyebrow: #0757d1; /* 6.0:1 */
+  --link: #0757d1;
+  --text-gradient: linear-gradient(135deg, #0a6cff 0%, #0750c8 50%, #0b1e4a 100%);
+  --glow: rgb(10 108 255 / 0.16);
+  --glow-2: rgb(34 211 238 / 0.14);
+  --grid-line: rgb(11 30 74 / 0.05);
+  --shadow-card: 0 1px 2px rgb(11 30 74 / 0.06), 0 18px 40px -24px rgb(11 30 74 / 0.25);
+  /* No claro, títulos ganham peso para manter presença sem o brilho do escuro */
+  --heading-weight: 700;
+  --input-bg: #ffffff;
+  --error: #be123c;
+  --success: #047857;
+}
+
+@theme inline {
+  /* Cores semânticas (mudam com o tema) */
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-glass: var(--surface-glass);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-eyebrow: var(--eyebrow);
+  --color-link: var(--link);
+  --color-error: var(--error);
+  --color-success: var(--success);
+}
+
+@theme {
+  /* Paleta fixa da marca */
+  --color-ink: #05070d;
+  --color-ink-2: #0b1120;
+  --color-ink-3: #0f172a;
+  --color-brand: #0a6cff;
+  --color-brand-600: #0757d1;
+  --color-cyan: #22d3ee;
+  --color-navy: #0b1e4a;
+  --color-snow: #f8fafc;
+
+  --font-display: 'Sora Variable', 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-pulse-ring: pulse-ring 2.4s var(--ease-out-soft) infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-glow: glow 6s ease-in-out infinite;
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    80%,
+    100% {
+      transform: scale(1.7);
+      opacity: 0;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+  @keyframes glow {
+    0%,
+    100% {
+      opacity: 0.65;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+  }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sem scroll-padding: o padding superior de cada seção (≥ 80px) já compensa o header fixo */
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-bg font-sans text-body antialiased;
+    text-rendering: optimizeLegibility;
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-heading;
+    font-weight: var(--heading-weight);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: rgb(10 108 255 / 0.35);
+    color: var(--heading);
+  }
+  :focus-visible {
+    outline: 2px solid var(--eyebrow);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* Campos de formulário herdam a fonte */
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+  }
+}
+
+/* ============================================================
+   UTILITÁRIOS DA MARCA
+   ============================================================ */
+@utility text-gradient {
+  background: var(--text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, #22d3ee 0%, #0a6cff 55%, #0b1e4a 100%);
+}
+
+/* Degradê dos botões: começa no azul primário para garantir contraste AA com texto branco */
+@utility bg-button-gradient {
+  background-image: linear-gradient(135deg, #0a6cff 0%, #0757d1 50%, #0b1e4a 100%);
+}
+
+/* Rótulos em caixa alta, como o slogan do logo */
+@utility eyebrow {
+  @apply font-display text-xs font-semibold tracking-[0.3em] text-eyebrow uppercase;
+}
+
+/* Card com borda translúcida + glass leve.
+   Sem backdrop-filter de propósito: em dezenas de cards ele custa caro na GPU
+   (derruba o Lighthouse) e sobre fundo quase liso o efeito é imperceptível.
+   Para sobreposições reais (header, banner), use também `backdrop-blur-*`. */
+@utility glass {
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+@utility container-site {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+}
+
+/* Grade de fundo bem discreta */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* ============================================================
+   COMPONENTES COM CSS PRÓPRIO
+   ============================================================ */
+
+/* Reveal ao rolar (ativado por src/scripts/reveal.ts) */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease-out-soft),
+    transform 700ms var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Troca de tema instantânea (sem cada elemento animar separadamente) */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+/* Textos específicos de cada tema (ver site.themeCopy) */
+[data-theme='dark'] [data-only='light'],
+[data-theme='light'] [data-only='dark'] {
+  display: none;
+}
+
+/* Accordion do FAQ: animação de abertura com <details> */
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 300ms var(--ease-out-soft),
+    content-visibility 300ms allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+}
+
+/* Movimento reduzido: desliga animações e scroll suave */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

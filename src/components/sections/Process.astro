@@ -1,0 +1,48 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import { processSteps } from '@/data/process';
+---
+
+<Section id="processo">
+  <SectionHeading
+    id="processo-title"
+    eyebrow="Processo"
+    title="Do briefing ao lançamento,"
+    highlight="sem complicação"
+    description="Um processo claro, com prazos definidos e você acompanhando cada etapa pelo WhatsApp."
+  />
+
+  <!-- Timeline: vertical no mobile, horizontal no desktop -->
+  <div class="relative">
+    <!-- Linha da timeline -->
+    <div
+      class="absolute top-0 bottom-0 left-[1.6rem] w-px bg-linear-to-b from-cyan/60 via-brand/40 to-transparent lg:top-[1.6rem] lg:right-[10%] lg:bottom-auto lg:left-[10%] lg:h-px lg:w-auto lg:bg-linear-to-r"
+      aria-hidden="true"
+    ></div>
+    <ol class="relative grid gap-8 lg:grid-cols-5 lg:gap-6">
+      {processSteps.map((step, i) => (
+        <li
+          class="relative flex gap-5 lg:flex-col lg:items-center lg:text-center"
+          data-reveal
+          data-reveal-delay={i * 90}
+        >
+          <div class="relative z-10 grid h-[3.2rem] w-[3.2rem] shrink-0 place-items-center rounded-2xl border border-line-strong bg-bg text-eyebrow shadow-[0_0_24px_-6px_var(--glow)]">
+            <Icon name={step.icon} size={22} />
+            <span class="absolute -top-2 -right-2 grid h-6 w-6 place-items-center rounded-full bg-button-gradient font-display text-[0.7rem] font-bold text-white">
+              {i + 1}
+            </span>
+          </div>
+          <div class="pb-2 lg:mt-6">
+            <p class="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
+              {step.duration}
+            </p>
+            <h3 class="mt-1.5 text-lg">{step.title}</h3>
+            <p class="mt-2 text-[0.95rem] leading-relaxed text-body">{step.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>

@@ -1,0 +1,83 @@
+---
+/**
+ * Portfólio: lê src/data/portfolio.ts.
+ * Enquanto a lista estiver vazia, a seção NÃO é renderizada (mesma lógica dos depoimentos)
+ * e o menu mostra "Entregas" no lugar de "Portfólio" (ver src/config/navigation.ts).
+ */
+import { Image } from 'astro:assets';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { projects } from '@/data/portfolio';
+---
+
+{projects.length > 0 && (
+  <Section id="portfolio" tone="alt">
+    <SectionHeading
+      id="portfolio-title"
+      eyebrow="Portfólio"
+      title="Projetos que"
+      highlight="falam por si"
+      description="Cada site é desenhado para o público e o objetivo de cada cliente."
+    />
+
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project, i) => (
+        <li data-reveal data-reveal-delay={(i % 3) * 90}>
+          <article class="group glass relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:border-line-strong">
+            <div class="relative aspect-[16/10] overflow-hidden border-b border-line">
+              <Image
+                src={project.image}
+                alt={`Tela do projeto ${project.name}: ${project.type.toLowerCase()}`}
+                widths={[400, 640, 960]}
+                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                format="webp"
+                quality={78}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover object-top transition-transform duration-700 ease-out-soft group-hover:scale-105"
+              />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <p class="text-xs font-semibold tracking-[0.2em] text-eyebrow uppercase">
+                {project.type}
+              </p>
+              <h3 class="mt-2 text-xl">{project.name}</h3>
+              <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-body">
+                {project.description}
+              </p>
+              <div class="mt-5 flex items-center justify-between gap-3">
+                <ul class="flex flex-wrap gap-2" aria-label="Categorias">
+                  {project.tags.map((tag) => (
+                    <li class="rounded-full border border-line px-2.5 py-1 text-xs text-body">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-heading transition-colors hover:border-cyan/50 hover:text-eyebrow"
+                    aria-label={`Ver o projeto ${project.name} (abre em nova aba)`}
+                  >
+                    <Icon name="arrowUpRight" size={16} />
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-12 text-center" data-reveal>
+      <Button href="#contato" variant="secondary">
+        Quero um projeto assim
+        <Icon name="arrowRight" size={18} class="transition-transform group-hover:translate-x-1" />
+      </Button>
+    </div>
+  </Section>
+)}

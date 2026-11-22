@@ -1,0 +1,50 @@
+---
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+import Drop from '../ui/Drop.astro';
+import Button from '../ui/Button.astro';
+import { differentials } from '@/data/differentials';
+---
+
+<Section id="diferenciais" tone="alt">
+  <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal>
+      <p class="eyebrow inline-flex items-center gap-2.5">
+        <Drop class="h-3 w-2.5" /> Por que a Droplab
+      </p>
+      <h2 id="diferenciais-title" class="mt-4 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]">
+        Seu site é seu melhor vendedor.{' '}
+        <span class="text-gradient">Ele precisa trabalhar bem.</span>
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-body">
+        Um site lento, genérico ou confuso faz você perder clientes todos os dias, sem perceber. Na
+        Droplab, cada decisão de design e código tem um objetivo: transformar visitas em conversas.
+      </p>
+      <Button href="#contato" class="mt-8">
+        Quero um site assim
+        <Icon name="arrowRight" size={18} class="transition-transform group-hover:translate-x-1" />
+      </Button>
+    </div>
+
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {differentials.map((item, i) => (
+        <li
+          class:list={[
+            'group glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong',
+            i === differentials.length - 1 && 'sm:col-span-2',
+          ]}
+          data-reveal
+          data-reveal-delay={(i % 2) * 100}
+        >
+          <div class="flex items-center gap-4">
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-button-gradient text-white shadow-[0_8px_24px_-8px_rgb(10_108_255/0.8)]">
+              <Icon name={item.icon} size={20} />
+            </span>
+            <h3 class="text-lg">{item.title}</h3>
+          </div>
+          <p class="mt-4 leading-relaxed text-body">{item.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>

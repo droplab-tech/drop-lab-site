@@ -1,0 +1,14 @@
+---
+/** A gota da marca, usada como motivo visual (bullets, divisores, detalhes). */
+interface Props {
+  class?: string;
+}
+const { class: className = 'h-3 w-2.5' } = Astro.props;
+---
+
+<svg viewBox="0 0 20 26" class={className} aria-hidden="true" focusable="false">
+  <path
+    d="M10 0c3.4 4.4 10 12.5 10 16a10 10 0 0 1-20 0C0 12.5 6.6 4.4 10 0Z"
+    fill="url(#drop-gradient)"
+  ></path>
+</svg>

@@ -1,0 +1,9 @@
+# Mantém quebras de linha LF (padrão do Prettier) em qualquer sistema
+* text=auto eol=lf
+
+# Binários
+*.png binary
+*.ico binary
+*.webp binary
+*.jpg binary
+*.woff2 binary

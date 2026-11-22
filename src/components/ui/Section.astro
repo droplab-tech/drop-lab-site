@@ -1,0 +1,22 @@
+---
+interface Props {
+  id: string;
+  class?: string;
+  /** Rótulo acessível da seção (normalmente o id do título) */
+  labelledby?: string;
+  /** Fundo alternado para separar seções visualmente */
+  tone?: 'default' | 'alt';
+}
+const { id, class: className = '', labelledby = `${id}-title`, tone = 'default' } = Astro.props;
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={['relative isolate py-20 sm:py-28', tone === 'alt' && 'bg-bg-2/60', className]}
+>
+  <slot name="background" />
+  <div class="container-site">
+    <slot />
+  </div>
+</section>

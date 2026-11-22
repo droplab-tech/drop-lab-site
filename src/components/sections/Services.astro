@@ -1,0 +1,21 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ServiceCard from './ServiceCard.astro';
+import { services } from '@/data/services';
+---
+
+<Section id="servicos">
+  <SectionHeading
+    id="servicos-title"
+    eyebrow="Serviços"
+    title="Tudo o que seu negócio precisa para"
+    highlight="vender mais na internet"
+    description="Do primeiro clique à mensagem no WhatsApp: soluções web completas, pensadas para gerar resultado e não só para ficar bonitas."
+  />
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {services.map((service, i) => (
+      <ServiceCard {...service} delay={(i % 3) * 90} />
+    ))}
+  </div>
+</Section>

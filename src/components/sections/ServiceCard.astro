@@ -1,0 +1,32 @@
+---
+import Icon from '../ui/Icon.astro';
+import Drop from '../ui/Drop.astro';
+import type { Service } from '@/data/services';
+
+interface Props extends Service {
+  delay?: number;
+}
+const { icon, title, description, benefit, delay = 0 } = Astro.props;
+---
+
+<article
+  class="group glass relative flex h-full flex-col overflow-hidden rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong"
+  data-reveal
+  data-reveal-delay={delay}
+>
+  <!-- Brilho que acompanha o hover -->
+  <div
+    class="pointer-events-none absolute -top-24 -right-24 h-48 w-48 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative grid h-12 w-12 place-items-center rounded-xl border border-line bg-bg-2 text-eyebrow transition-colors duration-300 group-hover:border-cyan/40">
+    <Icon name={icon} size={22} />
+  </div>
+  <h3 class="relative mt-6 text-xl">{title}</h3>
+  <p class="relative mt-3 flex-1 leading-relaxed text-body">{description}</p>
+  <p class="relative mt-6 flex items-start gap-2.5 border-t border-line pt-5 text-sm font-medium text-heading">
+    <Drop class="mt-1 h-3 w-2.5 shrink-0" />
+    {benefit}
+  </p>
+</article>

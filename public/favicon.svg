@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 112 540 540">
+  <defs>
+    <linearGradient id="d" x1="90" y1="640" x2="470" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B1E4A"/>
+      <stop offset=".55" stop-color="#0A6CFF"/>
+      <stop offset="1" stop-color="#1590FF"/>
+    </linearGradient>
+    <radialGradient id="c" cx="280" cy="140" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s" cx="345" cy="381" r="250" gradientUnits="userSpaceOnUse">
+      <stop offset=".55" stop-color="#05070D" stop-opacity=".5"/>
+      <stop offset=".72" stop-color="#05070D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g" x1="352" y1="292" x2="352" y2="477" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#0A4BFF"/>
+    </linearGradient>
+    <path id="p" d="M110 143q0-12 12-12h223a250.5 250.5 0 0 1 0 501H85q-12 0-12-12V452q0-8 6-14l154-151v200l-28 31h140a137.5 137.5 0 0 0 0-275H122q-12 0-12-12z"/>
+  </defs>
+  <use href="#p" fill="url(#d)"/>
+  <use href="#p" fill="url(#c)"/>
+  <use href="#p" fill="url(#s)"/>
+  <path fill="url(#g)" d="M352 292c22 29 65 82 65 120a65 65 0 0 1-130 0c0-38 43-91 65-120z"/>
+  <path fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="7" stroke-linecap="round" d="M330 335c-14 20-24 38-24 60"/>
+</svg>

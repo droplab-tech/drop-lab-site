@@ -1,0 +1,57 @@
+---
+import WhatsAppIcon from './ui/WhatsAppIcon.astro';
+import { whatsappLink } from '@/config/site';
+---
+
+<!--
+  Botão flutuante do WhatsApp. Aparece depois de rolar um pouco (não cobre o Hero)
+  e respeita a área segura do iPhone. Tamanho de 56px para toque confortável.
+-->
+<a
+  href={whatsappLink()}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Fale conosco pelo WhatsApp (abre em nova aba)"
+  data-wa-float
+  class="wa-float group fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-6px_rgb(37_211_102/0.6)] transition-all duration-300 hover:scale-105 sm:right-6 sm:bottom-6"
+>
+  <span
+    class="absolute inset-0 animate-pulse-ring rounded-full bg-[#25D366]"
+    aria-hidden="true"
+  ></span>
+  <WhatsAppIcon class="relative h-7 w-7" />
+  <span
+    class="pointer-events-none absolute right-full mr-3 rounded-lg bg-surface px-3 py-1.5 text-sm font-medium whitespace-nowrap text-heading opacity-0 shadow-lg ring-1 ring-line transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+    aria-hidden="true"
+  >
+    Fale conosco
+  </span>
+</a>
+
+<style>
+  .wa-float {
+    opacity: 0;
+    visibility: hidden; /* fora da ordem de foco enquanto escondido */
+    transform: translateY(16px) scale(0.9);
+    transition:
+      opacity 300ms ease,
+      transform 300ms ease,
+      visibility 300ms,
+      scale 200ms ease;
+  }
+  /* Pulso só roda quando o botão está visível (economiza CPU/GPU) */
+  .wa-float:not([data-visible='true']) span {
+    animation-play-state: paused;
+  }
+  .wa-float[data-visible='true'] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  /* Sem JS, o botão aparece sempre */
+  :global(html:not(.js)) .wa-float {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+</style>

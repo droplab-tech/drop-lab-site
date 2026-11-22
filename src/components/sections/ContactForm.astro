@@ -1,0 +1,240 @@
+---
+/**
+ * Formulário de contato. Lógica em src/scripts/form.ts.
+ * Sem JavaScript, o navegador ainda valida os campos obrigatórios (required).
+ */
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+
+const projectTypes = ['Landing Page', 'Site Institucional', 'E-commerce', 'Outro'];
+const budgets = [
+  'Até R$ 1.500',
+  'R$ 1.500 a R$ 3.000',
+  'R$ 3.000 a R$ 6.000',
+  'Acima de R$ 6.000',
+  'Ainda não sei',
+];
+
+const label = 'mb-2 block text-sm font-medium text-heading';
+const input =
+  'block w-full rounded-xl border border-line-strong bg-[var(--input-bg)] px-4 py-3 text-heading placeholder:text-muted transition-[border-color,box-shadow] duration-200 outline-none focus:border-cyan focus:shadow-[0_0_0_4px_rgb(34_211_238/0.18)] aria-[invalid=true]:border-error aria-[invalid=true]:focus:shadow-[0_0_0_4px_rgb(251_113_133/0.2)]';
+const error = 'mt-1.5 flex items-center gap-1.5 text-sm text-error';
+---
+
+<div class="glass relative rounded-3xl p-6 sm:p-8">
+  <form data-contact-form class="grid gap-5 sm:grid-cols-2" aria-describedby="form-hint">
+    <p id="form-hint" class="text-sm text-muted sm:col-span-2">
+      Campos com{' '}
+      <span class="text-error" aria-hidden="true">
+        *
+      </span>
+      <span class="sr-only">asterisco</span> são obrigatórios.
+    </p>
+
+    <div class="sm:col-span-2">
+      <label for="nome" class={label}>
+        Nome{' '}
+        <span class="text-error" aria-hidden="true">
+          *
+        </span>
+      </label>
+      <input
+        id="nome"
+        name="nome"
+        type="text"
+        autocomplete="name"
+        required
+        minlength="2"
+        class={input}
+        placeholder="Como podemos te chamar?"
+        aria-describedby="nome-error"
+        aria-invalid="false"
+      />
+      <p id="nome-error" class={error} aria-live="polite" hidden></p>
+    </div>
+
+    <div>
+      <label for="telefone" class={label}>
+        WhatsApp / Telefone{' '}
+        <span class="text-error" aria-hidden="true">
+          *
+        </span>
+      </label>
+      <input
+        id="telefone"
+        name="telefone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel-national"
+        required
+        class={input}
+        placeholder="(34) 99999-9999"
+        maxlength="15"
+        aria-describedby="telefone-error"
+        aria-invalid="false"
+      />
+      <p id="telefone-error" class={error} aria-live="polite" hidden></p>
+    </div>
+
+    <div>
+      <label for="email" class={label}>
+        E-mail <span class="text-muted text-xs font-normal">(opcional)</span>
+      </label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        class={input}
+        placeholder="voce@empresa.com.br"
+        aria-describedby="email-error"
+        aria-invalid="false"
+      />
+      <p id="email-error" class={error} aria-live="polite" hidden></p>
+    </div>
+
+    <div>
+      <label for="tipo" class={label}>
+        Tipo de projeto{' '}
+        <span class="text-error" aria-hidden="true">
+          *
+        </span>
+      </label>
+      <div class="relative">
+        <select
+          id="tipo"
+          name="tipo"
+          required
+          class:list={[input, 'appearance-none pr-10']}
+          aria-describedby="tipo-error"
+          aria-invalid="false"
+        >
+          <option value="" disabled selected>
+            Selecione
+          </option>
+          {projectTypes.map((t) => (
+            <option value={t}>{t}</option>
+          ))}
+        </select>
+        <Icon
+          name="arrowRight"
+          size={16}
+          class="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 rotate-90 text-muted"
+        />
+      </div>
+      <p id="tipo-error" class={error} aria-live="polite" hidden></p>
+    </div>
+
+    <div>
+      <label for="orcamento" class={label}>
+        Orçamento estimado <span class="text-muted text-xs font-normal">(opcional)</span>
+      </label>
+      <div class="relative">
+        <select id="orcamento" name="orcamento" class:list={[input, 'appearance-none pr-10']}>
+          <option value="" selected>
+            Selecione
+          </option>
+          {budgets.map((b) => (
+            <option value={b}>{b}</option>
+          ))}
+        </select>
+        <Icon
+          name="arrowRight"
+          size={16}
+          class="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 rotate-90 text-muted"
+        />
+      </div>
+    </div>
+
+    <div class="sm:col-span-2">
+      <label for="mensagem" class={label}>
+        Mensagem{' '}
+        <span class="text-error" aria-hidden="true">
+          *
+        </span>
+      </label>
+      <textarea
+        id="mensagem"
+        name="mensagem"
+        rows="4"
+        required
+        minlength="10"
+        class:list={[input, 'resize-y']}
+        placeholder="Conte sobre seu negócio e o que você precisa"
+        aria-describedby="mensagem-error"
+        aria-invalid="false"
+      ></textarea>
+      <p id="mensagem-error" class={error} aria-live="polite" hidden></p>
+    </div>
+
+    <!-- Honeypot anti-spam: invisível para pessoas, robôs costumam preencher -->
+    <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+      <label for="website">Não preencha este campo</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="sm:col-span-2">
+      <label class="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-body">
+        <input
+          type="checkbox"
+          name="consentimento"
+          required
+          class="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-line-strong accent-brand"
+          aria-describedby="consentimento-error"
+          aria-invalid="false"
+        />
+        <span>
+          Concordo com o uso dos meus dados para receber o contato e a proposta da Droplab, conforme
+          a
+          <a
+            href="/politica-de-privacidade"
+            class="font-medium text-link underline underline-offset-2"
+          >
+            Política de Privacidade
+          </a>
+          .
+          <span class="text-error" aria-hidden="true">
+            *
+          </span>
+        </span>
+      </label>
+      <p id="consentimento-error" class={error} aria-live="polite" hidden></p>
+    </div>
+
+    <div class="sm:col-span-2">
+      <Button as="button" type="submit" size="lg" class="w-full">
+        <WhatsAppIcon class="h-5 w-5" />
+        Enviar pelo WhatsApp
+      </Button>
+      <p class="mt-3 text-center text-xs text-muted">
+        Ao enviar, abriremos o WhatsApp com sua mensagem pronta. É só tocar em enviar.
+      </p>
+    </div>
+  </form>
+
+  <!-- Feedback de sucesso -->
+  <div
+    data-form-success
+    tabindex="-1"
+    role="status"
+    class="absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-surface p-8 text-center outline-none"
+    hidden
+  >
+    <span class="grid h-16 w-16 place-items-center rounded-full bg-success/15 text-success">
+      <Icon name="check" size={32} strokeWidth={2.5} />
+    </span>
+    <h3 class="mt-6 text-2xl">Mensagem pronta!</h3>
+    <p class="mt-3 max-w-sm text-body">
+      Abrimos o WhatsApp em uma nova aba com os dados do seu projeto. É só enviar a mensagem por lá
+      que respondemos rapidinho.
+    </p>
+    <button
+      type="button"
+      data-form-reset
+      class="mt-6 font-display text-sm font-semibold text-link hover:underline"
+    >
+      Enviar outra mensagem
+    </button>
+  </div>
+</div>

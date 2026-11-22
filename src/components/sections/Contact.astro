@@ -1,0 +1,122 @@
+---
+import Section from '../ui/Section.astro';
+import Drop from '../ui/Drop.astro';
+import Icon from '../ui/Icon.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+import ContactForm from './ContactForm.astro';
+import { site, whatsappLink } from '@/config/site';
+
+// "@usuario" extraído do link do Instagram em site.ts (vazio = card escondido)
+const instagramHandle = site.social.instagram
+  ? site.social.instagram.replace(/\/+$/, '').split('/').pop()
+  : '';
+---
+
+<Section id="contato">
+  <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div data-reveal>
+      <p class="eyebrow inline-flex items-center gap-2.5">
+        <Drop class="h-3 w-2.5" /> Contato
+      </p>
+      <h2 id="contato-title" class="mt-4 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]">
+        Peça seu orçamento <span class="text-gradient">gratuito</span>
+      </h2>
+      <p class="mt-5 text-lg leading-relaxed text-body">
+        Preencha o formulário ou chame direto no WhatsApp. Respondemos em horário comercial,
+        normalmente no mesmo dia.
+      </p>
+
+      <ul class="mt-10 space-y-4">
+        <li>
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track-location="contato"
+            class="group glass flex items-center gap-4 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
+          >
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#25D366] text-white">
+              <WhatsAppIcon class="h-6 w-6" />
+            </span>
+            <span class="flex-1">
+              <span class="block text-sm text-muted">WhatsApp</span>
+              <span class="block font-display font-semibold text-heading">
+                {site.contact.whatsappDisplay}
+              </span>
+            </span>
+            <Icon
+              name="arrowUpRight"
+              size={18}
+              class="text-muted transition-colors group-hover:text-eyebrow"
+            />
+          </a>
+        </li>
+        {site.contact.email && (
+          <li>
+            <a
+              href={`mailto:${site.contact.email}`}
+              class="group glass flex items-center gap-4 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
+            >
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-button-gradient text-white">
+                <Icon name="mail" size={22} />
+              </span>
+              <span class="flex-1">
+                <span class="block text-sm text-muted">E-mail</span>
+                <span class="block font-display font-semibold break-all text-heading">
+                  {site.contact.email}
+                </span>
+              </span>
+              <Icon
+                name="arrowUpRight"
+                size={18}
+                class="text-muted transition-colors group-hover:text-eyebrow"
+              />
+            </a>
+          </li>
+        )}
+        {instagramHandle && (
+          <li>
+            <a
+              href={site.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram da ${site.name}`}
+              class="group glass flex items-center gap-4 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
+            >
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-button-gradient text-white">
+                <Icon name="instagram" size={22} />
+              </span>
+              <span class="flex-1">
+                <span class="block text-sm text-muted">Instagram</span>
+                <span class="block font-display font-semibold text-heading">
+                  @{instagramHandle}
+                </span>
+              </span>
+              <Icon
+                name="arrowUpRight"
+                size={18}
+                class="text-muted transition-colors group-hover:text-eyebrow"
+              />
+            </a>
+          </li>
+        )}
+        <li class="glass flex items-center gap-4 rounded-2xl p-5">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-line bg-bg text-eyebrow">
+            <Icon name="clock" size={22} />
+          </span>
+          <span>
+            <span class="block text-sm text-muted">Atendimento</span>
+            <span class="block font-display font-semibold text-heading">{site.contact.hours}</span>
+            <span class="block text-sm text-body">
+              {site.contact.city}, {site.contact.state} · Projetos para todo o Brasil
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div data-reveal data-reveal-delay="120">
+      <ContactForm />
+    </div>
+  </div>
+</Section>

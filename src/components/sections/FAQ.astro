@@ -1,0 +1,65 @@
+---
+/** FAQ com <details>/<summary>: acessível por padrão e funciona sem JavaScript. */
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import { faq } from '@/data/faq';
+import { whatsappLink } from '@/config/site';
+
+// Dados estruturados FAQPage (podem gerar resultados ricos no Google)
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+
+<Section id="faq">
+  <SectionHeading
+    id="faq-title"
+    eyebrow="FAQ"
+    title="Perguntas"
+    highlight="frequentes"
+    description="Respostas diretas para as dúvidas mais comuns antes de começar um projeto."
+  />
+
+  <div class="mx-auto max-w-3xl space-y-3">
+    {faq.map((item, i) => (
+      <details
+        class="faq-item glass group rounded-2xl transition-colors duration-300 open:border-line-strong"
+        name="faq"
+        data-reveal
+        data-reveal-delay={Math.min(i, 4) * 50}
+      >
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 rounded-2xl px-6 py-5 font-display text-[1.05rem] font-medium text-heading">
+          {item.question}
+          <span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-eyebrow transition-transform duration-300">
+            <Icon name="plus" size={16} strokeWidth={2} />
+          </span>
+        </summary>
+        <div class="px-6 pb-6 leading-relaxed text-body">
+          <p>{item.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+
+  <p class="mt-10 text-center text-body" data-reveal>
+    Ficou com alguma dúvida?
+    <a
+      href={whatsappLink('Olá! Tenho uma dúvida sobre os serviços da Droplab.')}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-track-location="faq"
+      class="font-semibold text-link underline-offset-4 hover:underline"
+    >
+      Pergunte no WhatsApp
+    </a>
+  </p>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</Section>

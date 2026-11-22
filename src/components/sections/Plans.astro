@@ -1,0 +1,71 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { plans } from '@/data/plans';
+---
+
+<Section id="planos">
+  <SectionHeading
+    id="planos-title"
+    eyebrow="Planos"
+    title="Escolha o ponto de partida"
+    highlight="ideal para você"
+    description="Valores de referência. Cada proposta é personalizada depois de entendermos o seu projeto, sem custo e sem compromisso."
+  />
+
+  <ul class="mx-auto grid max-w-6xl items-stretch gap-6 lg:grid-cols-3">
+    {plans.map((plan, i) => (
+      <li data-reveal data-reveal-delay={i * 100} class="relative">
+        {plan.highlighted && (
+          <div
+            class="absolute -inset-px rounded-[1.05rem] bg-brand-gradient opacity-80 blur-[1px]"
+            aria-hidden="true"
+          />
+        )}
+        <article
+          class:list={[
+            'relative flex h-full flex-col rounded-2xl p-8',
+            plan.highlighted ? 'bg-surface shadow-[0_30px_60px_-30px_var(--glow)]' : 'glass',
+          ]}
+        >
+          {plan.highlighted && (
+            <span class="absolute -top-3.5 left-8 rounded-full bg-button-gradient px-3.5 py-1 text-xs font-semibold text-white">
+              Recomendado
+            </span>
+          )}
+          <h3 class="text-xl">{plan.name}</h3>
+          <p class="mt-2 text-[0.95rem] text-body">{plan.description}</p>
+          <p class="mt-7">
+            <span class="block text-xs font-semibold tracking-[0.2em] text-muted uppercase">
+              {plan.priceLabel}
+            </span>
+            <span class="mt-1 block font-display text-4xl font-bold text-heading">
+              {plan.price}
+            </span>
+          </p>
+          <ul class="mt-7 flex-1 space-y-3.5 border-t border-line pt-7">
+            {plan.features.map((feature) => (
+              <li class="flex items-start gap-3 text-[0.95rem] text-body">
+                <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-cyan/15 text-eyebrow">
+                  <Icon name="check" size={13} strokeWidth={2.5} />
+                </span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <Button
+            href="#contato"
+            variant={plan.highlighted ? 'primary' : 'secondary'}
+            class="mt-8 w-full"
+            data-project-type={plan.projectType}
+            aria-label={`Solicitar orçamento: ${plan.name}`}
+          >
+            Solicitar orçamento
+          </Button>
+        </article>
+      </li>
+    ))}
+  </ul>
+</Section>

@@ -1,0 +1,129 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Drop from '@/components/ui/Drop.astro';
+import { site } from '@/config/site';
+
+// ⚠️ Atualize a data sempre que alterar a política
+const updatedAt = '22 de novembro de 2026';
+const analyticsEnabled = Boolean(
+  import.meta.env.PUBLIC_GA_ID || import.meta.env.PUBLIC_META_PIXEL_ID,
+);
+---
+
+<BaseLayout
+  title={`Política de Privacidade | ${site.name}`}
+  description={`Saiba como a ${site.name} coleta, usa e protege seus dados pessoais, em conformidade com a LGPD (Lei nº 13.709/2018).`}
+>
+  <article class="relative pt-36 pb-24 sm:pt-44">
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(ellipse_at_top,var(--glow),transparent_70%)]"
+      aria-hidden="true"
+    ></div>
+    <div class="container-site max-w-3xl">
+      <p class="eyebrow inline-flex items-center gap-2.5">
+        <Drop class="h-3 w-2.5" /> LGPD
+      </p>
+      <h1 class="mt-4 text-4xl sm:text-5xl">Política de Privacidade</h1>
+      <p class="mt-4 text-muted">Última atualização: {updatedAt}</p>
+
+      <div class="prose-legal mt-12 space-y-10 text-[1.05rem] leading-relaxed text-body [&_a]:font-medium [&_a]:text-link [&_a]:underline [&_a]:underline-offset-2 [&_h2]:mb-4 [&_h2]:text-2xl [&_li]:pl-1 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5">
+        <section>
+          <h2>1. Quem somos</h2>
+          <p>
+            Esta política explica como a <strong class="text-heading">{site.legalName}</strong>{' '}
+            ("Droplab", "nós") trata os dados pessoais de quem visita o site da Droplab e entra em
+            contato conosco, em conformidade com a Lei Geral de Proteção de Dados (Lei nº
+            13.709/2018, LGPD).
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Quais dados coletamos</h2>
+          <p>
+            Coletamos apenas os dados que você informa voluntariamente no formulário de contato:
+          </p>
+          <ul>
+            <li>Nome;</li>
+            <li>Número de WhatsApp ou telefone;</li>
+            <li>E-mail (opcional);</li>
+            <li>Tipo de projeto e faixa de orçamento estimada;</li>
+            <li>A mensagem que você escrever.</li>
+          </ul>
+          <p class="mt-3">
+            Quando você clica em "Enviar pelo WhatsApp", esses dados são organizados em uma mensagem
+            que é aberta no seu aplicativo do WhatsApp. O envio só acontece se você confirmar a
+            mensagem por lá.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Para que usamos seus dados</h2>
+          <ul>
+            <li>Responder ao seu contato e entender a sua necessidade;</li>
+            <li>Elaborar e enviar propostas comerciais;</li>
+            <li>Dar continuidade ao atendimento, caso você contrate nossos serviços.</li>
+          </ul>
+          <p class="mt-3">
+            A base legal é o seu <strong class="text-heading">consentimento</strong> (art. 7º, I, da
+            LGPD), dado ao marcar a caixa de concordância no formulário, e o
+            <strong class="text-heading">procedimento preliminar a contrato</strong> (art. 7º, V).
+            Não vendemos nem compartilhamos seus dados para fins de marketing de terceiros.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Cookies e ferramentas de análise</h2>
+          <p>
+            {analyticsEnabled
+              ? 'Usamos cookies de análise (Google Analytics e/ou Meta Pixel) apenas se você aceitar no aviso de cookies. Eles nos ajudam a entender, de forma agregada, como o site é usado e a medir resultados de campanhas. Você pode mudar sua escolha a qualquer momento em "Preferências de cookies", no rodapé.'
+              : 'Atualmente, este site não utiliza cookies de rastreamento ou publicidade. Caso passemos a usar ferramentas de análise (como Google Analytics ou Meta Pixel), elas só serão ativadas com o seu consentimento, por meio de um aviso de cookies.'}
+          </p>
+          <p class="mt-3">
+            Guardamos no seu navegador apenas preferências técnicas, como o tema (claro ou escuro) e
+            a sua escolha sobre cookies.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Compartilhamento</h2>
+          <p>
+            Seus dados podem ser processados por serviços que usamos para operar o atendimento, como
+            o WhatsApp (Meta) e, quando ativo, um serviço de envio de formulários por e-mail. Esses
+            fornecedores tratam os dados apenas para a finalidade descrita aqui.
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Por quanto tempo guardamos</h2>
+          <p>
+            Mantemos os dados pelo tempo necessário para o atendimento e a relação comercial, ou até
+            que você solicite a exclusão, salvo obrigação legal de guarda.
+          </p>
+        </section>
+
+        <section>
+          <h2>7. Seus direitos</h2>
+          <p>Pela LGPD, você pode, a qualquer momento:</p>
+          <ul>
+            <li>Confirmar se tratamos seus dados e acessá-los;</li>
+            <li>Corrigir dados incompletos ou desatualizados;</li>
+            <li>Pedir a exclusão dos dados ou revogar o consentimento;</li>
+            <li>Solicitar informações sobre compartilhamento.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>8. Contato</h2>
+          <!-- prettier-ignore -->
+          <p>
+            Para exercer seus direitos ou tirar dúvidas sobre esta política, fale com a gente
+            {site.contact.email && (
+              <>pelo e-mail <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> ou </>
+            )}
+            pelo WhatsApp <a href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noopener noreferrer">{site.contact.whatsappDisplay}</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

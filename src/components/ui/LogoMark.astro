@@ -1,0 +1,73 @@
+---
+/**
+ * Ícone "D + gota" da Droplab em SVG inline, recriado a partir do logo original.
+ * O mesmo desenho está em public/favicon.svg (usado para gerar os favicons).
+ * IDs únicos por instância evitam conflito de gradientes quando há vários na página.
+ */
+interface Props {
+  class?: string;
+  /** Texto alternativo. Vazio = decorativo. */
+  title?: string;
+}
+const { class: className = 'h-9 w-9', title } = Astro.props;
+const uid = `lm${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="64 112 540 540"
+  class={className}
+  role={title ? 'img' : undefined}
+  aria-label={title}
+  aria-hidden={title ? undefined : 'true'}
+  focusable="false"
+>
+  <defs>
+    <linearGradient
+      id={`${uid}d`}
+      x1="90"
+      y1="640"
+      x2="470"
+      y2="300"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#0B1E4A"></stop>
+      <stop offset=".55" stop-color="#0A6CFF"></stop>
+      <stop offset="1" stop-color="#1590FF"></stop>
+    </linearGradient>
+    <radialGradient id={`${uid}c`} cx="280" cy="140" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"></stop>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient
+      id={`${uid}g`}
+      x1="352"
+      y1="292"
+      x2="352"
+      y2="477"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#22D3EE"></stop>
+      <stop offset="1" stop-color="#0A4BFF"></stop>
+    </linearGradient>
+    <path
+      id={`${uid}p`}
+      d="M110 143q0-12 12-12h223a250.5 250.5 0 0 1 0 501H85q-12 0-12-12V452q0-8 6-14l154-151v200l-28 31h140a137.5 137.5 0 0 0 0-275H122q-12 0-12-12z"
+    ></path>
+  </defs>
+  <use href={`#${uid}p`} fill={`url(#${uid}d)`}></use>
+  <use href={`#${uid}p`} fill={`url(#${uid}c)`}></use>
+  <path
+    fill={`url(#${uid}g)`}
+    d="M352 292c22 29 65 82 65 120a65 65 0 0 1-130 0c0-38 43-91 65-120z"
+    class="logo-drop"
+  ></path>
+  <path
+    fill="none"
+    stroke="#fff"
+    stroke-opacity=".7"
+    stroke-width="7"
+    stroke-linecap="round"
+    d="M330 335c-14 20-24 38-24 60"
+  ></path>
+</svg>

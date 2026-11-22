@@ -1,0 +1,37 @@
+---
+/**
+ * Banner de cookies (LGPD). Só é renderizado se GA4 ou Meta Pixel estiverem
+ * configurados por variável de ambiente. Os scripts de rastreamento só carregam
+ * depois do "Aceitar" (ver src/scripts/analytics.ts).
+ */
+import Button from './ui/Button.astro';
+
+const enabled = Boolean(import.meta.env.PUBLIC_GA_ID || import.meta.env.PUBLIC_META_PIXEL_ID);
+---
+
+{enabled && (
+  <div
+    data-cookie-banner
+    role="region"
+    aria-label="Aviso de cookies"
+    class="glass fixed inset-x-3 backdrop-blur-xl bottom-3 z-[55] mx-auto max-w-2xl rounded-2xl p-5 sm:bottom-6 sm:p-6"
+    hidden
+  >
+    <p class="text-sm leading-relaxed text-body">
+      Usamos cookies de análise (Google Analytics e Meta Pixel) para entender como o site é usado e
+      melhorar sua experiência. Você pode aceitar ou recusar. Saiba mais na nossa{' '}
+      <a href="/politica-de-privacidade" class="font-medium text-link underline underline-offset-2">
+        Política de Privacidade
+      </a>
+      .
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <Button size="sm" data-cookie-accept>
+        Aceitar
+      </Button>
+      <Button size="sm" variant="secondary" data-cookie-decline>
+        Recusar
+      </Button>
+    </div>
+  </div>
+)}
