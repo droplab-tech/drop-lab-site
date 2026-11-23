@@ -173,7 +173,8 @@ Depois de preencher `url` e publicar: cadastre o domínio no **Google Search Con
 ### Vercel (recomendado)
 
 1. Suba o projeto para um repositório no GitHub.
-2. Em <https://vercel.com/new>, importe o repositório. O preset **Astro** é detectado sozinho (build `npm run build`, saída `dist`). O `vercel.json` já ativa URLs limpas e cache dos assets.
+2. Em <https://vercel.com/new>, importe o repositório. Não é preciso mudar nada nas configurações: o `vercel.json` já define instalação (`npm ci`), build (`npm run build`), saída (`dist`), URLs limpas e cache dos assets. A versão do Node vem de `engines` no `package.json` (22.12+); se a Vercel pedir, use **Node.js 22.x** em **Settings → Build and Deployment**.
+   - O site funciona sem domínio próprio, no endereço `*.vercel.app`. Enquanto `url` estiver vazia em `site.ts`, os links compartilhados aparecem sem imagem de prévia.
 3. (Opcional) Em **Settings → Environment Variables**, adicione `PUBLIC_WEB3FORMS_KEY`, `PUBLIC_GA_ID` etc. e faça **Redeploy**.
 4. **Domínio próprio:** em **Settings → Domains**, adicione o seu domínio (ex.: `seudominio.com.br` e `www.seudominio.com.br`). No painel do seu registrador (ex.: Registro.br), configure o DNS como a Vercel indicar:
    - domínio raiz (`seudominio.com.br`): registro **A** → `76.76.21.21`
