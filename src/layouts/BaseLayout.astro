@@ -31,13 +31,15 @@ const {
 // URLs absolutas só existem quando o domínio estiver preenchido em site.ts.
 // Sem domínio, canonical / og:url / og:image / twitter:image não são gerados.
 const siteUrl = site.url;
-const canonical = siteUrl
-  ? new URL(
-      // build.format 'file' gera /index.html e /pagina.html: o canonical usa a URL limpa
-      Astro.url.pathname.replace(/(index)?\.html$/, '').replace(/\/$/, '') || '/',
-      siteUrl,
-    ).href
-  : undefined;
+// Páginas noindex (ex.: 404, servida em qualquer URL inexistente) não recebem canonical/og:url.
+const canonical =
+  siteUrl && !noindex
+    ? new URL(
+        // build.format 'file' gera /index.html e /pagina.html: o canonical usa a URL limpa
+        Astro.url.pathname.replace(/(index)?\.html$/, '').replace(/\/$/, '') || '/',
+        siteUrl,
+      ).href
+    : undefined;
 const ogImage = siteUrl ? new URL(image, siteUrl).href : undefined;
 
 // Dados estruturados (JSON-LD) para o Google.

@@ -3,6 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Drop from '@/components/ui/Drop.astro';
 import { site } from '@/config/site';
 
+// Domínio exibido no texto (ex.: www.droplabweb.com)
+const siteHost = site.url.replace(/^https?:\/\//, '');
+
 // ⚠️ Atualize a data sempre que alterar a política
 const updatedAt = '22 de novembro de 2026';
 const analyticsEnabled = Boolean(
@@ -31,9 +34,10 @@ const analyticsEnabled = Boolean(
           <h2>1. Quem somos</h2>
           <p>
             Esta política explica como a <strong class="text-heading">{site.legalName}</strong>{' '}
-            ("Droplab", "nós") trata os dados pessoais de quem visita o site da Droplab e entra em
-            contato conosco, em conformidade com a Lei Geral de Proteção de Dados (Lei nº
-            13.709/2018, LGPD).
+            ("Droplab", "nós") trata os dados pessoais de quem visita o site
+            {site.url ? <a href={site.url}>{siteHost}</a> : 'da Droplab'} e entra em contato
+            conosco, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018,
+            LGPD).
           </p>
         </section>
 

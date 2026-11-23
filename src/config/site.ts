@@ -25,8 +25,7 @@ export const site = {
    * Enquanto estiver vazio, o site não gera canonical, og:url, og:image, sitemap nem a
    * linha Sitemap do robots.txt, pois todos exigem um endereço absoluto.
    */
-  // preencher quando tiver domínio
-  url: '' as string,
+  url: 'https://www.droplabweb.com' as string,
 
   /** Título e descrição padrão (SEO) */
   title: 'Droplab | Criação de Sites e Landing Pages que Convertem',

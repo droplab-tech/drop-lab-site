@@ -33,7 +33,7 @@ Tudo o que se repete no site fica aqui: nome, slogan, **WhatsApp**, mensagem pad
 
 Itens marcados com `⚠️ PLACEHOLDER` precisam ser trocados antes de publicar:
 
-- `url`: **vazia enquanto não houver domínio**. Preencha com `https://www.seudominio.com.br` quando tiver um: só então o site passa a gerar canonical, og:url, imagem de compartilhamento (og:image/twitter:image), `sitemap-index.xml`, a linha Sitemap do robots.txt e as URLs do JSON-LD
+- `url`: domínio do site, hoje **`https://www.droplabweb.com`** (com www, sem barra no fim). É usado em canonical, og:url, imagem de compartilhamento (og:image/twitter:image), `sitemap-index.xml`, linha Sitemap do robots.txt e URLs do JSON-LD. Se ficar vazio, todos esses itens deixam de ser gerados
 - `contact.city`, `contact.state`, `contact.hours`
 - `social.*`: o Instagram já está preenchido (`instagram.com/droplabtech`) e aparece no rodapé, no contato e no JSON-LD; LinkedIn/Behance/GitHub ficam escondidos enquanto vazios
 - `contact.email`: deixe `''` para esconder o e-mail em todo o site
@@ -164,7 +164,7 @@ No GA4, marque `generate_lead` como **evento principal (conversão)**.
 - Favicon SVG + ICO + apple-touch-icon + `manifest.webmanifest`
 - Um único H1 por página, `alt` em todas as imagens
 
-Depois de preencher `url` e publicar: cadastre o domínio no **Google Search Console** e envie `https://seudominio.com.br/sitemap-index.xml`. Sem domínio, o sitemap não é gerado.
+Cadastre o domínio no **Google Search Console** e envie o sitemap: **<https://www.droplabweb.com/sitemap-index.xml>**.
 
 ---
 
@@ -174,10 +174,10 @@ Depois de preencher `url` e publicar: cadastre o domínio no **Google Search Con
 
 1. Suba o projeto para um repositório no GitHub.
 2. Em <https://vercel.com/new>, importe o repositório. Não é preciso mudar nada nas configurações: o `vercel.json` já define instalação (`npm ci`), build (`npm run build`), saída (`dist`), URLs limpas e cache dos assets. A versão do Node vem de `engines` no `package.json` (`>=22.23.4`, mínimo exigido pelo Astro 7.4); a Vercel resolve esse intervalo para a maior versão suportada, hoje a **26.x** (padrão da Vercel e a mesma usada no desenvolvimento). Para fixar explicitamente, escolha **Node.js 26.x** em **Settings → Build and Deployment → Node.js Version** (a documentação da Vercel prevê só esses dois caminhos, `engines` ou painel, e não o `vercel.json`).
-   - O site funciona sem domínio próprio, no endereço `*.vercel.app`. Enquanto `url` estiver vazia em `site.ts`, os links compartilhados aparecem sem imagem de prévia.
+   - O site está publicado em **<https://www.droplabweb.com>** (o domínio sem www redireciona para o www). O endereço `*.vercel.app` continua existindo, mas canonical, sitemap e Open Graph apontam só para o domínio próprio.
 3. (Opcional) Em **Settings → Environment Variables**, adicione `PUBLIC_WEB3FORMS_KEY`, `PUBLIC_GA_ID` etc. e faça **Redeploy**.
-4. **Domínio próprio:** em **Settings → Domains**, adicione o seu domínio (ex.: `seudominio.com.br` e `www.seudominio.com.br`). No painel do seu registrador (ex.: Registro.br), configure o DNS como a Vercel indicar:
-   - domínio raiz (`seudominio.com.br`): registro **A** → `76.76.21.21`
+4. **Domínio próprio** (já feito para `droplabweb.com`): em **Settings → Domains**, adicione o domínio com e sem www. No painel do seu registrador (ex.: Registro.br), configure o DNS como a Vercel indicar:
+   - domínio raiz (`droplabweb.com`): registro **A** → `76.76.21.21`
    - `www`: registro **CNAME** → `cname.vercel-dns.com`
    - O HTTPS é emitido automaticamente.
 5. Confirme que `url` em `src/config/site.ts` é exatamente o domínio principal (com ou sem `www`, o mesmo que você escolher como principal na Vercel).
