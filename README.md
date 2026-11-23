@@ -33,7 +33,7 @@ Tudo o que se repete no site fica aqui: nome, slogan, **WhatsApp**, mensagem pad
 
 Itens marcados com `⚠️ PLACEHOLDER` precisam ser trocados antes de publicar:
 
-- `url`: domínio do site, hoje **`https://www.droplabweb.com`** (com www, sem barra no fim). É usado em canonical, og:url, imagem de compartilhamento (og:image/twitter:image), `sitemap-index.xml`, linha Sitemap do robots.txt e URLs do JSON-LD. Se ficar vazio, todos esses itens deixam de ser gerados
+- `url`: domínio do site, hoje **`https://www.droplabweb.com`** (com www, sem barra no fim). É usado em canonical, og:url, imagem de compartilhamento (og:image/twitter:image), `sitemap.xml`, linha Sitemap do robots.txt e URLs do JSON-LD. Se ficar vazio, todos esses itens deixam de ser gerados
 - `contact.city`, `contact.state`, `contact.hours`
 - `social.*`: o Instagram já está preenchido (`instagram.com/droplabtech`) e aparece no rodapé, no contato e no JSON-LD; LinkedIn/Behance/GitHub ficam escondidos enquanto vazios
 - `contact.email`: deixe `''` para esconder o e-mail em todo o site
@@ -160,11 +160,11 @@ No GA4, marque `generate_lead` como **evento principal (conversão)**.
 - Title/description por página, canonical, `lang="pt-BR"`
 - Open Graph + Twitter Card com `public/og-image.png` (1200×630)
 - JSON-LD `ProfessionalService` + `WebSite` (no layout) e `FAQPage` (no FAQ)
-- `sitemap-index.xml` (via `@astrojs/sitemap`) e `robots.txt` gerados no build com o domínio de `site.ts`
+- `sitemap.xml` (`src/pages/sitemap.xml.ts`, lista as páginas de `src/pages` com lastmod da data do build) e `robots.txt` gerados com o domínio de `site.ts`. O `@astrojs/sitemap` continua gerando `sitemap-index.xml` para quem já o cadastrou
 - Favicon SVG + ICO + apple-touch-icon + `manifest.webmanifest`
 - Um único H1 por página, `alt` em todas as imagens
 
-Cadastre o domínio no **Google Search Console** e envie o sitemap: **<https://www.droplabweb.com/sitemap-index.xml>**.
+Cadastre o domínio no **Google Search Console** e envie o sitemap: **<https://www.droplabweb.com/sitemap.xml>**.
 
 ---
 
