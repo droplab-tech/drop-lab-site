@@ -199,9 +199,12 @@ export function initMotion() {
 }
 
 /**
- * Cartões dos pilares: no desktop entram juntos, deslizando da direita com uma
- * inclinação que se acomoda conforme a rolagem (scrub). No celular, cada cartão
- * entra sozinho ao aparecer. No modo calmo, só aparecem por opacidade.
+ * Cartões dos pilares, como na referência: o movimento acompanha a rolagem o tempo
+ * todo enquanto a seção está na tela (scrub). Os cartões chegam da direita
+ * inclinados, se acomodam quando a seção está no centro e seguem derivando para a
+ * esquerda ao sair, cada um num ritmo diferente (parallax).
+ * Roda também com "reduzir movimento": é um movimento ligado à rolagem, controlado
+ * pelo próprio visitante, e não uma animação automática.
  */
 function initPillars() {
   const list = document.querySelector<HTMLElement>('[data-pillars]');
@@ -209,51 +212,40 @@ function initPillars() {
   const cards = Array.from(list.querySelectorAll<HTMLElement>('[data-pillar]'));
   const restTilt = [-1.6, 1.1, -0.8, 1.9];
 
-  if (reduced) {
-    cards.forEach((card, i) =>
-      gsap.from(card, {
-        opacity: 0,
-        duration: 1,
-        delay: (i % 2) * 0.1,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: card, start: 'top 88%', once: true },
-      }),
-    );
-    return;
-  }
-
   const mm = gsap.matchMedia();
+
   mm.add('(min-width: 1024px)', () => {
-    const startX = [180, 260, 360, 470];
-    const startTilt = [-7, 5, 4, 9];
-    cards.forEach((card, i) => gsap.set(card, { x: startX[i], rotate: startTilt[i], opacity: 0.35 }));
-    gsap
-      .timeline({
-        scrollTrigger: { trigger: list, start: 'top 95%', end: 'top 30%', scrub: 0.8 },
-      })
-      .to(cards, {
-        x: 0,
-        opacity: 1,
-        rotate: (i: number) => restTilt[i],
-        ease: 'power2.out',
-        stagger: 0.06,
-      });
+    const startX = [260, 380, 520, 680];
+    const startTilt = [-8, 6, 5, 10];
+    const exitX = [-40, -90, -150, -220];
+    const exitTilt = [1.5, -2.5, 2, -3];
+    cards.forEach((card, i) => {
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: list, start: 'top bottom', end: 'bottom top', scrub: 0.9 },
+        })
+        .fromTo(
+          card,
+          { x: startX[i], rotate: startTilt[i], opacity: 0.4 },
+          { x: 0, rotate: restTilt[i], opacity: 1, ease: 'power2.out', duration: 0.55 },
+        )
+        .to(card, { x: exitX[i], rotate: exitTilt[i], ease: 'none', duration: 0.45 });
+    });
   });
+
   mm.add('(max-width: 1023px)', () => {
     cards.forEach((card, i) => {
-      const dir = i % 2 === 0 ? -1 : 1;
-      gsap.fromTo(
-        card,
-        { x: 70 * dir, rotate: 5 * dir, opacity: 0 },
-        {
-          x: 0,
-          rotate: restTilt[i] * 0.6,
-          opacity: 1,
-          duration: 1.1,
-          ease: 'expo.out',
-          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
-        },
-      );
+      const dir = i % 2 === 0 ? 1 : -1;
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.8 },
+        })
+        .fromTo(
+          card,
+          { x: 90 * dir, rotate: 6 * dir, opacity: 0.3 },
+          { x: 0, rotate: restTilt[i] * 0.6, opacity: 1, ease: 'power2.out', duration: 0.5 },
+        )
+        .to(card, { x: -40 * dir, rotate: -3 * dir, ease: 'none', duration: 0.5 });
     });
   });
 }
