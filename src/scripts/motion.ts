@@ -124,7 +124,13 @@ export function initMotion() {
   const wordsIn = (words: HTMLElement[], vars: gsap.TweenVars) =>
     reduced
       ? gsap.from(words, { opacity: 0, duration: 1.2, ease: 'power2.out', stagger: 0.06, ...vars })
-      : gsap.from(words, { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.06, ...vars });
+      : gsap.from(words, {
+          yPercent: 110,
+          duration: 1.2,
+          ease: 'expo.out',
+          stagger: 0.06,
+          ...vars,
+        });
 
   const hero = document.querySelector<HTMLElement>('#inicio');
   const canvas = document.querySelector<HTMLCanvasElement>('[data-motes]');

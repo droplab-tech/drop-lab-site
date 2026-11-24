@@ -51,7 +51,9 @@ const pillars = [
 
 <Section id="pilares" at={0.02} class="overflow-x-clip">
   <header class="mx-auto mb-14 max-w-2xl text-center sm:mb-20" data-reveal>
-    <h2 id="pilares-title" class="text-title">Estratégia + Experiência</h2>
+    <h2 id="pilares-title" class="text-title">
+      Estratégia + Experiência
+    </h2>
     <p class="mx-auto mt-5 max-w-lg text-[1.0625rem] leading-relaxed text-body">
       Desenhamos, desenvolvemos, escrevemos e acompanhamos sites que fazem o cliente confiar e agir.
     </p>
@@ -62,7 +64,10 @@ const pillars = [
       const imageFirst = i % 2 === 0;
       return (
         <li class:list={['pillar-slot', !imageFirst && 'lg:pt-10']}>
-          <article class="pillar group flex h-full flex-col rounded-[10px] border border-line bg-surface p-2 shadow-[0_30px_60px_-40px_rgb(0_0_0/0.9)]" data-pillar>
+          <article
+            class="pillar group flex h-full flex-col rounded-[10px] border border-line bg-surface p-2 shadow-[0_30px_60px_-40px_rgb(0_0_0/0.9)]"
+            data-pillar
+          >
             <div class:list={['overflow-hidden rounded-[6px]', !imageFirst && 'lg:order-2']}>
               <Image
                 src={p.image}
@@ -76,7 +81,12 @@ const pillars = [
                 class="aspect-[4/3] h-auto w-full object-cover transition-transform duration-[1200ms] ease-out-soft group-hover:scale-[1.04]"
               />
             </div>
-            <div class:list={['flex flex-1 flex-col px-4 pt-5 pb-4', !imageFirst && 'lg:order-1 lg:pt-4 lg:pb-5']}>
+            <div
+              class:list={[
+                'flex flex-1 flex-col px-4 pt-5 pb-4',
+                !imageFirst && 'lg:order-1 lg:pt-4 lg:pb-5',
+              ]}
+            >
               <h3 class="text-[1.5rem] leading-tight tracking-[-0.03em]">{p.title}</h3>
               <p class="mt-2.5 text-[0.95rem] leading-relaxed text-body">{p.text}</p>
               <a

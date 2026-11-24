@@ -43,7 +43,12 @@ import { plans } from '@/data/plans';
           <ul class="relative mt-6 flex-1 space-y-3 border-t border-line pt-6">
             {plan.features.map((feature) => (
               <li class="flex items-start gap-3 text-[0.95rem] text-body">
-                <Icon name="check" size={16} strokeWidth={2} class="mt-1 shrink-0 text-accent-text" />
+                <Icon
+                  name="check"
+                  size={16}
+                  strokeWidth={2}
+                  class="mt-1 shrink-0 text-accent-text"
+                />
                 {feature}
               </li>
             ))}
@@ -70,7 +75,13 @@ import { plans } from '@/data/plans';
     inset: -40% -30% auto auto;
     width: 90%;
     height: 120%;
-    background: linear-gradient(90deg, transparent, var(--beam-a) 40%, var(--beam-b) 55%, transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--beam-a) 40%,
+      var(--beam-b) 55%,
+      transparent
+    );
     transform: rotate(28deg);
     filter: blur(40px);
     opacity: 0.8;

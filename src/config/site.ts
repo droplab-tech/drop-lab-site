@@ -73,7 +73,11 @@ export const site = {
     heroTitle: 'Sites que fazem o seu negócio ser escolhido.',
     heroSubtitle:
       'Desenhados do zero para transmitir confiança em segundos e transformar visitas em conversas. Estratégia, design e código no mesmo lugar, com atendimento direto pelo WhatsApp.',
-    proofStrip: ['Design feito do zero', 'Alta performance em qualquer conexão', 'Pensado para converter'],
+    proofStrip: [
+      'Design feito do zero',
+      'Alta performance em qualquer conexão',
+      'Pensado para converter',
+    ],
     finalCtaTitle: 'Seu próximo cliente já está procurando. Que ele encontre você pronto.',
     finalCtaText:
       'Conte sua ideia em uma mensagem. Respondemos no mesmo dia útil, com uma proposta clara e sem compromisso.',

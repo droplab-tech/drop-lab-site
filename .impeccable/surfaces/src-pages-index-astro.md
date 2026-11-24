@@ -1,7 +1,7 @@
 ---
 version: 1
-slug: "src-pages-index-astro"
-primary_target: "src/pages/index.astro"
+slug: 'src-pages-index-astro'
+primary_target: 'src/pages/index.astro'
 related_targets: []
 ---
 

@@ -68,7 +68,10 @@ const src = '/video/hero.mp4';
         <ul class="order-2 grid gap-3 sm:grid-cols-3 sm:gap-8 lg:order-1 lg:flex lg:gap-10">
           {site.copy.proofStrip.map((item, i) => (
             <li class="flex items-center gap-3 text-[0.95rem] text-snow">
-              <span class:list={['h-3 w-px', i === 0 ? 'bg-cyan' : 'bg-brand']} aria-hidden="true"></span>
+              <span
+                class:list={['h-3 w-px', i === 0 ? 'bg-cyan' : 'bg-brand']}
+                aria-hidden="true"
+              ></span>
               {item}
             </li>
           ))}
@@ -97,8 +100,28 @@ const src = '/video/hero.mp4';
           data-video-toggle
           aria-label="Pausar vídeo de fundo"
         >
-          <svg data-icon="pause" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
-          <svg data-icon="play" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" class="hidden"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"></path></svg>
+          <svg
+            data-icon="pause"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+            <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+          </svg>
+          <svg
+            data-icon="play"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="currentColor"
+            aria-hidden="true"
+            class="hidden"
+          >
+            <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"></path>
+          </svg>
         </button>
       </div>
     </div>
@@ -116,7 +139,12 @@ const src = '/video/hero.mp4';
   @media (max-width: 1023px) {
     .hero-shade {
       background:
-        linear-gradient(to bottom, rgb(5 7 13 / 0.7) 0%, rgb(5 7 13 / 0.35) 55%, rgb(5 7 13 / 0.2) 70%),
+        linear-gradient(
+          to bottom,
+          rgb(5 7 13 / 0.7) 0%,
+          rgb(5 7 13 / 0.35) 55%,
+          rgb(5 7 13 / 0.2) 70%
+        ),
         linear-gradient(to top, rgb(5 7 13 / 0.85) 0%, rgb(5 7 13 / 0) 35%);
     }
   }

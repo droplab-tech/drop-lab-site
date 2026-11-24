@@ -4,21 +4,105 @@
   "title": "Design System: Droplab",
   "extensions": {
     "colorMeta": {
-      "night": { "role": "neutral", "displayName": "Night", "canonical": "#05070d", "tonalRamp": ["#05070d", "#0b1220", "#1a2438", "#2f3a52", "#4b5872", "#7f8ca4", "#b9c2d3", "#eef1f6"] },
-      "night-2": { "role": "neutral", "displayName": "Night 2 (footer band)", "canonical": "#080c16" },
-      "graphite": { "role": "neutral", "displayName": "Graphite", "canonical": "#0b1220", "tonalRamp": ["#060a12", "#0b1220", "#101a2d", "#1a2740", "#2a3a58", "#4a5c7e", "#8a9ab6", "#dce3ee"] },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#05070d",
+        "tonalRamp": [
+          "#05070d",
+          "#0b1220",
+          "#1a2438",
+          "#2f3a52",
+          "#4b5872",
+          "#7f8ca4",
+          "#b9c2d3",
+          "#eef1f6"
+        ]
+      },
+      "night-2": {
+        "role": "neutral",
+        "displayName": "Night 2 (footer band)",
+        "canonical": "#080c16"
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#0b1220",
+        "tonalRamp": [
+          "#060a12",
+          "#0b1220",
+          "#101a2d",
+          "#1a2740",
+          "#2a3a58",
+          "#4a5c7e",
+          "#8a9ab6",
+          "#dce3ee"
+        ]
+      },
       "graphite-2": { "role": "neutral", "displayName": "Graphite 2", "canonical": "#101a2d" },
-      "line": { "role": "neutral", "displayName": "Hairline", "canonical": "rgb(150 172 214 / 0.13)" },
-      "line-strong": { "role": "neutral", "displayName": "Hairline Strong", "canonical": "rgb(150 172 214 / 0.26)" },
-      "tick": { "role": "neutral", "displayName": "Ruler Tick", "canonical": "rgb(150 172 214 / 0.2)" },
-      "tick-strong": { "role": "neutral", "displayName": "Ruler Major Tick", "canonical": "rgb(150 172 214 / 0.42)" },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgb(150 172 214 / 0.13)"
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "rgb(150 172 214 / 0.26)"
+      },
+      "tick": {
+        "role": "neutral",
+        "displayName": "Ruler Tick",
+        "canonical": "rgb(150 172 214 / 0.2)"
+      },
+      "tick-strong": {
+        "role": "neutral",
+        "displayName": "Ruler Major Tick",
+        "canonical": "rgb(150 172 214 / 0.42)"
+      },
       "snow": { "role": "neutral", "displayName": "Snow", "canonical": "#f2f5fa" },
       "steel-body": { "role": "neutral", "displayName": "Steel Body", "canonical": "#a3aec2" },
       "steel-muted": { "role": "neutral", "displayName": "Steel Muted", "canonical": "#7f8ca4" },
-      "signal-blue": { "role": "primary", "displayName": "Signal Blue", "canonical": "#0a6cff", "tonalRamp": ["#04214f", "#06367f", "#0757d1", "#0a6cff", "#3a8bff", "#5aa2ff", "#9cc6ff", "#e3efff"] },
-      "signal-blue-text": { "role": "primary", "displayName": "Signal Blue Text (dark theme)", "canonical": "#5aa2ff" },
-      "signal-blue-deep": { "role": "primary", "displayName": "Signal Blue Deep (light theme text)", "canonical": "#0757d1" },
-      "cold-cyan": { "role": "secondary", "displayName": "Cold Cyan", "canonical": "#22d3ee", "tonalRamp": ["#063b44", "#0a5f6d", "#0e8fa3", "#22d3ee", "#4fdcf2", "#7fe7f7", "#9df0ff", "#e9fdff"] },
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "#0a6cff",
+        "tonalRamp": [
+          "#04214f",
+          "#06367f",
+          "#0757d1",
+          "#0a6cff",
+          "#3a8bff",
+          "#5aa2ff",
+          "#9cc6ff",
+          "#e3efff"
+        ]
+      },
+      "signal-blue-text": {
+        "role": "primary",
+        "displayName": "Signal Blue Text (dark theme)",
+        "canonical": "#5aa2ff"
+      },
+      "signal-blue-deep": {
+        "role": "primary",
+        "displayName": "Signal Blue Deep (light theme text)",
+        "canonical": "#0757d1"
+      },
+      "cold-cyan": {
+        "role": "secondary",
+        "displayName": "Cold Cyan",
+        "canonical": "#22d3ee",
+        "tonalRamp": [
+          "#063b44",
+          "#0a5f6d",
+          "#0e8fa3",
+          "#22d3ee",
+          "#4fdcf2",
+          "#7fe7f7",
+          "#9df0ff",
+          "#e9fdff"
+        ]
+      },
       "navy": { "role": "neutral", "displayName": "Brand Navy", "canonical": "#0b1e4a" },
       "error": { "role": "neutral", "displayName": "Error (dark)", "canonical": "#fb7185" },
       "success": { "role": "neutral", "displayName": "Success (dark)", "canonical": "#34d399" },
@@ -26,9 +110,21 @@
       "day": { "role": "neutral", "displayName": "Day", "canonical": "#eef1f6" },
       "day-2": { "role": "neutral", "displayName": "Day 2", "canonical": "#e5e9f1" },
       "day-surface": { "role": "neutral", "displayName": "Day Surface", "canonical": "#ffffff" },
-      "day-surface-2": { "role": "neutral", "displayName": "Day Surface 2", "canonical": "#f6f8fb" },
-      "day-line": { "role": "neutral", "displayName": "Day Hairline", "canonical": "rgb(11 30 74 / 0.12)" },
-      "day-line-strong": { "role": "neutral", "displayName": "Day Hairline Strong", "canonical": "rgb(11 30 74 / 0.24)" },
+      "day-surface-2": {
+        "role": "neutral",
+        "displayName": "Day Surface 2",
+        "canonical": "#f6f8fb"
+      },
+      "day-line": {
+        "role": "neutral",
+        "displayName": "Day Hairline",
+        "canonical": "rgb(11 30 74 / 0.12)"
+      },
+      "day-line-strong": {
+        "role": "neutral",
+        "displayName": "Day Hairline Strong",
+        "canonical": "rgb(11 30 74 / 0.24)"
+      },
       "day-heading": { "role": "neutral", "displayName": "Day Heading", "canonical": "#070b14" },
       "day-body": { "role": "neutral", "displayName": "Day Body", "canonical": "#3a465a" },
       "day-muted": { "role": "neutral", "displayName": "Day Muted", "canonical": "#55627a" },
@@ -37,27 +133,95 @@
     },
     "typographyMeta": {
       "display": { "displayName": "Display", "purpose": "Hero title only, held to about 13ch." },
-      "headline": { "displayName": "Headline", "purpose": "Section titles, bottom-aligned against supporting text." },
-      "title": { "displayName": "Title", "purpose": "Plan names, process steps, mobile menu items (1.45 to 1.75rem)." },
-      "body": { "displayName": "Body", "purpose": "Running text in steel-body; 0.95rem for lists and card copy." },
-      "label": { "displayName": "Measure", "purpose": "Mono uppercase tabular labels for durations, captions and fixed labels; never a kicker." }
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles, bottom-aligned against supporting text."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Plan names, process steps, mobile menu items (1.45 to 1.75rem)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text in steel-body; 0.95rem for lists and card copy."
+      },
+      "label": {
+        "displayName": "Measure",
+        "purpose": "Mono uppercase tabular labels for durations, captions and fixed labels; never a kicker."
+      }
     },
     "themes": {
-      "dark": { "selector": ":root, [data-theme='dark']", "bg": "#05070d", "surface": "#0b1220", "heading": "#f2f5fa", "body": "#a3aec2", "accentText": "#5aa2ff", "beamA": "rgb(34 211 238 / 0.22)", "beamB": "rgb(10 108 255 / 0.42)", "inputBg": "#070b14" },
-      "light": { "selector": "[data-theme='light']", "bg": "#eef1f6", "surface": "#ffffff", "heading": "#070b14", "body": "#3a465a", "accentText": "#0757d1", "beamA": "rgb(34 211 238 / 0.18)", "beamB": "rgb(10 108 255 / 0.2)", "inputBg": "#ffffff" }
+      "dark": {
+        "selector": ":root, [data-theme='dark']",
+        "bg": "#05070d",
+        "surface": "#0b1220",
+        "heading": "#f2f5fa",
+        "body": "#a3aec2",
+        "accentText": "#5aa2ff",
+        "beamA": "rgb(34 211 238 / 0.22)",
+        "beamB": "rgb(10 108 255 / 0.42)",
+        "inputBg": "#070b14"
+      },
+      "light": {
+        "selector": "[data-theme='light']",
+        "bg": "#eef1f6",
+        "surface": "#ffffff",
+        "heading": "#070b14",
+        "body": "#3a465a",
+        "accentText": "#0757d1",
+        "beamA": "rgb(34 211 238 / 0.18)",
+        "beamB": "rgb(10 108 255 / 0.2)",
+        "inputBg": "#ffffff"
+      }
     },
     "shadows": [
-      { "name": "panel", "value": "0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -28px rgb(0 0 0 / 0.9)", "purpose": "Raised surfaces in the dark theme (light: 0 1px 2px rgb(11 30 74 / 0.06), 0 24px 48px -30px rgb(11 30 74 / 0.35))." },
-      { "name": "primary-glow", "value": "0 12px 32px -14px rgb(10 108 255 / 0.85)", "purpose": "Under the primary button; hover 0 16px 40px -14px rgb(10 108 255 / 1)." },
-      { "name": "lit-segment", "value": "0 0 18px 2px rgb(10 108 255 / 0.55)", "purpose": "Ruler position marker and first process dot." },
-      { "name": "lit-card", "value": "0 30px 70px -40px rgb(10 108 255 / 0.7)", "purpose": "Recommended plan only." },
-      { "name": "focus-ring-input", "value": "0 0 0 4px rgb(10 108 255 / 0.2)", "purpose": "Input focus." }
+      {
+        "name": "panel",
+        "value": "0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -28px rgb(0 0 0 / 0.9)",
+        "purpose": "Raised surfaces in the dark theme (light: 0 1px 2px rgb(11 30 74 / 0.06), 0 24px 48px -30px rgb(11 30 74 / 0.35))."
+      },
+      {
+        "name": "primary-glow",
+        "value": "0 12px 32px -14px rgb(10 108 255 / 0.85)",
+        "purpose": "Under the primary button; hover 0 16px 40px -14px rgb(10 108 255 / 1)."
+      },
+      {
+        "name": "lit-segment",
+        "value": "0 0 18px 2px rgb(10 108 255 / 0.55)",
+        "purpose": "Ruler position marker and first process dot."
+      },
+      {
+        "name": "lit-card",
+        "value": "0 30px 70px -40px rgb(10 108 255 / 0.7)",
+        "purpose": "Recommended plan only."
+      },
+      {
+        "name": "focus-ring-input",
+        "value": "0 0 0 4px rgb(10 108 255 / 0.2)",
+        "purpose": "Input focus."
+      }
     ],
     "motion": [
-      { "name": "ease-out-soft", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Control state transitions (300ms)." },
-      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Light-on, reveals, nav underline, menu sheet." },
-      { "name": "light-on", "value": "1800ms ease-out-expo 150ms, from opacity 0 and blur 80px", "purpose": "Beam and drop switch on once at entry." },
-      { "name": "reveal", "value": "900ms ease-out-expo, translateY(18px) to none, staggered 90 to 120ms", "purpose": "Scroll reveals; disabled under reduced motion." }
+      {
+        "name": "ease-out-soft",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Control state transitions (300ms)."
+      },
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Light-on, reveals, nav underline, menu sheet."
+      },
+      {
+        "name": "light-on",
+        "value": "1800ms ease-out-expo 150ms, from opacity 0 and blur 80px",
+        "purpose": "Beam and drop switch on once at entry."
+      },
+      {
+        "name": "reveal",
+        "value": "900ms ease-out-expo, translateY(18px) to none, staggered 90 to 120ms",
+        "purpose": "Scroll reveals; disabled under reduced motion."
+      }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
@@ -134,11 +298,31 @@
       "Light theme mirrors the dark one token-for-token"
     ],
     "rules": [
-      { "name": "The One Light Rule", "body": "There is one light source per scene: the diagonal beam (rotated about 22 to 28 degrees, heavily blurred, masked out toward the bottom). Glows elsewhere (primary button, lit ruler segment, first step dot, recommended plan) are that light landing on an object, always blue, never a second color.", "section": "colors" },
-      { "name": "The Role Mirror Rule", "body": "Every color is consumed through a theme role (bg, surface, line, heading, body, muted, accent-text, tick, beam). A new surface that hardcodes a dark-only value breaks the day garage.", "section": "colors" },
-      { "name": "The Scale-Only Rule", "body": "Importance is shown by size, not by color or weight. All headings are weight 500 in heading color; the step from body to headline is a jump of three to five times.", "section": "typography" },
-      { "name": "The Measure Rule", "body": "Mono uppercase is a measuring instrument: durations, ticks, captions, fixed labels. It never sits above a heading as a kicker.", "section": "typography" },
-      { "name": "The Lit-Not-Lifted Rule", "body": "Nothing rises on hover with a heavier shadow or a translate. A surface becomes important by being lit (blue border, beam inside, blue glow), not by floating.", "section": "elevation" }
+      {
+        "name": "The One Light Rule",
+        "body": "There is one light source per scene: the diagonal beam (rotated about 22 to 28 degrees, heavily blurred, masked out toward the bottom). Glows elsewhere (primary button, lit ruler segment, first step dot, recommended plan) are that light landing on an object, always blue, never a second color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role Mirror Rule",
+        "body": "Every color is consumed through a theme role (bg, surface, line, heading, body, muted, accent-text, tick, beam). A new surface that hardcodes a dark-only value breaks the day garage.",
+        "section": "colors"
+      },
+      {
+        "name": "The Scale-Only Rule",
+        "body": "Importance is shown by size, not by color or weight. All headings are weight 500 in heading color; the step from body to headline is a jump of three to five times.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measure Rule",
+        "body": "Mono uppercase is a measuring instrument: durations, ticks, captions, fixed labels. It never sits above a heading as a kicker.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lit-Not-Lifted Rule",
+        "body": "Nothing rises on hover with a heavier shadow or a translate. A surface becomes important by being lit (blue border, beam inside, blue glow), not by floating.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do open every section with the ruler, and place the lit segment by the section's position on the page.",

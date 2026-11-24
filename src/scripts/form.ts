@@ -90,10 +90,7 @@ function buildMessage(data: FormData): string {
 /** Envio opcional por e-mail. Usa keepalive para não ser cancelado ao abrir o WhatsApp. */
 async function sendEmail(data: FormData) {
   const payload = Object.fromEntries(
-    ['nome', 'telefone', 'email', 'tipo', 'mensagem'].map((k) => [
-      k,
-      String(data.get(k) ?? ''),
-    ]),
+    ['nome', 'telefone', 'email', 'tipo', 'mensagem'].map((k) => [k, String(data.get(k) ?? '')]),
   );
   try {
     if (WEB3FORMS_KEY) {

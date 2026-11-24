@@ -67,7 +67,13 @@ const jsonLd = {
         addressCountry: site.contact.country,
       },
       areaServed: { '@type': 'Country', name: site.contact.areaServed },
-      knowsAbout: ['Criação de sites', 'Páginas de conversão', 'SEO', 'E-commerce', 'Desenvolvimento web'],
+      knowsAbout: [
+        'Criação de sites',
+        'Páginas de conversão',
+        'SEO',
+        'E-commerce',
+        'Desenvolvimento web',
+      ],
       sameAs: Object.values(site.social).filter(Boolean),
       contactPoint: {
         '@type': 'ContactPoint',

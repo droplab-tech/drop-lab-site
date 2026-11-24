@@ -16,7 +16,14 @@ const d = 'M100 4C136 50 196 124 196 164a96 96 0 0 1-192 0C4 124 64 50 100 4Z';
 <div class:list={['relative', className]} aria-hidden="true">
   <svg viewBox="0 0 200 264" class="relative z-10 block h-full w-auto overflow-visible">
     <defs>
-      <linearGradient id={`${uid}body`} x1="40" y1="20" x2="150" y2="264" gradientUnits="userSpaceOnUse">
+      <linearGradient
+        id={`${uid}body`}
+        x1="40"
+        y1="20"
+        x2="150"
+        y2="264"
+        gradientUnits="userSpaceOnUse"
+      >
         <stop offset="0" stop-color="#4fdcf2"></stop>
         <stop offset=".38" stop-color="#0a6cff"></stop>
         <stop offset=".78" stop-color="#0a2f86"></stop>
@@ -31,7 +38,14 @@ const d = 'M100 4C136 50 196 124 196 164a96 96 0 0 1-192 0C4 124 64 50 100 4Z';
         <stop offset="0" stop-color="#030712" stop-opacity=".7"></stop>
         <stop offset="1" stop-color="#030712" stop-opacity="0"></stop>
       </radialGradient>
-      <linearGradient id={`${uid}rim`} x1="190" y1="60" x2="40" y2="250" gradientUnits="userSpaceOnUse">
+      <linearGradient
+        id={`${uid}rim`}
+        x1="190"
+        y1="60"
+        x2="40"
+        y2="250"
+        gradientUnits="userSpaceOnUse"
+      >
         <stop offset="0" stop-color="#ffffff" stop-opacity="1"></stop>
         <stop offset=".4" stop-color="#9df0ff" stop-opacity=".55"></stop>
         <stop offset=".7" stop-color="#9df0ff" stop-opacity="0"></stop>
@@ -56,7 +70,16 @@ const d = 'M100 4C136 50 196 124 196 164a96 96 0 0 1-192 0C4 124 64 50 100 4Z';
       filter={`url(#${uid}soft)`}
       class="glint"
     ></ellipse>
-    <ellipse cx="62" cy="196" rx="10" ry="22" transform="rotate(20 62 196)" fill="#9df0ff" fill-opacity=".14" filter={`url(#${uid}soft)`}></ellipse>
+    <ellipse
+      cx="62"
+      cy="196"
+      rx="10"
+      ry="22"
+      transform="rotate(20 62 196)"
+      fill="#9df0ff"
+      fill-opacity=".14"
+      filter={`url(#${uid}soft)`}
+    ></ellipse>
   </svg>
   {reflection && (
     <svg

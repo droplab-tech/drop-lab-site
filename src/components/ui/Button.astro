@@ -70,7 +70,13 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
   <a href={href} class:list={classes} {...externalAttrs} {...rest}>
     <slot />
     {arrow && (
-      <span class:list={['grid shrink-0 place-items-center rounded-[4px]', box[size], boxVariant[variant]]}>
+      <span
+        class:list={[
+          'grid shrink-0 place-items-center rounded-[4px]',
+          box[size],
+          boxVariant[variant],
+        ]}
+      >
         <Icon
           name="arrowUpRight"
           size={16}
@@ -84,7 +90,13 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
   <button type={type} class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
     <slot />
     {arrow && (
-      <span class:list={['grid shrink-0 place-items-center rounded-[4px]', box[size], boxVariant[variant]]}>
+      <span
+        class:list={[
+          'grid shrink-0 place-items-center rounded-[4px]',
+          box[size],
+          boxVariant[variant],
+        ]}
+      >
         <Icon
           name="arrowUpRight"
           size={16}

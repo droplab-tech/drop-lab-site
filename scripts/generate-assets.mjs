@@ -84,10 +84,7 @@ async function transparentLogo() {
 const icoPngs = [];
 for (const size of [16, 32, 48]) icoPngs.push({ size, data: await renderIcon(size) });
 await writeFile(pub('favicon.ico'), buildIco(icoPngs));
-await writeFile(
-  pub('apple-touch-icon.png'),
-  await renderIcon(180),
-);
+await writeFile(pub('apple-touch-icon.png'), await renderIcon(180));
 await writeFile(pub('icon-512.png'), await renderIcon(512));
 console.log('✓ favicons');
 

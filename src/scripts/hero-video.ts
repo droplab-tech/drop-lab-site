@@ -62,7 +62,10 @@ export function initHeroVideo() {
     userPaused = !userPaused;
     if (userPaused) pauseAll();
     else resume();
-    toggle.setAttribute('aria-label', userPaused ? 'Continuar vídeo de fundo' : 'Pausar vídeo de fundo');
+    toggle.setAttribute(
+      'aria-label',
+      userPaused ? 'Continuar vídeo de fundo' : 'Pausar vídeo de fundo',
+    );
     toggle.querySelector('[data-icon="pause"]')?.classList.toggle('hidden', userPaused);
     toggle.querySelector('[data-icon="play"]')?.classList.toggle('hidden', !userPaused);
   });

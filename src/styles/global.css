@@ -179,8 +179,8 @@
     linear-gradient(var(--tick-strong), var(--tick-strong)) top left / 100% 1px no-repeat,
     repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 12px) top left / 100% 6px
       no-repeat,
-    repeating-linear-gradient(90deg, var(--tick-strong) 0 1px, transparent 1px 96px) top left /
-      100% 11px no-repeat;
+    repeating-linear-gradient(90deg, var(--tick-strong) 0 1px, transparent 1px 96px) top left / 100%
+      11px no-repeat;
 }
 
 @utility panel {

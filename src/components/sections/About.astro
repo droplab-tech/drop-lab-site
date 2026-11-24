@@ -17,7 +17,6 @@ const paragraphs = [
 
 const mission =
   'Ajudar negócios a crescer no digital com sites que unem estética, performance e resultado.';
-
 ---
 
 <Section id="sobre" at={0.8}>
@@ -28,7 +27,9 @@ const mission =
       </h2>
       <p class="mt-10 flex items-center gap-4 text-sm text-muted">
         <span class="h-px w-10 bg-brand" aria-hidden="true"></span>
-        <span><span class="text-heading">{founder.name}</span> · {founder.role}</span>
+        <span>
+          <span class="text-heading">{founder.name}</span> · {founder.role}
+        </span>
       </p>
     </div>
     <div
@@ -36,11 +37,13 @@ const mission =
       data-reveal
       data-reveal-delay="120"
     >
-      {paragraphs.map((p) => <p>{p}</p>)}
+      {paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
       <p class="border-t border-line pt-5 text-heading">
-        <span class="sr-only">Nossa missão: </span>{mission}
+        <span class="sr-only">Nossa missão: </span>
+        {mission}
       </p>
     </div>
   </div>
-
 </Section>

@@ -18,7 +18,11 @@ import { services } from '@/data/services';
 
   <ul class="border-t border-line">
     {services.map((s, i) => (
-      <li class="service group relative border-b border-line" data-reveal data-reveal-delay={i * 60}>
+      <li
+        class="service group relative border-b border-line"
+        data-reveal
+        data-reveal-delay={i * 60}
+      >
         <div class="grid gap-3 py-8 sm:py-10 lg:grid-cols-12 lg:items-baseline lg:gap-10">
           <h3 class="flex items-center gap-4 text-[1.6rem] leading-tight tracking-[-0.035em] sm:text-[2.1rem] lg:col-span-5">
             <Icon
@@ -31,7 +35,10 @@ import { services } from '@/data/services';
           </h3>
           <p class="max-w-xl leading-relaxed text-body lg:col-span-4">{s.description}</p>
           <p class="text-[0.95rem] text-heading lg:col-span-3">
-            <span class="mr-2 inline-block h-px w-6 translate-y-[-0.3em] bg-brand align-middle" aria-hidden="true"></span>
+            <span
+              class="mr-2 inline-block h-px w-6 translate-y-[-0.3em] bg-brand align-middle"
+              aria-hidden="true"
+            ></span>
             {s.benefit}
           </p>
         </div>
