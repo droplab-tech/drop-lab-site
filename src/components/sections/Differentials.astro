@@ -1,50 +1,413 @@
 ---
+/**
+ * Diferenciais + comparador "site comum × Droplab".
+ * O comparador é uma ilustração (negócio fictício), arrastável por mouse, toque ou teclado.
+ */
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import Icon from '../ui/Icon.astro';
-import Drop from '../ui/Drop.astro';
-import Button from '../ui/Button.astro';
-import { differentials } from '@/data/differentials';
 ---
 
-<Section id="diferenciais" tone="alt">
-  <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal>
-      <p class="eyebrow inline-flex items-center gap-2.5">
-        <Drop class="h-3 w-2.5" /> Por que a Droplab
-      </p>
-      <h2 id="diferenciais-title" class="mt-4 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]">
-        Seu site é seu melhor vendedor.{' '}
-        <span class="text-gradient">Ele precisa trabalhar bem.</span>
-      </h2>
-      <p class="mt-5 text-lg leading-relaxed text-body">
-        Um site lento, genérico ou confuso faz você perder clientes todos os dias, sem perceber. Na
-        Droplab, cada decisão de design e código tem um objetivo: transformar visitas em conversas.
-      </p>
-      <Button href="#contato" class="mt-8">
-        Quero um site assim
-        <Icon name="arrowRight" size={18} class="transition-transform group-hover:translate-x-1" />
-      </Button>
-    </div>
+<Section id="diferenciais" at={0.24}>
+  <SectionHeading
+    id="diferenciais-title"
+    title="A diferença aparece antes do primeiro clique."
+    description="Arraste para comparar. O mesmo negócio, a mesma informação: de um lado, o site que todo mundo tem; do outro, um site feito para ser escolhido."
+  />
 
-    <ul class="grid gap-4 sm:grid-cols-2">
-      {differentials.map((item, i) => (
-        <li
-          class:list={[
-            'group glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong',
-            i === differentials.length - 1 && 'sm:col-span-2',
-          ]}
-          data-reveal
-          data-reveal-delay={(i % 2) * 100}
-        >
-          <div class="flex items-center gap-4">
-            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-button-gradient text-white shadow-[0_8px_24px_-8px_rgb(10_108_255/0.8)]">
-              <Icon name={item.icon} size={20} />
-            </span>
-            <h3 class="text-lg">{item.title}</h3>
+  <figure class="compare relative" data-compare data-reveal style="--pos:42%">
+    <div class="compare-stage relative overflow-hidden rounded-[10px] border border-line-strong bg-surface">
+      <!-- Site comum -->
+      <div class="mock mock-generic absolute inset-0" aria-hidden="true">
+        <div class="g-top">
+          <span class="g-logo">PADARIA TRIGO FINO</span>
+          <span class="g-nav">Home · Quem Somos · Produtos · Galeria · Contato</span>
+        </div>
+        <div class="g-banner">
+          <span class="g-arrow">&lsaquo;</span>
+          <div>
+            <p class="g-h">SEJA BEM-VINDO AO NOSSO SITE!</p>
+            <p class="g-s">A melhor padaria da região com os melhores produtos e o melhor atendimento</p>
+            <span class="g-btn">CLIQUE AQUI</span>
           </div>
-          <p class="mt-4 leading-relaxed text-body">{item.description}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
+          <span class="g-arrow">&rsaquo;</span>
+        </div>
+        <div class="g-cols">
+          <div><b>Quem Somos</b><i></i><i></i><i></i></div>
+          <div><b>Nossos Produtos</b><i></i><i></i><i></i></div>
+          <div><b>Fale Conosco</b><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <!-- Droplab -->
+      <div class="mock mock-crafted absolute inset-0" aria-hidden="true">
+        <div class="c-top">
+          <span class="c-logo">Trigo Fino</span>
+          <span class="c-nav"><span>Pães</span><span>Encomendas</span><span>Onde estamos</span></span>
+        </div>
+        <div class="c-loaf"></div>
+        <div class="c-hero">
+          <p class="c-h">Pão de fermentação natural, saindo do forno todo dia às 7h.</p>
+          <p class="c-s">Encomende até as 20h e retire quentinho pela manhã.</p>
+          <span class="c-btn">Encomendar pelo WhatsApp <em>&#8599;</em></span>
+        </div>
+        <div class="c-strip">
+          <span><b>7h</b> primeira fornada</span>
+          <span><b>48h</b> de fermentação</span>
+          <span><b>Seg a Sáb</b> Rua das Flores, 120</span>
+        </div>
+      </div>
+
+      <!-- Alça -->
+      <div class="compare-handle pointer-events-none absolute inset-y-0" aria-hidden="true">
+        <span class="compare-knob">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"></path></svg>
+        </span>
+      </div>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value="42"
+        step="1"
+        class="compare-input absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
+        aria-label="Comparar site comum com site Droplab"
+        data-compare-input
+      />
+    </div>
+    <figcaption class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-measure text-muted sm:grid-cols-[auto_1fr_auto]">
+      <span class="sm:col-start-1 sm:row-start-1"><Icon name="arrowRight" size={12} class="mr-1.5 inline rotate-180 align-[-1px]" />Site comum</span>
+      <span class="col-span-2 row-start-2 text-center sm:col-span-1 sm:col-start-2 sm:row-start-1">
+        Ilustração com negócio fictício
+      </span>
+      <span class="text-right text-accent-text sm:col-start-3 sm:row-start-1">Droplab<Icon name="arrowRight" size={12} class="ml-1.5 inline align-[-1px]" /></span>
+    </figcaption>
+  </figure>
 </Section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-compare]').forEach((fig) => {
+    const input = fig.querySelector<HTMLInputElement>('[data-compare-input]');
+    if (!input) return;
+    const set = () => fig.style.setProperty('--pos', `${input.value}%`);
+    input.addEventListener('input', set);
+    set();
+  });
+</script>
+
+<style>
+  .compare-stage {
+    aspect-ratio: 16 / 9.5;
+    container-type: inline-size;
+  }
+  @media (max-width: 639px) {
+    .compare-stage {
+      aspect-ratio: 4 / 5;
+    }
+  }
+  .mock-crafted {
+    clip-path: inset(0 0 0 var(--pos));
+  }
+  .compare-handle {
+    left: var(--pos);
+    width: 0;
+  }
+  .compare-handle::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: -0.5px;
+    width: 1px;
+    background: #fff;
+    box-shadow: 0 0 16px 2px rgb(10 108 255 / 0.8);
+  }
+  .compare-knob {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 6px;
+    background: #0a6cff;
+    color: #fff;
+    box-shadow: 0 10px 30px -8px rgb(10 108 255 / 0.9);
+    transition: scale 300ms var(--ease-out-expo);
+  }
+  .compare:has(.compare-input:focus-visible) .compare-knob {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  .compare:has(.compare-input:active) .compare-knob {
+    scale: 1.08;
+  }
+
+  /* ---------- Site comum (ilustração) ---------- */
+  .mock-generic {
+    background: #f1f1f1;
+    color: #555;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  .g-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6cqw;
+    padding: 1.6cqw 0;
+    background: #fff;
+    border-bottom: 3px solid #e2b33c;
+  }
+  .g-logo {
+    font-size: 2.2cqw;
+    font-weight: 700;
+    color: #8a5a1c;
+    letter-spacing: 0.08em;
+  }
+  .g-nav {
+    font-size: 1.15cqw;
+    color: #777;
+  }
+  .g-banner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2cqw;
+    padding: 0 2cqw;
+    text-align: center;
+    background:
+      linear-gradient(rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.35)),
+      linear-gradient(120deg, #c98a3d, #8c5a24 60%, #d9a55a);
+    color: #fff;
+  }
+  .g-arrow {
+    font-size: 4cqw;
+    opacity: 0.7;
+  }
+  .g-h {
+    font-size: 3cqw;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgb(0 0 0 / 0.5);
+  }
+  .g-s {
+    margin-top: 0.8cqw;
+    font-size: 1.4cqw;
+  }
+  .g-btn {
+    display: inline-block;
+    margin-top: 1.6cqw;
+    padding: 0.9cqw 2.4cqw;
+    background: #e2b33c;
+    color: #4a2f0b;
+    font-size: 1.3cqw;
+    font-weight: 700;
+    border-radius: 2cqw;
+  }
+  .g-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5cqw;
+    padding: 2cqw;
+  }
+  .g-cols div {
+    background: #fff;
+    padding: 1.4cqw;
+    border: 1px solid #ddd;
+    display: grid;
+    gap: 0.7cqw;
+  }
+  .g-cols b {
+    font-size: 1.5cqw;
+    color: #8a5a1c;
+  }
+  .g-cols i {
+    display: block;
+    height: 0.7cqw;
+    background: #ddd;
+  }
+  .g-cols i:last-child {
+    width: 60%;
+  }
+
+  /* ---------- Droplab (ilustração) ---------- */
+  .mock-crafted {
+    background: #f4efe6;
+    color: #1c1712;
+    font-family: var(--font-sans);
+    padding: 3cqw 4cqw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .c-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 1.35cqw;
+  }
+  .c-logo {
+    font-size: 2cqw;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+  .c-nav {
+    display: flex;
+    gap: 2.4cqw;
+    color: #5b5148;
+  }
+  .c-hero {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    margin-left: auto;
+    width: 44%;
+  }
+  .c-h {
+    font-size: 5cqw;
+    line-height: 0.98;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+  }
+  .c-s {
+    margin-top: 1.6cqw;
+    font-size: 1.5cqw;
+    color: #5b5148;
+  }
+  .c-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1cqw;
+    margin-top: 2.2cqw;
+    padding: 1.1cqw 1.4cqw 1.1cqw 2cqw;
+    background: #1c1712;
+    color: #f4efe6;
+    border-radius: 0.5cqw;
+    font-size: 1.45cqw;
+    font-weight: 500;
+  }
+  .c-btn em {
+    font-style: normal;
+    display: grid;
+    place-items: center;
+    width: 2.4cqw;
+    height: 2.4cqw;
+    background: #c2652a;
+    border-radius: 0.3cqw;
+  }
+  .c-strip {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: 4cqw;
+    margin-top: 3.4cqw;
+    margin-left: auto;
+    width: 44%;
+    padding-top: 1.4cqw;
+    border-top: 1px solid rgb(28 23 18 / 0.2);
+    font-size: 1.2cqw;
+    color: #5b5148;
+  }
+  .c-strip b {
+    display: block;
+    font-size: 2.2cqw;
+    font-weight: 500;
+    color: #1c1712;
+    letter-spacing: -0.03em;
+  }
+  .c-loaf {
+    position: absolute;
+    left: -8cqw;
+    top: 18%;
+    width: 46cqw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 38% 34%, #f0c27e 0 12%, transparent 34%),
+      radial-gradient(circle at 50% 50%, #c27a35 0 52%, #8b4c1d 66%, transparent 67%);
+    filter: drop-shadow(0 3cqw 3cqw rgb(60 30 10 / 0.35));
+  }
+  .c-loaf::before,
+  .c-loaf::after {
+    content: '';
+    position: absolute;
+    left: 24%;
+    width: 52%;
+    height: 2.5%;
+    border-radius: 99px;
+    background: #f3d7a5;
+    rotate: -24deg;
+  }
+  .c-loaf::before {
+    top: 40%;
+  }
+  .c-loaf::after {
+    top: 54%;
+  }
+  @media (max-width: 639px) {
+    .g-h {
+      font-size: 4.6cqw;
+    }
+    .g-s,
+    .g-nav,
+    .g-btn {
+      font-size: 2.4cqw;
+    }
+    .g-logo {
+      font-size: 3.6cqw;
+    }
+    .g-cols {
+      grid-template-columns: 1fr;
+    }
+    .g-cols b {
+      font-size: 2.8cqw;
+    }
+    .g-cols div:nth-child(n + 2) {
+      display: none;
+    }
+    .c-top {
+      font-size: 2.6cqw;
+    }
+    .c-logo {
+      font-size: 3.8cqw;
+    }
+    .c-nav {
+      display: none;
+    }
+    .c-hero,
+    .c-strip {
+      width: 62%;
+    }
+    .c-h {
+      font-size: 6.4cqw;
+    }
+    .c-strip {
+      grid-template-columns: 1fr;
+      gap: 2cqw;
+    }
+    .c-s,
+    .c-btn,
+    .c-strip {
+      font-size: 2.8cqw;
+    }
+    .c-btn em {
+      width: 4.4cqw;
+      height: 4.4cqw;
+    }
+    .c-strip b {
+      font-size: 4.2cqw;
+    }
+    .c-loaf {
+      width: 64cqw;
+      top: 8%;
+      left: -26cqw;
+    }
+  }
+</style>

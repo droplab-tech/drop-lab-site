@@ -13,7 +13,7 @@ import type { ImageMetadata } from 'astro';
  *  3. Adicione um item na lista `projects`:
  *       {
  *         name: 'Nome do projeto',
- *         type: 'Site institucional',        // ou 'Landing page', 'E-commerce'…
+ *         type: 'Site institucional',        // ou 'Página de conversão', 'E-commerce'…
  *         description: 'Resumo do que foi feito e do objetivo do cliente.',
  *         image: clienteX,
  *         url: 'https://site-do-cliente.com.br', // '' para não mostrar o link

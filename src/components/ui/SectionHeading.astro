@@ -1,34 +1,26 @@
 ---
-import Drop from './Drop.astro';
-
+/**
+ * Título de seção: título grande à esquerda, texto de apoio à direita,
+ * alinhado pela base. Sem rótulo acima do título.
+ */
 interface Props {
   id: string;
-  eyebrow: string;
   title: string;
-  /** Trecho do título destacado em degradê */
-  highlight?: string;
   description?: string;
-  align?: 'center' | 'left';
+  class?: string;
 }
-const { id, eyebrow, title, highlight, description, align = 'center' } = Astro.props;
+const { id, title, description, class: className = '' } = Astro.props;
 ---
 
 <header
-  class:list={['mb-14 max-w-3xl', align === 'center' ? 'mx-auto text-center' : 'text-left']}
+  class:list={['mb-14 grid gap-6 sm:mb-20 lg:grid-cols-12 lg:items-end lg:gap-10', className]}
   data-reveal
 >
-  <p
-    class:list={[
-      'eyebrow inline-flex items-center gap-2.5',
-      align === 'center' && 'justify-center',
-    ]}
-  >
-    <Drop class="h-3 w-2.5" />
-    {eyebrow}
-  </p>
-  <h2 id={id} class="mt-4 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]">
-    {title}
-    {highlight && <span class="text-gradient">{highlight}</span>}
-  </h2>
-  {description && <p class="mt-5 text-lg leading-relaxed text-body">{description}</p>}
+  <h2 id={id} class="text-title lg:col-span-7">{title}</h2>
+  {description && (
+    <p class="max-w-md text-[1.0625rem] leading-relaxed text-body lg:col-span-4 lg:col-start-9">
+      {description}
+    </p>
+  )}
+  <slot />
 </header>

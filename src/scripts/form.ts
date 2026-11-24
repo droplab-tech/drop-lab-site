@@ -79,7 +79,6 @@ function buildMessage(data: FormData): string {
     line('WhatsApp', 'telefone'),
     line('E-mail', 'email'),
     line('Tipo de projeto', 'tipo'),
-    line('Orçamento estimado', 'orcamento'),
   ].filter(Boolean);
   return [
     `Olá! Vim pelo site da ${site.name} e quero um orçamento.`,
@@ -91,7 +90,7 @@ function buildMessage(data: FormData): string {
 /** Envio opcional por e-mail. Usa keepalive para não ser cancelado ao abrir o WhatsApp. */
 async function sendEmail(data: FormData) {
   const payload = Object.fromEntries(
-    ['nome', 'telefone', 'email', 'tipo', 'orcamento', 'mensagem'].map((k) => [
+    ['nome', 'telefone', 'email', 'tipo', 'mensagem'].map((k) => [
       k,
       String(data.get(k) ?? ''),
     ]),

@@ -1,21 +1,73 @@
 ---
+/**
+ * Serviços como índice: cada linha é um serviço, com o benefício à direita.
+ * No hover, a linha acende com a luz da marca.
+ */
 import Section from '../ui/Section.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
-import ServiceCard from './ServiceCard.astro';
+import Icon from '../ui/Icon.astro';
 import { services } from '@/data/services';
 ---
 
-<Section id="servicos">
+<Section id="servicos" at={0.08}>
   <SectionHeading
     id="servicos-title"
-    eyebrow="Serviços"
-    title="Tudo o que seu negócio precisa para"
-    highlight="vender mais na internet"
-    description="Do primeiro clique à mensagem no WhatsApp: soluções web completas, pensadas para gerar resultado e não só para ficar bonitas."
+    title="Tudo o que o seu negócio precisa para ser escolhido online."
+    description="Do primeiro clique ao pedido no WhatsApp: cada serviço resolve uma parte do caminho que o seu cliente percorre."
   />
-  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-    {services.map((service, i) => (
-      <ServiceCard {...service} delay={(i % 3) * 90} />
+
+  <ul class="border-t border-line">
+    {services.map((s, i) => (
+      <li class="service group relative border-b border-line" data-reveal data-reveal-delay={i * 60}>
+        <div class="grid gap-3 py-8 sm:py-10 lg:grid-cols-12 lg:items-baseline lg:gap-10">
+          <h3 class="flex items-center gap-4 text-[1.6rem] leading-tight tracking-[-0.035em] sm:text-[2.1rem] lg:col-span-5">
+            <Icon
+              name={s.icon}
+              size={22}
+              strokeWidth={1.5}
+              class="shrink-0 text-muted transition-colors duration-500 group-hover:text-accent-text"
+            />
+            {s.title}
+          </h3>
+          <p class="max-w-xl leading-relaxed text-body lg:col-span-4">{s.description}</p>
+          <p class="text-[0.95rem] text-heading lg:col-span-3">
+            <span class="mr-2 inline-block h-px w-6 translate-y-[-0.3em] bg-brand align-middle" aria-hidden="true"></span>
+            {s.benefit}
+          </p>
+        </div>
+      </li>
     ))}
-  </div>
+  </ul>
 </Section>
+
+<style>
+  .service::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgb(10 108 255 / 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 600ms var(--ease-out-expo);
+  }
+  .service::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 100%;
+    background: #0a6cff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 700ms var(--ease-out-expo);
+  }
+  @media (hover: hover) {
+    .service:hover::before {
+      opacity: 1;
+    }
+    .service:hover::after {
+      transform: scaleX(1);
+    }
+  }
+</style>

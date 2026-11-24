@@ -13,15 +13,11 @@ import { whatsappLink } from '@/config/site';
   rel="noopener noreferrer"
   aria-label="Fale conosco pelo WhatsApp (abre em nova aba)"
   data-wa-float
-  class="wa-float group fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-6px_rgb(37_211_102/0.6)] transition-all duration-300 hover:scale-105 sm:right-6 sm:bottom-6"
+  class="wa-float group fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_12px_30px_-8px_rgb(0_0_0/0.6)] transition-all duration-300 hover:scale-105 sm:right-6 sm:bottom-6"
 >
-  <span
-    class="absolute inset-0 animate-pulse-ring rounded-full bg-[#25D366]"
-    aria-hidden="true"
-  ></span>
   <WhatsAppIcon class="relative h-7 w-7" />
   <span
-    class="pointer-events-none absolute right-full mr-3 rounded-lg bg-surface px-3 py-1.5 text-sm font-medium whitespace-nowrap text-heading opacity-0 shadow-lg ring-1 ring-line transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+    class="pointer-events-none absolute right-full mr-3 rounded-[6px] bg-surface px-3 py-1.5 text-sm font-medium whitespace-nowrap text-heading opacity-0 shadow-lg ring-1 ring-line transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
     aria-hidden="true"
   >
     Fale conosco
@@ -38,10 +34,6 @@ import { whatsappLink } from '@/config/site';
       transform 300ms ease,
       visibility 300ms,
       scale 200ms ease;
-  }
-  /* Pulso só roda quando o botão está visível (economiza CPU/GPU) */
-  .wa-float:not([data-visible='true']) span {
-    animation-play-state: paused;
   }
   .wa-float[data-visible='true'] {
     opacity: 1;

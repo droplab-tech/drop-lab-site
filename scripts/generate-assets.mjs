@@ -1,6 +1,6 @@
 /**
  * Gera os assets de marca a partir de public/favicon.svg e public/logo.png:
- *  - favicon.ico (16/32/48), apple-touch-icon.png, icon-192.png, icon-512.png, icon-maskable-512.png
+ *  - favicon.ico (16/32/48), apple-touch-icon.png, icon-512.png
  *  - og-image.png (1200×630)
  *
  * Uso:  npm run assets
@@ -86,14 +86,9 @@ for (const size of [16, 32, 48]) icoPngs.push({ size, data: await renderIcon(siz
 await writeFile(pub('favicon.ico'), buildIco(icoPngs));
 await writeFile(
   pub('apple-touch-icon.png'),
-  await renderIcon(180, { padding: 0.14, background: BG }),
+  await renderIcon(180),
 );
-await writeFile(pub('icon-192.png'), await renderIcon(192, { padding: 0.08 }));
-await writeFile(pub('icon-512.png'), await renderIcon(512, { padding: 0.08 }));
-await writeFile(
-  pub('icon-maskable-512.png'),
-  await renderIcon(512, { padding: 0.2, background: BG }),
-);
+await writeFile(pub('icon-512.png'), await renderIcon(512));
 console.log('✓ favicons');
 
 // ---------- Open Graph 1200×630 ----------

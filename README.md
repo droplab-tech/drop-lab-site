@@ -1,6 +1,6 @@
 # Droplab: site institucional
 
-Site da **Droplab** (Sites • Landing Pages • Soluções Web), feito com **Astro 7** (estático), **TypeScript** e **Tailwind CSS v4**. One-page com modo claro e escuro, formulário que abre o WhatsApp, SEO completo e analytics preparado (desligado por padrão).
+Site da **Droplab** (Sites · Páginas de conversão · Soluções web), feito com **Astro 7** (estático), **TypeScript** e **Tailwind CSS v4**. One-page com modo claro e escuro, formulário que abre o WhatsApp, SEO completo e analytics preparado (desligado por padrão).
 
 ---
 
@@ -82,7 +82,7 @@ Adicione objetos em `src/data/testimonials.ts` (há um modelo comentado no arqui
   - `public/favicon.svg`: mesma arte, usada para gerar os favicons
 - O wordmark "Droplab" é texto na fonte Sora ("Drop" na cor do título, "lab" em degradê azul), em `src/components/ui/Logo.astro`.
 
-**Para trocar o logo:** edite o desenho em `public/favicon.svg` **e** em `LogoMark.astro` (o mesmo `path`) e rode `npm run assets` para regerar `favicon.ico`, `apple-touch-icon.png`, `icon-192/512.png`, `icon-maskable-512.png` e `og-image.png`. Se trocar o `logo.png`, rode `npm run assets` também, pois a imagem OG usa o logo.
+**Para trocar o logo:** edite o desenho em `public/favicon.svg` **e** em `LogoMark.astro` (o mesmo `path`) e rode `npm run assets` para regerar `favicon.ico`, `apple-touch-icon.png`, `icon-512.png` e `og-image.png`. Se trocar o `logo.png`, rode `npm run assets` também, pois a imagem OG usa o logo.
 
 ### Cores e tipografia
 
@@ -161,7 +161,7 @@ No GA4, marque `generate_lead` como **evento principal (conversão)**.
 - Open Graph + Twitter Card com `public/og-image.png` (1200×630)
 - JSON-LD `ProfessionalService` + `WebSite` (no layout) e `FAQPage` (no FAQ)
 - `sitemap.xml` (`src/pages/sitemap.xml.ts`, lista as páginas de `src/pages` com lastmod da data do build) e `robots.txt` gerados com o domínio de `site.ts`. O `@astrojs/sitemap` continua gerando `sitemap-index.xml` para quem já o cadastrou
-- Favicon SVG + ICO + apple-touch-icon + `manifest.webmanifest`
+- Favicon SVG + ICO + apple-touch-icon (sem manifest: o site não oferece instalação como app)
 - Um único H1 por página, `alt` em todas as imagens
 
 Cadastre o domínio no **Google Search Console** e envie o sitemap: **<https://www.droplabweb.com/sitemap.xml>**.
@@ -200,7 +200,7 @@ src/
 │  ├─ sections/             ← Hero, Services, Process, Deliverables, Portfolio, Plans, About, FAQ, Contact…
 │  ├─ Header / Footer / WhatsAppFloat / CookieBanner
 ├─ layouts/BaseLayout.astro ← <head>, SEO, JSON-LD, tema, fontes
-├─ pages/                   ← index, politica-de-privacidade, 404, robots.txt, manifest
+├─ pages/                   ← index, politica-de-privacidade, 404, robots.txt, sitemap
 ├─ scripts/                 ← JS do cliente (tema, menu, scrollspy, reveal, formulário, analytics)
 └─ styles/global.css        ← tokens de tema e utilitários da marca
 scripts/generate-assets.mjs ← favicons e imagem OG

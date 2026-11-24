@@ -1,7 +1,6 @@
 ---
 /**
- * Botão de tema personalizado: trilho com sol e lua, e uma "gota" que desliza.
- * O nome acessível muda com o tema (textos em site.themeCopy).
+ * Botão de tema: um quadrado com sol/lua. O nome acessível muda com o tema.
  * Lógica em src/scripts/theme.ts
  */
 import Icon from './Icon.astro';
@@ -17,38 +16,12 @@ const { class: className = '' } = Astro.props;
   type="button"
   data-theme-toggle
   class:list={[
-    'theme-toggle group relative inline-flex h-9 w-[4.25rem] shrink-0 items-center rounded-full border border-line bg-glass p-1 transition-colors duration-300 hover:border-line-strong',
+    'grid h-10 w-10 shrink-0 place-items-center rounded-[6px] border border-line text-body transition-colors duration-300 hover:border-line-strong hover:text-heading',
     className,
   ]}
 >
-  <span class="sr-only" data-only="dark">
-    {site.themeCopy.dark.toggleLabel}
-  </span>
-  <span class="sr-only" data-only="light">
-    {site.themeCopy.light.toggleLabel}
-  </span>
-  <!-- Ícones fixos no trilho -->
-  <span class="pointer-events-none absolute inset-0 flex items-center justify-between px-2 text-muted">
-    <Icon name="sun" size={14} strokeWidth={2} />
-    <Icon name="moon" size={14} strokeWidth={2} />
-  </span>
-  <!-- Botão deslizante em forma de gota -->
-  <span class="theme-knob relative z-10 grid h-7 w-7 place-items-center rounded-full bg-button-gradient text-white shadow-[0_0_14px_var(--glow)] transition-transform duration-300 ease-out-soft">
-    <span data-only="dark">
-      <Icon name="moon" size={14} strokeWidth={2.25} />
-    </span>
-    <span data-only="light">
-      <Icon name="sun" size={14} strokeWidth={2.25} />
-    </span>
-  </span>
+  <span class="sr-only" data-only="dark">{site.themeCopy.dark.toggleLabel}</span>
+  <span class="sr-only" data-only="light">{site.themeCopy.light.toggleLabel}</span>
+  <span data-only="dark"><Icon name="sun" size={17} strokeWidth={1.75} /></span>
+  <span data-only="light"><Icon name="moon" size={17} strokeWidth={1.75} /></span>
 </button>
-
-<style>
-  /* No escuro, a gota fica à direita (sobre a lua); no claro, à esquerda (sobre o sol) */
-  :global([data-theme='dark']) .theme-knob {
-    transform: translateX(2.25rem);
-  }
-  :global([data-theme='light']) .theme-knob {
-    transform: translateX(0);
-  }
-</style>

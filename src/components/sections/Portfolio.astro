@@ -13,19 +13,17 @@ import { projects } from '@/data/portfolio';
 ---
 
 {projects.length > 0 && (
-  <Section id="portfolio" tone="alt">
+  <Section id="portfolio" at={0.62}>
     <SectionHeading
       id="portfolio-title"
-      eyebrow="Portfólio"
-      title="Projetos que"
-      highlight="falam por si"
+      title="Projetos que falam por si."
       description="Cada site é desenhado para o público e o objetivo de cada cliente."
     />
 
     <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project, i) => (
         <li data-reveal data-reveal-delay={(i % 3) * 90}>
-          <article class="group glass relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:border-line-strong">
+          <article class="group panel relative flex h-full flex-col overflow-hidden rounded-[10px] transition-colors duration-300 hover:border-line-strong">
             <div class="relative aspect-[16/10] overflow-hidden border-b border-line">
               <Image
                 src={project.image}
@@ -40,17 +38,15 @@ import { projects } from '@/data/portfolio';
               />
             </div>
             <div class="flex flex-1 flex-col p-6">
-              <p class="text-xs font-semibold tracking-[0.2em] text-eyebrow uppercase">
-                {project.type}
-              </p>
-              <h3 class="mt-2 text-xl">{project.name}</h3>
+              <h3 class="text-xl">{project.name}</h3>
+              <p class="mt-1.5 text-sm text-accent-text">{project.type}</p>
               <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-body">
                 {project.description}
               </p>
               <div class="mt-5 flex items-center justify-between gap-3">
                 <ul class="flex flex-wrap gap-2" aria-label="Categorias">
                   {project.tags.map((tag) => (
-                    <li class="rounded-full border border-line px-2.5 py-1 text-xs text-body">
+                    <li class="rounded-[4px] border border-line px-2.5 py-1 text-xs text-body">
                       {tag}
                     </li>
                   ))}
@@ -60,7 +56,7 @@ import { projects } from '@/data/portfolio';
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-heading transition-colors hover:border-cyan/50 hover:text-eyebrow"
+                    class="grid h-9 w-9 shrink-0 place-items-center rounded-[4px] border border-line text-heading transition-colors hover:border-brand hover:text-accent-text"
                     aria-label={`Ver o projeto ${project.name} (abre em nova aba)`}
                   >
                     <Icon name="arrowUpRight" size={16} />
@@ -74,9 +70,8 @@ import { projects } from '@/data/portfolio';
     </ul>
 
     <div class="mt-12 text-center" data-reveal>
-      <Button href="#contato" variant="secondary">
+      <Button href="#contato" variant="secondary" arrow>
         Quero um projeto assim
-        <Icon name="arrowRight" size={18} class="transition-transform group-hover:translate-x-1" />
       </Button>
     </div>
   </Section>

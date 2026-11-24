@@ -1,79 +1,73 @@
 @import 'tailwindcss';
 
-/* Variante `dark:` controlada pelo atributo data-theme (botão de tema) */
+/* Variantes `dark:` / `light:` controladas pelo atributo data-theme (botão de tema) */
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 @custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
 
 /* ============================================================
    TOKENS DE TEMA
-   Cada tema define as mesmas variáveis. Os componentes usam só
-   os tokens semânticos (bg, surface, heading, body…), então a troca
-   de tema não exige classes duplicadas.
+   Escuro: a garagem à noite, uma única luz fria azul.
+   Claro: a mesma garagem de dia, cinza frio e régua escura.
    Contraste verificado (WCAG AA ≥ 4.5:1 para texto normal).
    ============================================================ */
 :root,
 [data-theme='dark'] {
   color-scheme: dark;
   --bg: #05070d;
-  --bg-2: #0b1120;
-  --surface: #0f172a;
-  --surface-glass: rgb(15 23 42 / 0.55);
-  --border: rgb(148 163 184 / 0.14);
-  --border-strong: rgb(148 163 184 / 0.28);
-  --heading: #f8fafc; /* 19.3:1 sobre --bg */
-  --body: #94a3b8; /* 7.9:1 sobre --bg | 6.9:1 sobre --surface */
-  --muted: #8291a7; /* 6.0:1 sobre --bg (o #64748B daria só 4.2:1) */
-  --eyebrow: #22d3ee; /* 10.6:1 */
-  --link: #5cb2ff;
-  --text-gradient: linear-gradient(135deg, #22d3ee 0%, #3b8bff 60%, #6aa8ff 100%);
-  --glow: rgb(10 108 255 / 0.35);
-  --glow-2: rgb(34 211 238 / 0.18);
-  --grid-line: rgb(255 255 255 / 0.035);
-  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
-  --heading-weight: 600;
-  --input-bg: rgb(5 7 13 / 0.6);
+  --bg-2: #080c16;
+  --surface: #0b1220;
+  --surface-2: #101a2d;
+  --border: rgb(150 172 214 / 0.13);
+  --border-strong: rgb(150 172 214 / 0.26);
+  --heading: #f2f5fa; /* 18.6:1 sobre --bg */
+  --body: #a3aec2; /* 8.9:1 */
+  --muted: #7f8ca4; /* 5.7:1 */
+  --accent-text: #5aa2ff; /* 7.1:1: azul da marca para texto pequeno */
+  --tick: rgb(150 172 214 / 0.2);
+  --tick-strong: rgb(150 172 214 / 0.42);
+  --beam-a: rgb(34 211 238 / 0.22);
+  --beam-b: rgb(10 108 255 / 0.42);
+  --floor: rgb(10 108 255 / 0.28);
+  --input-bg: #070b14;
   --error: #fb7185;
   --success: #34d399;
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -28px rgb(0 0 0 / 0.9);
 }
 
 [data-theme='light'] {
   color-scheme: light;
-  --bg: #f5f8fd;
-  --bg-2: #eaf0f9;
+  --bg: #eef1f6;
+  --bg-2: #e5e9f1;
   --surface: #ffffff;
-  --surface-glass: rgb(255 255 255 / 0.7);
-  --border: rgb(15 23 42 / 0.1);
-  --border-strong: rgb(15 23 42 / 0.2);
-  --heading: #0b1220; /* 17.9:1 sobre --bg */
-  --body: #3d4b60; /* 8.7:1 */
-  --muted: #55657b; /* 5.8:1 */
-  --eyebrow: #0757d1; /* 6.0:1 */
-  --link: #0757d1;
-  --text-gradient: linear-gradient(135deg, #0a6cff 0%, #0750c8 50%, #0b1e4a 100%);
-  --glow: rgb(10 108 255 / 0.16);
-  --glow-2: rgb(34 211 238 / 0.14);
-  --grid-line: rgb(11 30 74 / 0.05);
-  --shadow-card: 0 1px 2px rgb(11 30 74 / 0.06), 0 18px 40px -24px rgb(11 30 74 / 0.25);
-  /* No claro, títulos ganham peso para manter presença sem o brilho do escuro */
-  --heading-weight: 700;
+  --surface-2: #f6f8fb;
+  --border: rgb(11 30 74 / 0.12);
+  --border-strong: rgb(11 30 74 / 0.24);
+  --heading: #070b14; /* 17.4:1 */
+  --body: #3a465a; /* 8.6:1 */
+  --muted: #55627a; /* 5.6:1 */
+  --accent-text: #0757d1; /* 5.9:1 */
+  --tick: rgb(11 30 74 / 0.18);
+  --tick-strong: rgb(11 30 74 / 0.42);
+  --beam-a: rgb(34 211 238 / 0.18);
+  --beam-b: rgb(10 108 255 / 0.2);
+  --floor: rgb(10 108 255 / 0.16);
   --input-bg: #ffffff;
   --error: #be123c;
   --success: #047857;
+  --shadow: 0 1px 2px rgb(11 30 74 / 0.06), 0 24px 48px -30px rgb(11 30 74 / 0.35);
 }
 
 @theme inline {
-  /* Cores semânticas (mudam com o tema) */
   --color-bg: var(--bg);
   --color-bg-2: var(--bg-2);
   --color-surface: var(--surface);
-  --color-glass: var(--surface-glass);
+  --color-surface-2: var(--surface-2);
   --color-line: var(--border);
   --color-line-strong: var(--border-strong);
   --color-heading: var(--heading);
   --color-body: var(--body);
   --color-muted: var(--muted);
-  --color-eyebrow: var(--eyebrow);
-  --color-link: var(--link);
+  --color-accent-text: var(--accent-text);
   --color-error: var(--error);
   --color-success: var(--success);
 }
@@ -81,54 +75,19 @@
 @theme {
   /* Paleta fixa da marca */
   --color-ink: #05070d;
-  --color-ink-2: #0b1120;
-  --color-ink-3: #0f172a;
   --color-brand: #0a6cff;
   --color-brand-600: #0757d1;
   --color-cyan: #22d3ee;
   --color-navy: #0b1e4a;
-  --color-snow: #f8fafc;
+  --color-snow: #f2f5fa;
+  --color-whatsapp: #25d366;
 
-  --font-display: 'Sora Variable', 'Sora', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Host Grotesk Variable', 'Host Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Host Grotesk Variable', 'Host Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-
-  --animate-pulse-ring: pulse-ring 2.4s var(--ease-out-soft) infinite;
-  --animate-float: float 7s ease-in-out infinite;
-  --animate-glow: glow 6s ease-in-out infinite;
-
-  @keyframes pulse-ring {
-    0% {
-      transform: scale(1);
-      opacity: 0.55;
-    }
-    80%,
-    100% {
-      transform: scale(1.7);
-      opacity: 0;
-    }
-  }
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-14px);
-    }
-  }
-  @keyframes glow {
-    0%,
-    100% {
-      opacity: 0.65;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.08);
-    }
-  }
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ============================================================
@@ -137,12 +96,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Sem scroll-padding: o padding superior de cada seção (≥ 80px) já compensa o header fixo */
     -webkit-tap-highlight-color: transparent;
+    scrollbar-color: var(--border-strong) var(--bg);
   }
   body {
     @apply bg-bg font-sans text-body antialiased;
-    text-rendering: optimizeLegibility;
+    font-size: 1.0625rem;
+    line-height: 1.6;
     transition:
       background-color 300ms ease,
       color 300ms ease;
@@ -152,88 +112,148 @@
   h3,
   h4 {
     @apply font-display text-heading;
-    font-weight: var(--heading-weight);
-    letter-spacing: -0.02em;
+    font-weight: 500;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
   p {
     text-wrap: pretty;
   }
   ::selection {
-    background: rgb(10 108 255 / 0.35);
-    color: var(--heading);
+    background: #0a6cff;
+    color: #fff;
   }
   :focus-visible {
-    outline: 2px solid var(--eyebrow);
+    outline: 2px solid var(--accent-text);
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 4px;
   }
-  /* Campos de formulário herdam a fonte */
   input,
   select,
   textarea,
   button {
     font: inherit;
   }
+  input,
+  textarea {
+    caret-color: #0a6cff;
+  }
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
 }
 
 /* ============================================================
    UTILITÁRIOS DA MARCA
    ============================================================ */
-@utility text-gradient {
-  background: var(--text-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@utility bg-brand-gradient {
-  background-image: linear-gradient(135deg, #22d3ee 0%, #0a6cff 55%, #0b1e4a 100%);
-}
-
-/* Degradê dos botões: começa no azul primário para garantir contraste AA com texto branco */
-@utility bg-button-gradient {
-  background-image: linear-gradient(135deg, #0a6cff 0%, #0757d1 50%, #0b1e4a 100%);
-}
-
-/* Rótulos em caixa alta, como o slogan do logo */
-@utility eyebrow {
-  @apply font-display text-xs font-semibold tracking-[0.3em] text-eyebrow uppercase;
-}
-
-/* Card com borda translúcida + glass leve.
-   Sem backdrop-filter de propósito: em dezenas de cards ele custa caro na GPU
-   (derruba o Lighthouse) e sobre fundo quase liso o efeito é imperceptível.
-   Para sobreposições reais (header, banner), use também `backdrop-blur-*`. */
-@utility glass {
-  background: var(--surface-glass);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-card);
-}
-
 @utility container-site {
-  @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-[84rem] px-5 sm:px-8 lg:px-12;
 }
 
-/* Grade de fundo bem discreta */
-@utility bg-grid {
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 56px 56px;
+/* Títulos: hierarquia só por escala */
+@utility text-display {
+  font-size: clamp(2.6rem, 1.35rem + 5.2vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+@utility text-title {
+  font-size: clamp(2rem, 1.3rem + 2.9vw, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.038em;
+}
+
+/* Rótulos de medida (prazos, marcações): mono pequeno, caixa alta */
+@utility text-measure {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Régua: linha fina com marcações a cada 12px e marcações maiores a cada 96px */
+@utility ruler {
+  background:
+    linear-gradient(var(--tick-strong), var(--tick-strong)) top left / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 12px) top left / 100% 6px
+      no-repeat,
+    repeating-linear-gradient(90deg, var(--tick-strong) 0 1px, transparent 1px 96px) top left /
+      100% 11px no-repeat;
+}
+
+@utility panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 /* ============================================================
-   COMPONENTES COM CSS PRÓPRIO
+   LUZ: o feixe diagonal que ilumina a cena
    ============================================================ */
+.beam {
+  position: absolute;
+  pointer-events: none;
+  inset: -20% -30% auto auto;
+  width: 70vw;
+  max-width: 68rem;
+  height: 150%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--beam-a) 30%,
+    var(--beam-b) 52%,
+    var(--beam-a) 70%,
+    transparent 100%
+  );
+  transform: rotate(28deg);
+  transform-origin: top right;
+  filter: blur(42px);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 92%);
+}
+
+/* Entrada da luz: acende uma vez, devagar */
+.js .light-on {
+  animation: light-on 1800ms var(--ease-out-expo) 150ms both;
+}
+@keyframes light-on {
+  from {
+    opacity: 0;
+    filter: blur(80px);
+  }
+}
+
+/* Palavras mascaradas (títulos animados por src/scripts/motion.ts) */
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.w > span {
+  display: inline-block;
+  will-change: transform;
+}
+/* Evita o "piscar" do título antes da animação; aparece sozinho se o JS falhar */
+.motion-ok #inicio-title {
+  opacity: 0;
+  animation: show-fallback 0s 2.5s forwards;
+}
+@keyframes show-fallback {
+  to {
+    opacity: 1;
+  }
+}
 
 /* Reveal ao rolar (ativado por src/scripts/reveal.ts) */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(18px);
   transition:
-    opacity 700ms var(--ease-out-soft),
-    transform 700ms var(--ease-out-soft);
+    opacity 900ms var(--ease-out-expo),
+    transform 900ms var(--ease-out-expo);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .js [data-reveal].is-visible {
@@ -241,56 +261,46 @@
   transform: none;
 }
 
-/* Troca de tema instantânea (sem cada elemento animar separadamente) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* Só aparece por opacidade, sem deslocamento */
+  .js [data-reveal] {
+    transform: none;
+    transition: opacity 900ms ease;
+  }
+}
+
+/* Troca de tema instantânea */
 .theme-switching *,
 .theme-switching *::before,
 .theme-switching *::after {
   transition: none !important;
 }
 
-/* Textos específicos de cada tema (ver site.themeCopy) */
+/* Textos que mudam com o tema */
 [data-theme='dark'] [data-only='light'],
 [data-theme='light'] [data-only='dark'] {
   display: none;
 }
 
-/* Accordion do FAQ: animação de abertura com <details> */
-.faq-item summary::-webkit-details-marker {
-  display: none;
+/* Lenis (rolagem suave): o navegador não deve suavizar por cima */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
-.faq-item[open] .faq-icon {
-  transform: rotate(45deg);
+html.lenis {
+  scroll-behavior: auto;
 }
-.faq-item::details-content {
-  block-size: 0;
-  overflow: hidden;
-  transition:
-    block-size 300ms var(--ease-out-soft),
-    content-visibility 300ms allow-discrete;
-}
-.faq-item[open]::details-content {
-  block-size: auto;
-}
-@supports (interpolate-size: allow-keywords) {
-  :root {
-    interpolate-size: allow-keywords;
-  }
+.lenis.lenis-stopped {
+  overflow: clip;
 }
 
-/* Movimento reduzido: desliga animações e scroll suave */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  .js [data-reveal] {
-    opacity: 1;
-    transform: none;
-  }
+/* Cabeçalho sobre o vídeo do hero (só na home, antes de rolar): sempre claro */
+[data-header][data-over-hero]:not([data-scrolled='true']) {
+  --heading: #f2f5fa;
+  --body: rgb(242 245 250 / 0.78);
+  --border: rgb(242 245 250 / 0.22);
+  --border-strong: rgb(242 245 250 / 0.4);
 }

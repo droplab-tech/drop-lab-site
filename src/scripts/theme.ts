@@ -1,6 +1,6 @@
 /** Alterna entre modo escuro e claro e salva a escolha do visitante. */
 const STORAGE_KEY = 'droplab-theme';
-const THEME_COLORS = { dark: '#05070D', light: '#F5F8FD' } as const;
+const THEME_COLORS = { dark: '#05070D', light: '#EEF1F6' } as const;
 
 type Theme = keyof typeof THEME_COLORS;
 

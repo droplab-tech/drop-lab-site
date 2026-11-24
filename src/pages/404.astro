@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/ui/Button.astro';
-import Icon from '@/components/ui/Icon.astro';
-import WhatsAppIcon from '@/components/ui/WhatsAppIcon.astro';
 import { site, whatsappLink } from '@/config/site';
 ---
 
@@ -16,18 +14,17 @@ import { site, whatsappLink } from '@/config/site';
     aria-labelledby="erro-title"
   >
     <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-      <div class="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_45%,#000_20%,transparent_75%)]"></div>
-      <div class="absolute top-1/2 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 animate-glow rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)]"></div>
+            <div class="beam light-on"></div>
     </div>
 
     <div class="container-site text-center">
       <!-- Gota "caindo" no lugar do zero -->
       <p
-        class="flex items-center justify-center gap-2 font-display text-[7rem] leading-none font-bold text-heading sm:text-[10rem]"
+        class="flex items-center justify-center gap-2 text-[7rem] leading-none font-medium tracking-[-0.06em] text-heading sm:text-[10rem]"
         aria-hidden="true"
       >
         <span>4</span>
-        <svg viewBox="0 0 20 26" class="h-[0.8em] w-[0.62em] animate-float">
+        <svg viewBox="0 0 20 26" class="h-[0.8em] w-[0.62em]">
           <path
             d="M10 0c3.4 4.4 10 12.5 10 16a10 10 0 0 1-20 0C0 12.5 6.6 4.4 10 0Z"
             fill="url(#drop-gradient)"
@@ -35,7 +32,7 @@ import { site, whatsappLink } from '@/config/site';
         </svg>
         <span>4</span>
       </p>
-      <h1 id="erro-title" class="mt-6 text-3xl sm:text-4xl">
+      <h1 id="erro-title" class="mt-6 text-title">
         Essa página evaporou
       </h1>
       <p class="mx-auto mt-4 max-w-md text-lg text-body">
@@ -43,12 +40,8 @@ import { site, whatsappLink } from '@/config/site';
         rápido.
       </p>
       <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Button href="/" size="lg">
-          <Icon name="arrowRight" size={18} class="rotate-180" />
-          Voltar ao início
-        </Button>
-        <Button href={whatsappLink()} external size="lg" variant="secondary">
-          <WhatsAppIcon class="h-5 w-5 text-[#25D366]" />
+        <Button href="/" size="lg">Voltar ao início</Button>
+        <Button href={whatsappLink()} external size="lg" variant="secondary" arrow>
           Falar no WhatsApp
         </Button>
       </div>

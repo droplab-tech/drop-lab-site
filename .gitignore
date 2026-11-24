@@ -19,3 +19,6 @@ Thumbs.db
 
 # Claude Code (preferências locais)
 .claude/settings.local.json
+
+# Impeccable: rascunhos de build (o contrato fica em .impeccable/surfaces)
+.impeccable/build/

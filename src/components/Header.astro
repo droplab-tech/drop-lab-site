@@ -3,7 +3,6 @@ import Logo from './ui/Logo.astro';
 import Button from './ui/Button.astro';
 import Icon from './ui/Icon.astro';
 import ThemeToggle from './ui/ThemeToggle.astro';
-import WhatsAppIcon from './ui/WhatsAppIcon.astro';
 import { navItems } from '@/config/navigation';
 import { whatsappLink } from '@/config/site';
 
@@ -13,52 +12,51 @@ interface Props {
 }
 const { isHome = true } = Astro.props;
 const href = (anchor: string) => (isHome ? anchor : `/${anchor}`);
+// "Início" fica no logo; o menu mostra só as seções
+const menu = navItems.filter((item) => item.href !== '#inicio');
 ---
 
 <header
   data-header
-  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 data-[scrolled=true]:border-line data-[scrolled=true]:bg-bg/75 data-[scrolled=true]:backdrop-blur-xl"
+  data-over-hero={isHome ? 'true' : undefined}
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color] duration-300 data-[scrolled=true]:border-line data-[scrolled=true]:bg-bg/80 data-[scrolled=true]:backdrop-blur-xl"
 >
-  <div class="container-site flex h-[4.5rem] items-center justify-between gap-4">
+  <div class="container-site flex h-[4.25rem] items-center justify-between gap-6">
     <Logo href={isHome ? '#inicio' : '/'} />
 
     <nav aria-label="Navegação principal" class="hidden lg:block">
-      <ul class="flex items-center gap-1">
-        {navItems.map((item) => (
+      <ul class="flex items-center gap-7">
+        {menu.map((item) => (
           <li>
             <a
               href={href(item.href)}
               data-nav-link
-              class="relative rounded-full px-3.5 py-2 text-sm font-medium text-body transition-colors duration-200 hover:text-heading aria-[current=true]:text-heading"
+              class="nav-link relative py-2 text-[0.9rem] text-body transition-colors duration-200 hover:text-heading aria-[current=true]:text-heading"
             >
               {item.label}
-              <span
-                class="nav-indicator absolute inset-x-3.5 -bottom-0.5 h-px scale-x-0 bg-brand-gradient transition-transform duration-300"
-                aria-hidden="true"
-              />
             </a>
           </li>
         ))}
       </ul>
     </nav>
 
-    <div class="flex items-center gap-2.5">
+    <div class="flex items-center gap-2">
       <ThemeToggle />
       <div class="hidden sm:block">
         <Button
           href={whatsappLink()}
           external
           size="sm"
+          arrow
           aria-label="Fale no WhatsApp (abre em nova aba)"
           data-track-location="header"
         >
-          <WhatsAppIcon class="h-4 w-4" />
           Fale no WhatsApp
         </Button>
       </div>
       <button
         type="button"
-        class="grid h-10 w-10 place-items-center rounded-full border border-line bg-glass text-heading transition-colors hover:border-line-strong lg:hidden"
+        class="grid h-10 w-10 place-items-center rounded-[6px] border border-line text-heading transition-colors hover:border-line-strong lg:hidden"
         aria-controls="mobile-menu"
         aria-expanded="false"
         aria-label="Abrir menu"
@@ -80,48 +78,61 @@ const href = (anchor: string) => (isHome ? anchor : `/${anchor}`);
   hidden
 >
   <div class="absolute inset-0 bg-ink/70 backdrop-blur-sm" data-menu-close></div>
-  <div class="menu-panel absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-line bg-bg px-6 pt-5 pb-8 shadow-2xl">
+  <div class="menu-panel absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-line bg-bg px-6 pt-4 pb-8">
     <div class="flex items-center justify-between">
       <Logo href={isHome ? '#inicio' : '/'} />
       <button
         type="button"
-        class="grid h-10 w-10 place-items-center rounded-full border border-line text-heading hover:border-line-strong"
+        class="grid h-10 w-10 place-items-center rounded-[6px] border border-line text-heading hover:border-line-strong"
         aria-label="Fechar menu"
         data-menu-close
       >
         <Icon name="close" size={20} />
       </button>
     </div>
-    <nav aria-label="Navegação mobile" class="mt-10 flex-1 overflow-y-auto">
-      <ul class="space-y-1">
+    <div class="ruler mt-6 h-3" aria-hidden="true"></div>
+    <nav aria-label="Navegação mobile" class="mt-4 flex-1 overflow-y-auto">
+      <ul>
         {navItems.map((item) => (
-          <li>
+          <li class="border-b border-line">
             <a
               href={href(item.href)}
               data-nav-link
               data-menu-link
-              class="flex items-center justify-between rounded-xl px-4 py-3.5 font-display text-lg font-medium text-heading transition-colors hover:bg-surface aria-[current=true]:bg-surface aria-[current=true]:text-eyebrow"
+              class="flex items-center justify-between py-4 text-[1.6rem] font-medium tracking-[-0.03em] text-heading transition-colors hover:text-accent-text aria-[current=true]:text-accent-text"
             >
               {item.label}
-              <Icon name="arrowRight" size={18} class="text-muted" />
+              <Icon name="arrowUpRight" size={18} class="text-muted" />
             </a>
           </li>
         ))}
       </ul>
     </nav>
-    <Button href={whatsappLink()} external size="lg" class="w-full">
-      <WhatsAppIcon class="h-5 w-5" />
+    <Button href={whatsappLink()} external size="lg" arrow class="w-full justify-between" data-track-location="menu">
       Fale no WhatsApp
     </Button>
   </div>
 </div>
 
 <style>
-  [data-nav-link][aria-current='true'] .nav-indicator {
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: #0a6cff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 400ms var(--ease-out-expo);
+  }
+  .nav-link:hover::after,
+  .nav-link[aria-current='true']::after {
     transform: scaleX(1);
   }
   .mobile-menu:not([hidden]) .menu-panel {
-    animation: slide-in 320ms var(--ease-out-soft);
+    animation: slide-in 420ms var(--ease-out-expo);
   }
   @keyframes slide-in {
     from {

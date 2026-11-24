@@ -1,37 +1,38 @@
-import { site } from '@/config/site';
+/**
+ * Formatos de projeto. Sem valores: cada proposta é feita sob medida.
+ * O botão de cada formato pré-seleciona o "Tipo de projeto" no formulário.
+ */
+export type ProjectType = 'Página de Conversão' | 'Site Institucional' | 'E-commerce' | 'Outro';
 
 export interface Plan {
   name: string;
   description: string;
-  price: string;
-  priceLabel: string;
+  /** Prazo típico exibido como medida */
+  timeline: string;
   features: string[];
   highlighted?: boolean;
-  /** Valor pré-selecionado no campo "Tipo de projeto" do formulário */
-  projectType: 'Landing Page' | 'Site Institucional' | 'E-commerce' | 'Outro';
+  projectType: ProjectType;
 }
 
 export const plans: Plan[] = [
   {
-    name: 'Landing Page',
-    description: 'Ideal para campanhas, lançamentos e captação de leads.',
-    price: site.pricing.landingPage,
-    priceLabel: 'a partir de',
+    name: 'Página de Conversão',
+    description: 'Uma página focada em uma única ação, para campanhas, lançamentos e captação.',
+    timeline: '7 a 10 dias úteis',
     features: [
       'Página única com design exclusivo',
-      'Copy orientada à conversão',
+      'Textos orientados à conversão',
       'Botão e integração com WhatsApp',
       'Formulário de captação',
       'Google Analytics e Meta Pixel',
       '100% responsiva e otimizada',
     ],
-    projectType: 'Landing Page',
+    projectType: 'Página de Conversão',
   },
   {
     name: 'Site Institucional',
     description: 'A presença digital completa para empresas e profissionais.',
-    price: site.pricing.institutional,
-    priceLabel: 'a partir de',
+    timeline: '15 a 25 dias úteis',
     features: [
       'Até 6 seções ou páginas',
       'Design exclusivo com sua identidade',
@@ -46,8 +47,7 @@ export const plans: Plan[] = [
   {
     name: 'Personalizado',
     description: 'Projetos sob medida: e-commerce, catálogos e sistemas web.',
-    price: site.pricing.custom,
-    priceLabel: 'investimento',
+    timeline: 'Prazo sob medida',
     features: [
       'Escopo desenhado para o seu negócio',
       'E-commerce ou catálogo online',

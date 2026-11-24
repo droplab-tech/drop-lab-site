@@ -18,7 +18,7 @@ export function whatsappLink(message: string = whatsappDefaultMessage): string {
 export const site = {
   name: 'Droplab',
   legalName: 'Droplab', // ⚠️ PLACEHOLDER: razão social, se houver
-  slogan: 'Sites • Landing Pages • Soluções Web',
+  slogan: 'Sites · Páginas de conversão · Soluções web',
 
   /**
    * Domínio final, com https:// e sem barra no fim (ex.: 'https://www.seudominio.com.br').
@@ -28,9 +28,9 @@ export const site = {
   url: 'https://www.droplabweb.com' as string,
 
   /** Título e descrição padrão (SEO) */
-  title: 'Droplab | Criação de Sites e Landing Pages que Convertem',
+  title: 'Droplab | Sites sob medida que transformam visitas em clientes',
   description:
-    'A Droplab cria sites institucionais, landing pages de alta conversão e soluções web sob medida. Design exclusivo, carregamento rápido e otimizado para o Google. Peça seu orçamento pelo WhatsApp.',
+    'A Droplab cria sites institucionais, páginas de conversão e soluções web sob medida. Design exclusivo, carregamento rápido e otimizado para o Google. Peça seu orçamento pelo WhatsApp.',
   ogImage: '/og-image.png',
   locale: 'pt_BR',
 
@@ -68,24 +68,15 @@ export const site = {
     { label: 'Contato', href: '#contato' },
   ],
 
-  /** Preços "a partir de" dos planos. ⚠️ PLACEHOLDER: ajuste os valores. */
-  pricing: {
-    landingPage: 'R$ 997',
-    institutional: 'R$ 1.997',
-    custom: 'Sob consulta',
-  },
-
   /** Textos-chave reutilizados em várias seções */
   copy: {
-    // O título do Hero é heroTitle + heroHighlight (este último aparece em degradê)
-    heroTitle: 'Sites e landing pages que',
-    heroHighlight: 'transformam visitantes em clientes',
+    heroTitle: 'Sites que fazem o seu negócio ser escolhido.',
     heroSubtitle:
-      'Design exclusivo, carregamento instantâneo e estratégia de conversão em cada pixel. Seu negócio com a presença digital que ele merece, com atendimento direto pelo WhatsApp.',
-    proofStrip: ['Entrega rápida', '100% responsivo', 'Otimizado para Google'],
-    finalCtaTitle: 'Vamos tirar seu projeto do papel?',
+      'Desenhados do zero para transmitir confiança em segundos e transformar visitas em conversas. Estratégia, design e código no mesmo lugar, com atendimento direto pelo WhatsApp.',
+    proofStrip: ['Design feito do zero', 'Alta performance em qualquer conexão', 'Pensado para converter'],
+    finalCtaTitle: 'Seu próximo cliente já está procurando. Que ele encontre você pronto.',
     finalCtaText:
-      'Conte sua ideia em uma mensagem. Respondemos rápido, com uma proposta clara e sem compromisso.',
+      'Conte sua ideia em uma mensagem. Respondemos no mesmo dia útil, com uma proposta clara e sem compromisso.',
   },
 
   /**
@@ -101,14 +92,12 @@ export const site = {
    */
   themeCopy: {
     dark: {
-      heroBadge: 'Agência digital • Projetos sob medida',
       toggleLabel: 'Ativar modo claro',
-      footerNote: 'Feito com precisão, pixel por pixel, no modo noturno.',
+      footerNote: 'Design e desenvolvimento web sob medida.',
     },
     light: {
-      heroBadge: 'Agência digital • Clareza que converte',
       toggleLabel: 'Ativar modo escuro',
-      footerNote: 'Feito com precisão, pixel por pixel, à luz do dia.',
+      footerNote: 'Design e desenvolvimento web sob medida.',
     },
   },
 } as const;

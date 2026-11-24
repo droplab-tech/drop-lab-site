@@ -1,48 +1,85 @@
 ---
+/**
+ * Processo: as etapas marcadas numa régua, com o prazo de cada uma como medida.
+ */
 import Section from '../ui/Section.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
-import Icon from '../ui/Icon.astro';
 import { processSteps } from '@/data/process';
 ---
 
-<Section id="processo">
+<Section id="processo" at={0.4}>
   <SectionHeading
     id="processo-title"
-    eyebrow="Processo"
-    title="Do briefing ao lançamento,"
-    highlight="sem complicação"
-    description="Um processo claro, com prazos definidos e você acompanhando cada etapa pelo WhatsApp."
+    title="Um processo curto, claro e sem surpresas."
+    description="Você sabe o que acontece em cada etapa e quanto tempo ela leva. E aprova tudo antes de seguirmos."
   />
 
-  <!-- Timeline: vertical no mobile, horizontal no desktop -->
-  <div class="relative">
-    <!-- Linha da timeline -->
-    <div
-      class="absolute top-0 bottom-0 left-[1.6rem] w-px bg-linear-to-b from-cyan/60 via-brand/40 to-transparent lg:top-[1.6rem] lg:right-[10%] lg:bottom-auto lg:left-[10%] lg:h-px lg:w-auto lg:bg-linear-to-r"
-      aria-hidden="true"
-    ></div>
-    <ol class="relative grid gap-8 lg:grid-cols-5 lg:gap-6">
-      {processSteps.map((step, i) => (
-        <li
-          class="relative flex gap-5 lg:flex-col lg:items-center lg:text-center"
-          data-reveal
-          data-reveal-delay={i * 90}
-        >
-          <div class="relative z-10 grid h-[3.2rem] w-[3.2rem] shrink-0 place-items-center rounded-2xl border border-line-strong bg-bg text-eyebrow shadow-[0_0_24px_-6px_var(--glow)]">
-            <Icon name={step.icon} size={22} />
-            <span class="absolute -top-2 -right-2 grid h-6 w-6 place-items-center rounded-full bg-button-gradient font-display text-[0.7rem] font-bold text-white">
-              {i + 1}
-            </span>
-          </div>
-          <div class="pb-2 lg:mt-6">
-            <p class="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
-              {step.duration}
-            </p>
-            <h3 class="mt-1.5 text-lg">{step.title}</h3>
-            <p class="mt-2 text-[0.95rem] leading-relaxed text-body">{step.description}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </div>
+  <ol class="steps relative grid gap-0 lg:grid-cols-5 lg:gap-8">
+    {processSteps.map((step, i) => (
+      <li class="step relative pb-10 pl-8 lg:pb-0 lg:pl-0" data-reveal data-reveal-delay={i * 90}>
+        <div class="step-mark" aria-hidden="true">
+          <span class:list={['step-dot', i === 0 && 'is-first']}></span>
+        </div>
+        <h3 class="text-[1.45rem] leading-tight tracking-[-0.03em] lg:mt-8">{step.title}</h3>
+        <p class="mt-2 text-measure text-accent-text">{step.duration}</p>
+        <p class="mt-3 max-w-sm text-[0.95rem] leading-relaxed text-body">{step.description}</p>
+      </li>
+    ))}
+  </ol>
 </Section>
+
+<style>
+  /* Linha da régua: vertical no celular, horizontal no desktop */
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, #0a6cff, var(--border-strong) 30%, var(--border-strong));
+  }
+  .step-mark {
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  .step-dot {
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+  }
+  .step-dot.is-first {
+    background: #0a6cff;
+    border-color: #0a6cff;
+    box-shadow: 0 0 16px 2px rgb(10 108 255 / 0.6);
+  }
+  @media (min-width: 1024px) {
+    .steps::before {
+      left: 0;
+      right: 0;
+      top: 5px;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      background:
+        repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 12px) 0 1px / 100% 6px
+          no-repeat,
+        linear-gradient(to right, #0a6cff, var(--border-strong) 25%, var(--border-strong));
+      height: 7px;
+      background-size:
+        100% 6px,
+        100% 1px;
+      background-position:
+        0 1px,
+        0 0;
+      background-repeat: no-repeat;
+    }
+    .step-mark {
+      top: 0;
+    }
+  }
+</style>

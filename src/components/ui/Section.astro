@@ -1,22 +1,35 @@
 ---
+/**
+ * Seção padrão. Toda seção começa com a régua da marca, e um trecho aceso
+ * marca em que ponto da página o visitante está (`at`, de 0 a 1).
+ */
 interface Props {
   id: string;
   class?: string;
-  /** Rótulo acessível da seção (normalmente o id do título) */
   labelledby?: string;
-  /** Fundo alternado para separar seções visualmente */
-  tone?: 'default' | 'alt';
+  /** Posição do trecho aceso na régua (0 a 1). Omitir = régua sem destaque. */
+  at?: number;
+  /** Esconde a régua */
+  bare?: boolean;
 }
-const { id, class: className = '', labelledby = `${id}-title`, tone = 'default' } = Astro.props;
+const { id, class: className = '', labelledby = `${id}-title`, at, bare = false } = Astro.props;
 ---
 
-<section
-  id={id}
-  aria-labelledby={labelledby}
-  class:list={['relative isolate py-20 sm:py-28', tone === 'alt' && 'bg-bg-2/60', className]}
->
+<section id={id} aria-labelledby={labelledby} class:list={['relative isolate', className]}>
   <slot name="background" />
   <div class="container-site">
-    <slot />
+    {!bare && (
+      <div class="relative h-3 ruler" aria-hidden="true">
+        {at !== undefined && (
+          <span
+            class="absolute -top-px h-[3px] w-[9%] min-w-12 bg-brand shadow-[0_0_18px_2px_rgb(10_108_255/0.55)]"
+            style={`left:${Math.min(Math.max(at, 0), 0.91) * 100}%`}
+          />
+        )}
+      </div>
+    )}
+    <div class="pt-16 pb-24 sm:pt-20 sm:pb-32">
+      <slot />
+    </div>
   </div>
 </section>

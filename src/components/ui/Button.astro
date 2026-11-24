@@ -1,7 +1,12 @@
 ---
+/**
+ * Botão da marca: retângulo de canto pequeno. A variante com `arrow`
+ * leva a seta num quadradinho à direita, que avança no hover.
+ */
 import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'light';
+type Variant = 'primary' | 'secondary' | 'ghost';
 type Size = 'sm' | 'md' | 'lg';
 
 interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
@@ -13,6 +18,8 @@ interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
   as?: 'a' | 'button';
   type?: 'button' | 'submit';
   external?: boolean;
+  /** Mostra a seta no quadradinho */
+  arrow?: boolean;
 }
 
 const {
@@ -23,39 +30,68 @@ const {
   as = href ? 'a' : 'button',
   type = 'button',
   external = false,
+  arrow = false,
   ...rest
 } = Astro.props;
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 rounded-full font-display font-semibold whitespace-nowrap transition-all duration-300 ease-out-soft focus-visible:outline-offset-4 disabled:pointer-events-none disabled:opacity-60';
+  'btn group relative inline-flex items-center justify-center gap-2.5 rounded-[6px] font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow] duration-300 ease-out-soft focus-visible:outline-offset-4 disabled:pointer-events-none disabled:opacity-60';
 
 const sizes: Record<Size, string> = {
-  sm: 'h-10 px-4 text-sm',
-  md: 'h-12 px-6 text-[0.95rem]',
-  lg: 'h-14 px-7 text-base',
+  sm: 'h-10 pl-4 text-[0.9rem]',
+  md: 'h-12 pl-5 text-[0.95rem]',
+  lg: 'h-14 pl-6 text-base',
 };
+const padRight: Record<Size, string> = {
+  sm: arrow ? 'pr-1.5' : 'pr-4',
+  md: arrow ? 'pr-1.5' : 'pr-5',
+  lg: arrow ? 'pr-2' : 'pr-6',
+};
+const box: Record<Size, string> = { sm: 'h-7 w-7', md: 'h-9 w-9', lg: 'h-10 w-10' };
 
 const variants: Record<Variant, string> = {
-  // Degradê da marca + brilho no hover
   primary:
-    'bg-button-gradient text-white shadow-[0_0_0_1px_rgb(34_211_238/0.35)_inset,0_10px_30px_-10px_rgb(10_108_255/0.7)] hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgb(34_211_238/0.6)_inset,0_14px_40px_-8px_rgb(10_108_255/0.9)]',
+    'bg-brand text-white shadow-[0_12px_32px_-14px_rgb(10_108_255/0.85)] hover:bg-[#1a78ff] hover:shadow-[0_16px_40px_-14px_rgb(10_108_255/1)]',
   secondary:
-    'glass text-heading hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[0_10px_30px_-12px_var(--glow)]',
-  ghost: 'text-heading hover:text-eyebrow',
-  light:
-    'bg-white text-ink shadow-[0_10px_30px_-10px_rgb(0_0_0/0.5)] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_-10px_rgb(0_0_0/0.6)]',
+    'border border-line-strong text-heading hover:border-heading/50 hover:bg-heading/[0.04]',
+  ghost: 'text-heading hover:text-accent-text',
+};
+const boxVariant: Record<Variant, string> = {
+  primary: 'bg-white/14 text-white',
+  secondary: 'bg-heading/[0.07] text-heading',
+  ghost: 'bg-heading/[0.07] text-heading',
 };
 
-const classes = [base, sizes[size], variants[variant], className];
+const classes = [base, sizes[size], padRight[size], variants[variant], className];
 const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
 {as === 'a' ? (
   <a href={href} class:list={classes} {...externalAttrs} {...rest}>
     <slot />
+    {arrow && (
+      <span class:list={['grid shrink-0 place-items-center rounded-[4px]', box[size], boxVariant[variant]]}>
+        <Icon
+          name="arrowUpRight"
+          size={16}
+          strokeWidth={2}
+          class="transition-transform duration-300 ease-out-soft group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </span>
+    )}
   </a>
 ) : (
   <button type={type} class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
     <slot />
+    {arrow && (
+      <span class:list={['grid shrink-0 place-items-center rounded-[4px]', box[size], boxVariant[variant]]}>
+        <Icon
+          name="arrowUpRight"
+          size={16}
+          strokeWidth={2}
+          class="transition-transform duration-300 ease-out-soft group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </span>
+    )}
   </button>
 )}
