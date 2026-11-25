@@ -133,11 +133,20 @@ export function initIntro() {
       /* sem sessionStorage: a intro só volta ao recarregar */
     }
     window.scrollTo(0, 0);
-    root.classList.remove('intro-hold'); // o hero começa a entrada por baixo da cortina
     others.forEach((n) => (n.inert = false));
     phase = 'exit';
     document.dispatchEvent(new Event('intro:exit'));
     el.classList.add('is-out');
+
+    // A água reage ao clique: a fumaça se espalha a partir do botão
+    const b = enter.getBoundingClientRect();
+    fluid?.burst((b.left + b.width / 2) / innerWidth, 1 - (b.top + b.height / 2) / innerHeight);
+
+    // Quando a intro começa a se desfazer, o hero faz a entrada por baixo dela
+    window.setTimeout(() => {
+      root.classList.add('intro-reveal');
+      root.classList.remove('intro-hold');
+    }, 850);
 
     const finish = () => {
       fluid?.stop();
@@ -152,7 +161,7 @@ export function initIntro() {
       document.dispatchEvent(new Event('intro:done'));
     };
     // Tempo da animação de saída (com folga), sem depender de animationend
-    window.setTimeout(finish, 1600);
+    window.setTimeout(finish, 2000);
   };
 
   const onKey = (e: KeyboardEvent) => {
