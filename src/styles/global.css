@@ -236,17 +236,6 @@
   display: inline-block;
   will-change: transform;
 }
-/* Evita o "piscar" do título antes da animação; aparece sozinho se o JS falhar */
-.motion-ok #inicio-title {
-  opacity: 0;
-  animation: show-fallback 0s 2.5s forwards;
-}
-@keyframes show-fallback {
-  to {
-    opacity: 1;
-  }
-}
-
 /* Reveal ao rolar (ativado por src/scripts/reveal.ts) */
 .js [data-reveal] {
   opacity: 0;
@@ -303,4 +292,12 @@ html.lenis {
   --body: rgb(242 245 250 / 0.78);
   --border: rgb(242 245 250 / 0.22);
   --border-strong: rgb(242 245 250 / 0.4);
+}
+
+/* Seções abaixo da dobra: o navegador só calcula o layout quando chegam perto da tela.
+   Depois do carregamento, src/scripts/main.ts remove a classe seção por seção
+   (para âncoras e animações de rolagem medirem as alturas reais). */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
 }

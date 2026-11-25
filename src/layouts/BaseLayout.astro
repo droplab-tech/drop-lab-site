@@ -42,51 +42,73 @@ const canonical =
 const ogImage = siteUrl ? new URL(image, siteUrl).href : undefined;
 
 // Dados estruturados (JSON-LD) para o Google.
-// Os campos que dependem do domínio só entram quando ele existir.
+// Só informações reais: nada de avaliações, endereço completo ou números inventados.
+const { serviceArea } = site.contact;
+const services = [
+  {
+    name: 'Criação de sites',
+    description: 'Criação e design de sites profissionais e institucionais sob medida.',
+  },
+  {
+    name: 'Landing pages',
+    description: 'Landing pages focadas em conversão para campanhas, lançamentos e captação.',
+  },
+  {
+    name: 'Manutenção de sites',
+    description: 'Atualizações, ajustes de conteúdo, backups e suporte depois da entrega.',
+  },
+];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'ProfessionalService',
+      '@type': ['Organization', 'ProfessionalService'],
       '@id': `${siteUrl}/#business`,
-      name: site.name,
-      alternateName: `${site.name} | ${site.slogan}`,
+      name: 'DropLab',
+      alternateName: site.name,
       description: site.description,
       ...(siteUrl && {
-        url: siteUrl,
-        logo: `${siteUrl}/icon-512.png`,
+        url: `${siteUrl}/`,
+        logo: { '@type': 'ImageObject', url: `${siteUrl}/icon-512.png`, width: 512, height: 512 },
         image: ogImage,
       }),
-      telephone: `+${site.contact.whatsapp}`,
+      telephone: site.contact.phoneIntl,
       ...(site.contact.email && { email: site.contact.email }),
-      priceRange: '$$',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: site.contact.city,
-        addressRegion: site.contact.state,
-        addressCountry: site.contact.country,
-      },
-      areaServed: { '@type': 'Country', name: site.contact.areaServed },
-      knowsAbout: [
-        'Criação de sites',
-        'Páginas de conversão',
-        'SEO',
-        'E-commerce',
-        'Desenvolvimento web',
+      areaServed: [
+        ...serviceArea.cities.map((name) => ({
+          '@type': 'City',
+          name,
+          containedInPlace: { '@type': 'State', name: serviceArea.state },
+        })),
+        { '@type': 'State', name: serviceArea.state },
       ],
       sameAs: Object.values(site.social).filter(Boolean),
+      knowsAbout: ['Criação de sites', 'Design de sites', 'Landing pages', 'Sites profissionais'],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Serviços da DropLab',
+        itemListElement: services.map((service) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            ...service,
+            provider: { '@id': `${siteUrl}/#business` },
+          },
+        })),
+      },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: `+${site.contact.whatsapp}`,
+        telephone: site.contact.phoneIntl,
         contactType: 'sales',
+        areaServed: 'BR',
         availableLanguage: 'Portuguese',
       },
     },
     {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
-      ...(siteUrl && { url: siteUrl }),
-      name: site.name,
+      ...(siteUrl && { url: `${siteUrl}/` }),
+      name: 'DropLab',
       inLanguage: 'pt-BR',
       publisher: { '@id': `${siteUrl}/#business` },
     },
@@ -115,14 +137,18 @@ const jsonLd = {
         }
         d.dataset.theme = t;
         d.classList.add('js');
-        d.classList.add('motion-ok');
       })();
     </script>
 
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta
+      name="robots"
+      content={
+        noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'
+      }
+    />
     <meta name="theme-color" content="#05070D" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#EEF1F6" media="(prefers-color-scheme: light)" />
     <meta name="author" content={site.name} />
@@ -130,6 +156,16 @@ const jsonLd = {
 
     <!-- Fontes principais com preload (auto-hospedadas, font-display: swap) -->
     <link rel="preload" href={hostWoff2} as="font" type="font/woff2" crossorigin />
+
+    {isHome && (
+      <link
+        rel="preload"
+        as="image"
+        href="/video/hero-poster.webp"
+        type="image/webp"
+        fetchpriority="high"
+      />
+    )}
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -139,7 +175,7 @@ const jsonLd = {
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={site.locale} />
-    <meta property="og:site_name" content={site.name} />
+    <meta property="og:site_name" content="DropLab" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
@@ -148,7 +184,8 @@ const jsonLd = {
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={`${site.name}: ${site.slogan}`} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:alt" content={`DropLab: ${site.slogan}`} />
       </>
     )}
 
@@ -156,7 +193,12 @@ const jsonLd = {
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogImage && (
+      <>
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={`DropLab: ${site.slogan}`} />
+      </>
+    )}
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>

@@ -22,7 +22,7 @@ Design feito do zero (sem template), pensado para conversão, com atendimento di
 
 - Stack: Astro 7 + Tailwind CSS 4, site estático com deploy na Vercel.
 - Funcionalidades a preservar: navegação por âncoras com menu mobile, alternância de tema claro/escuro, formulário de contato (src/scripts/form.ts) com o tipo de projeto pré-selecionado pelos planos, botão flutuante de WhatsApp, banner de cookies/LGPD, analytics, página de política de privacidade, 404, sitemap e robots, JSON-LD.
-- Planos continuam (Página de conversão, Site Institucional, Personalizado) **sem valores em reais**; cada um leva a "Pedir proposta".
+- Planos continuam (Landing Page, Site Institucional, Personalizado) **sem valores em reais**; cada um leva a "Pedir proposta".
 - Sem PWA: nada de manifest nem convite para instalar o site como aplicativo.
 - Portfólio e depoimentos ficam escondidos enquanto as listas em src/data estiverem vazias.
 
@@ -30,7 +30,7 @@ Design feito do zero (sem template), pensado para conversão, com atendimento di
 
 - Nome: Droplab (domínio droplabweb.com). Marca "D + gota" em azul (#0A6CFF), ciano (#22D3EE) e navy (#0B1E4A) sobre quase-preto (#05070D). Paleta da marca deve ser mantida.
 - Favicon da marca na aba do navegador.
-- Terminologia: **não usar "landing page" em nenhum texto do site**; o serviço se chama "Página de conversão". Slogan: "Sites · Páginas de conversão · Soluções web".
+- Terminologia (atualizada em 2026-11-24, pedido de SEO): "landing page" voltou a ser usado no site, de forma natural, junto com "criação de sites", "site profissional" e "design de sites". O plano se chama "Landing Page". Slogan: "Sites · Landing pages · Soluções web".
 - Voz: calma, confiante, direta, em português do Brasil; sem superlativos de agência.
 - Referência visual escolhida pelo usuário para esta versão: https://www.bluesqx.com/ (inspiração de linguagem, não cópia).
 

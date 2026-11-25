@@ -22,19 +22,18 @@ const src = '/video/hero.mp4';
     <div class="hero-video absolute inset-0" data-hero-video>
       <video
         class="absolute inset-0 h-full w-full object-cover"
-        src={src}
+        data-src={src}
         poster={poster}
         muted
         playsinline
-        autoplay
-        preload="auto"
+        preload="none"
         aria-hidden="true"
         tabindex="-1"
         data-layer="a"
       ></video>
       <video
         class="absolute inset-0 h-full w-full object-cover opacity-0"
-        src={src}
+        data-src={src}
         muted
         playsinline
         preload="none"
@@ -50,20 +49,19 @@ const src = '/video/hero.mp4';
 
   <div class="container-site relative flex flex-1 flex-col pt-[9vh] pb-8 sm:pt-[12vh] lg:pt-[14vh]">
     <div data-hero-copy>
-      <h1 id="inicio-title" class="text-display max-w-[12ch] !text-snow">
+      <h1 id="inicio-title" class="text-display max-w-[13ch] !text-snow" data-hero-in="0">
         {site.copy.heroTitle}
       </h1>
       <p
         class="mt-7 max-w-[34rem] text-[1.0625rem] leading-relaxed text-snow/75 sm:text-lg"
-        data-reveal
-        data-reveal-delay="120"
+        data-hero-in="1"
       >
         {site.copy.heroSubtitle}
       </p>
     </div>
 
     <!-- Base: marcas à esquerda, ações à direita (como na referência) -->
-    <div class="mt-auto pt-14" data-reveal data-reveal-delay="260">
+    <div class="mt-auto pt-14" data-hero-in="2">
       <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <ul class="order-2 grid gap-3 sm:grid-cols-3 sm:gap-8 lg:order-1 lg:flex lg:gap-10">
           {site.copy.proofStrip.map((item, i) => (
@@ -150,6 +148,26 @@ const src = '/video/hero.mp4';
   }
   .hero-video video {
     transition: opacity 1200ms ease;
+  }
+  /* Entrada do texto: só deslocamento, sem esconder (o texto já conta para o LCP) */
+  :global(.js) [data-hero-in] {
+    animation: hero-in 1100ms var(--ease-out-expo) both;
+  }
+  :global(.js) [data-hero-in='1'] {
+    animation-delay: 90ms;
+  }
+  :global(.js) [data-hero-in='2'] {
+    animation-delay: 180ms;
+  }
+  @keyframes hero-in {
+    from {
+      transform: translateY(22px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) [data-hero-in] {
+      animation: none;
+    }
   }
   /* Entrada: o vídeo acende devagar */
   :global(.motion) .hero-video {

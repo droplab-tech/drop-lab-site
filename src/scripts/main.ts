@@ -1,5 +1,5 @@
 /**
- * Ponto de entrada do JavaScript do site (um único bundle pequeno).
+ * Ponto de entrada do JavaScript do site (bundle pequeno; as animações vêm depois, sob demanda).
  * Cada módulo verifica se os elementos existem antes de agir.
  *
  * A inicialização é dividida em 3 momentos para não bloquear a primeira pintura:
@@ -12,13 +12,11 @@ import { initHeader, initMobileMenu, initScrollSpy, initFloatingWhatsApp } from 
 import { initReveal } from './reveal';
 import { initAnalytics } from './analytics';
 import { initContactForm } from './form';
-import { initMotion } from './motion';
 import { initHeroVideo } from './hero-video';
 
 initTheme();
 initMobileMenu();
 initReveal();
-initMotion();
 initHeroVideo();
 
 requestAnimationFrame(() => {
@@ -36,3 +34,22 @@ whenIdle(() => {
   initScrollSpy();
   initContactForm();
 });
+
+// Animações (GSAP + Lenis) num pacote separado, carregado só depois que a página
+// terminou de carregar e o navegador ficou ocioso: não pesa na primeira pintura.
+// Antes, libera a renderização das seções adiadas (.cv-auto), uma por tarefa ociosa,
+// para que as medidas de rolagem usem as alturas reais.
+const renderDeferred = (done: () => void) => {
+  const pending = Array.from(document.querySelectorAll<HTMLElement>('.cv-auto'));
+  const next = () => {
+    const el = pending.shift();
+    if (!el) return done();
+    el.classList.remove('cv-auto');
+    whenIdle(next);
+  };
+  next();
+};
+const loadMotion = () =>
+  renderDeferred(() => whenIdle(() => void import('./motion').then((m) => m.initMotion())));
+if (document.readyState === 'complete') loadMotion();
+else window.addEventListener('load', loadMotion, { once: true });

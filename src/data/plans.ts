@@ -2,7 +2,7 @@
  * Formatos de projeto. Sem valores: cada proposta é feita sob medida.
  * O botão de cada formato pré-seleciona o "Tipo de projeto" no formulário.
  */
-export type ProjectType = 'Página de Conversão' | 'Site Institucional' | 'E-commerce' | 'Outro';
+export type ProjectType = 'Landing Page' | 'Site Institucional' | 'E-commerce' | 'Outro';
 
 export interface Plan {
   name: string;
@@ -16,7 +16,7 @@ export interface Plan {
 
 export const plans: Plan[] = [
   {
-    name: 'Página de Conversão',
+    name: 'Landing Page',
     description: 'Uma página focada em uma única ação, para campanhas, lançamentos e captação.',
     timeline: '7 a 10 dias úteis',
     features: [
@@ -27,11 +27,11 @@ export const plans: Plan[] = [
       'Google Analytics e Meta Pixel',
       '100% responsiva e otimizada',
     ],
-    projectType: 'Página de Conversão',
+    projectType: 'Landing Page',
   },
   {
     name: 'Site Institucional',
-    description: 'A presença digital completa para empresas e profissionais.',
+    description: 'Um site profissional completo para empresas e profissionais.',
     timeline: '15 a 25 dias úteis',
     features: [
       'Até 6 seções ou páginas',

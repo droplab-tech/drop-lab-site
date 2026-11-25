@@ -12,14 +12,14 @@ export const services: Service[] = [
     icon: 'layout',
     title: 'Sites Institucionais',
     description:
-      'Um site completo que apresenta sua empresa com autoridade: quem você é, o que faz e por que confiar em você.',
+      'Um site profissional completo que apresenta sua empresa com autoridade: quem você é, o que faz e por que confiar em você.',
     benefit: 'Credibilidade imediata para fechar mais negócios',
   },
   {
     icon: 'target',
-    title: 'Páginas de Conversão',
+    title: 'Landing Pages',
     description:
-      'Páginas focadas em uma única ação, com copy persuasiva e estrutura testada para campanhas e lançamentos.',
+      'Landing pages focadas em uma única ação, com textos persuasivos e estrutura pensada para campanhas e lançamentos.',
     benefit: 'Mais leads com o mesmo investimento em anúncios',
   },
   {

@@ -102,7 +102,7 @@ const ogBg = Buffer.from(`
   <rect width="1200" height="630" fill="url(#a)"/>
   <rect width="1200" height="630" fill="url(#b)"/>
   <rect y="622" width="1200" height="8" fill="url(#line)"/>
-  <text x="600" y="505" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="#F8FAFC">Sites e landing pages que transformam visitantes em clientes</text>
+  <text x="600" y="505" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="#F8FAFC">Criação e design de sites profissionais</text>
 </svg>`);
 const logo = await sharp(await transparentLogo())
   .trim()

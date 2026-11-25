@@ -18,7 +18,7 @@ export function whatsappLink(message: string = whatsappDefaultMessage): string {
 export const site = {
   name: 'Droplab',
   legalName: 'Droplab', // ⚠️ PLACEHOLDER: razão social, se houver
-  slogan: 'Sites · Páginas de conversão · Soluções web',
+  slogan: 'Sites · Landing pages · Soluções web',
 
   /**
    * Domínio final, com https:// e sem barra no fim (ex.: 'https://www.seudominio.com.br').
@@ -28,9 +28,9 @@ export const site = {
   url: 'https://www.droplabweb.com' as string,
 
   /** Título e descrição padrão (SEO) */
-  title: 'Droplab | Sites sob medida que transformam visitas em clientes',
+  title: 'DropLab | Criação e Design de Sites Profissionais',
   description:
-    'A Droplab cria sites institucionais, páginas de conversão e soluções web sob medida. Design exclusivo, carregamento rápido e otimizado para o Google. Peça seu orçamento pelo WhatsApp.',
+    'Criação e design de sites profissionais, landing pages e páginas para empresas. Transforme sua presença digital com a DropLab.',
   ogImage: '/og-image.png',
   locale: 'pt_BR',
 
@@ -45,6 +45,10 @@ export const site = {
     country: 'BR',
     /** Área de atuação (JSON-LD). Atendimento remoto para todo o Brasil. */
     areaServed: 'Brasil',
+    /** Cidades e estado atendidos com prioridade (JSON-LD). */
+    serviceArea: { cities: ['Uberlândia', 'Uberaba', 'Araguari'], state: 'Minas Gerais' },
+    /** Telefone no formato internacional legível (JSON-LD). */
+    phoneIntl: '+55 34 99189-8546',
     hours: 'Seg a Sex, 9h às 18h', // ⚠️ PLACEHOLDER
   },
 
@@ -70,9 +74,9 @@ export const site = {
 
   /** Textos-chave reutilizados em várias seções */
   copy: {
-    heroTitle: 'Sites que fazem o seu negócio ser escolhido.',
+    heroTitle: 'Criação de sites que fazem o seu negócio ser escolhido.',
     heroSubtitle:
-      'Desenhados do zero para transmitir confiança em segundos e transformar visitas em conversas. Estratégia, design e código no mesmo lugar, com atendimento direto pelo WhatsApp.',
+      'Design de sites profissionais, feitos do zero para transmitir confiança em segundos e transformar visitas em conversas. Estratégia, design e código no mesmo lugar, com atendimento direto pelo WhatsApp.',
     proofStrip: [
       'Design feito do zero',
       'Alta performance em qualquer conexão',
@@ -97,11 +101,11 @@ export const site = {
   themeCopy: {
     dark: {
       toggleLabel: 'Ativar modo claro',
-      footerNote: 'Design e desenvolvimento web sob medida.',
+      footerNote: 'Criação de sites e design web sob medida.',
     },
     light: {
       toggleLabel: 'Ativar modo escuro',
-      footerNote: 'Design e desenvolvimento web sob medida.',
+      footerNote: 'Criação de sites e design web sob medida.',
     },
   },
 } as const;

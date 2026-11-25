@@ -3,6 +3,9 @@
  *  - loop emendado: perto do fim, a segunda cópia começa do zero e as duas se cruzam
  *  - pausa sozinho quando sai da tela ou a aba fica oculta (economiza bateria)
  *  - botão de pausar/continuar (o visitante sempre pode parar o movimento)
+ *  - performance: o vídeo só começa a baixar depois que a página terminou de carregar
+ *    (a imagem de capa aparece na hora). Com economia de dados ligada ou conexão 2G,
+ *    fica só a imagem de capa.
  */
 const FADE = 1.2; // segundos de transição entre as cópias
 
@@ -18,6 +21,16 @@ export function initHeroVideo() {
   let swapping = false;
   let userPaused = false;
   let visible = true;
+  let loaded = false;
+
+  const conn = (
+    navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
+  ).connection;
+  const slow = Boolean(conn?.saveData) || /2g/.test(conn?.effectiveType ?? '');
+  if (slow) {
+    toggle?.classList.add('hidden');
+    return;
+  }
 
   const play = (v: HTMLVideoElement) => v.play().catch(() => {});
 
@@ -40,7 +53,7 @@ export function initHeroVideo() {
   };
 
   const resume = () => {
-    if (userPaused || !visible || document.hidden) return;
+    if (!loaded || userPaused || !visible || document.hidden) return;
     void play(active).then(() => requestAnimationFrame(tick));
   };
   const pauseAll = () => {
@@ -49,7 +62,24 @@ export function initHeroVideo() {
   };
 
   a.addEventListener('playing', () => requestAnimationFrame(tick), { once: true });
-  resume();
+
+  // Começa a baixar o vídeo só depois do carregamento (no celular, um pouco mais tarde)
+  const start = () => {
+    loaded = true;
+    a.preload = 'auto';
+    a.src = a.dataset.src ?? '';
+    b.src = b.dataset.src ?? '';
+    resume();
+  };
+  const later = () => {
+    const delay = matchMedia('(max-width: 767px)').matches ? 2500 : 400;
+    window.setTimeout(() => {
+      if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
+      else start();
+    }, delay);
+  };
+  if (document.readyState === 'complete') later();
+  else window.addEventListener('load', later, { once: true });
 
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;

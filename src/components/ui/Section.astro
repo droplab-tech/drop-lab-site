@@ -11,11 +11,27 @@ interface Props {
   at?: number;
   /** Esconde a régua */
   bare?: boolean;
+  /**
+   * Adia a renderização enquanto a seção está fora da tela (content-visibility).
+   * Deixe false para seções que podem aparecer na primeira tela.
+   */
+  lazy?: boolean;
 }
-const { id, class: className = '', labelledby = `${id}-title`, at, bare = false } = Astro.props;
+const {
+  id,
+  class: className = '',
+  labelledby = `${id}-title`,
+  at,
+  bare = false,
+  lazy = true,
+} = Astro.props;
 ---
 
-<section id={id} aria-labelledby={labelledby} class:list={['relative isolate', className]}>
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={['relative isolate', lazy && 'cv-auto', className]}
+>
   <slot name="background" />
   <div class="container-site">
     {!bare && (
