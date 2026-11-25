@@ -1,7 +1,6 @@
 /**
  * Gera os assets de marca a partir de public/favicon.svg e public/logo.png:
  *  - favicon.ico (16/32/48), apple-touch-icon.png, icon-512.png
- *  - og-image.png (1200×630)
  *
  * Uso:  npm run assets
  * Rode novamente sempre que trocar o logo ou o ícone.
@@ -13,7 +12,6 @@ import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const pub = (f) => path.join(root, 'public', f);
-const BG = '#05070D';
 
 const iconSvg = await readFile(pub('favicon.svg'));
 
@@ -88,29 +86,8 @@ await writeFile(pub('apple-touch-icon.png'), await renderIcon(180));
 await writeFile(pub('icon-512.png'), await renderIcon(512));
 console.log('✓ favicons');
 
-// ---------- Open Graph 1200×630 ----------
-const ogBg = Buffer.from(`
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
-  <defs>
-    <radialGradient id="a" cx="15%" cy="0%" r="70%"><stop offset="0" stop-color="#0A6CFF" stop-opacity=".45"/><stop offset="1" stop-color="#0A6CFF" stop-opacity="0"/></radialGradient>
-    <radialGradient id="b" cx="95%" cy="100%" r="60%"><stop offset="0" stop-color="#22D3EE" stop-opacity=".28"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
-    <linearGradient id="line" x1="0" x2="1"><stop offset="0" stop-color="#22D3EE"/><stop offset=".55" stop-color="#0A6CFF"/><stop offset="1" stop-color="#0B1E4A"/></linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="${BG}"/>
-  <rect width="1200" height="630" fill="url(#grid)"/>
-  <rect width="1200" height="630" fill="url(#a)"/>
-  <rect width="1200" height="630" fill="url(#b)"/>
-  <rect y="622" width="1200" height="8" fill="url(#line)"/>
-  <text x="600" y="505" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="600" fill="#F8FAFC">Criação e design de sites profissionais</text>
-</svg>`);
-const logo = await sharp(await transparentLogo())
-  .trim()
-  .resize({ width: 940 })
-  .toBuffer();
-await sharp(ogBg)
-  .composite([{ input: logo, top: 120, left: 130 }])
-  .png({ compressionLevel: 9 })
-  .toFile(pub('og-image.png'));
+// ---------- Logo com fundo transparente ----------
+// A imagem de compartilhamento (public/og-image.png, 1200×630) não é mais gerada aqui:
+// ela é uma captura da logo do rodapé do site, com a mesma tipografia, e fica fixa.
 await writeFile(pub('logo-transparent.png'), await transparentLogo());
-console.log('✓ og-image.png');
+console.log('✓ logo-transparent.png');

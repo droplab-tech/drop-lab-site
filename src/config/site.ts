@@ -74,7 +74,7 @@ export const site = {
 
   /** Textos-chave reutilizados em várias seções */
   copy: {
-    heroTitle: 'Criação de sites que fazem o seu negócio ser escolhido.',
+    heroTitle: 'Sites que fazem o seu negócio ser escolhido.',
     heroSubtitle:
       'Design de sites profissionais, feitos do zero para transmitir confiança em segundos e transformar visitas em conversas. Estratégia, design e código no mesmo lugar, com atendimento direto pelo WhatsApp.',
     proofStrip: [
