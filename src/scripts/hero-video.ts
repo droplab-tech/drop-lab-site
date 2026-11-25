@@ -1,5 +1,5 @@
 /**
- * Vídeo de fundo do hero:
+ * Vídeos de fundo (hero e chamada final):
  *  - loop emendado: perto do fim, a segunda cópia começa do zero e as duas se cruzam
  *  - pausa sozinho quando sai da tela ou a aba fica oculta (economiza bateria)
  *  - botão de pausar/continuar (o visitante sempre pode parar o movimento)
@@ -10,12 +10,12 @@
 import { onFirstInteraction } from './interaction';
 const FADE = 1.2; // segundos de transição entre as cópias
 
-export function initHeroVideo() {
-  const wrap = document.querySelector<HTMLElement>('[data-hero-video]');
-  if (!wrap) return;
+type Schedule = (start: () => void) => void;
+
+/** Liga um par de <video data-src> em loop emendado, com pausa e economia de bateria. */
+function setupLoopVideo(wrap: HTMLElement, toggle: HTMLButtonElement | null, schedule: Schedule) {
   const [a, b] = Array.from(wrap.querySelectorAll<HTMLVideoElement>('video'));
   if (!a || !b) return;
-  const toggle = document.querySelector<HTMLButtonElement>('[data-video-toggle]');
 
   let active = a;
   let idle = b;
@@ -64,7 +64,7 @@ export function initHeroVideo() {
 
   a.addEventListener('playing', () => requestAnimationFrame(tick), { once: true });
 
-  // Começa a baixar o vídeo só depois do carregamento (no celular, um pouco mais tarde)
+  // O vídeo só começa a baixar quando `schedule` mandar
   const start = () => {
     loaded = true;
     a.preload = 'auto';
@@ -72,18 +72,7 @@ export function initHeroVideo() {
     b.src = b.dataset.src ?? '';
     resume();
   };
-  // Desktop: logo depois do carregamento. Celular: na primeira interação ou após 6 s,
-  // para não disputar processamento e rede com o carregamento inicial.
-  const startIdle = () => {
-    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
-    else start();
-  };
-  const later = () => {
-    if (matchMedia('(max-width: 767px)').matches) onFirstInteraction(startIdle, 6000);
-    else window.setTimeout(startIdle, 400);
-  };
-  if (document.readyState === 'complete') later();
-  else window.addEventListener('load', later, { once: true });
+  schedule(start);
 
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
@@ -102,5 +91,45 @@ export function initHeroVideo() {
     );
     toggle.querySelector('[data-icon="pause"]')?.classList.toggle('hidden', userPaused);
     toggle.querySelector('[data-icon="play"]')?.classList.toggle('hidden', !userPaused);
+  });
+}
+
+const startIdle = (start: () => void) => {
+  if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
+  else start();
+};
+
+/**
+ * Hero: no desktop, logo depois do carregamento; no celular, na primeira interação ou
+ * após 6 s, para não disputar processamento e rede com o carregamento inicial.
+ */
+export function initHeroVideo() {
+  const wrap = document.querySelector<HTMLElement>('[data-hero-video]');
+  if (!wrap) return;
+  setupLoopVideo(wrap, document.querySelector('[data-video-toggle]'), (start) => {
+    const later = () => {
+      if (matchMedia('(max-width: 767px)').matches)
+        onFirstInteraction(() => startIdle(start), 6000);
+      else window.setTimeout(() => startIdle(start), 400);
+    };
+    if (document.readyState === 'complete') later();
+    else window.addEventListener('load', later, { once: true });
+  });
+}
+
+/** Chamada final: o vídeo só baixa quando a seção chega perto da tela. */
+export function initCtaVideo() {
+  const wrap = document.querySelector<HTMLElement>('[data-cta-video]');
+  if (!wrap) return;
+  setupLoopVideo(wrap, document.querySelector('[data-cta-video-toggle]'), (start) => {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        startIdle(start);
+      },
+      { rootMargin: '600px 0px' },
+    );
+    io.observe(wrap);
   });
 }

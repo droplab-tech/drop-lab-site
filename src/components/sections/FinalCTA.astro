@@ -1,21 +1,55 @@
 ---
+/**
+ * Chamada final com vídeo de fundo (public/video/cta.mp4), no mesmo padrão do hero:
+ * loop emendado, capa instantânea, botão de pausa e camada escura para leitura.
+ * O vídeo só baixa quando a seção chega perto da tela (src/scripts/hero-video.ts).
+ */
 import Button from '../ui/Button.astro';
-import LightDrop from '../ui/LightDrop.astro';
 import { site, whatsappLink } from '@/config/site';
+
+const poster = '/video/cta-poster.webp';
+const src = '/video/cta.mp4';
 ---
 
-<section aria-labelledby="cta-title" class="relative isolate overflow-hidden">
-  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <div class="beam opacity-80"></div>
+<section aria-labelledby="cta-title" class="relative isolate overflow-hidden bg-ink">
+  <!-- Vídeo de fundo -->
+  <div class="absolute inset-0 -z-10" data-cta-video>
+    <video
+      class="absolute inset-0 h-full w-full object-cover"
+      data-src={src}
+      poster={poster}
+      muted
+      playsinline
+      preload="none"
+      aria-hidden="true"
+      tabindex="-1"
+    ></video>
+    <video
+      class="absolute inset-0 h-full w-full object-cover opacity-0"
+      data-src={src}
+      muted
+      playsinline
+      preload="none"
+      aria-hidden="true"
+      tabindex="-1"
+    ></video>
   </div>
+
+  <!-- Camada escura: leitura do texto e emenda com o resto da página -->
+  <div
+    class="cta-shade pointer-events-none absolute inset-0 -z-10"
+    aria-hidden="true"
+    data-cta-shade
+  ></div>
+
   <div class="container-site">
-    <div class="ruler h-3" aria-hidden="true"></div>
-    <div class="grid items-end gap-12 py-24 sm:py-32 lg:grid-cols-12 lg:gap-10">
-      <div class="lg:col-span-8" data-reveal>
-        <h2 id="cta-title" class="cta-title max-w-[16ch]">
+    <div class="ruler ruler-snow h-3" aria-hidden="true"></div>
+    <div class="py-28 sm:py-36 lg:py-44">
+      <div class="max-w-3xl" data-reveal>
+        <h2 id="cta-title" class="cta-title max-w-[16ch] !text-snow">
           {site.copy.finalCtaTitle}
         </h2>
-        <p class="mt-7 max-w-lg text-lg leading-relaxed text-body">{site.copy.finalCtaText}</p>
+        <p class="mt-7 max-w-lg text-lg leading-relaxed text-snow/75">{site.copy.finalCtaText}</p>
         <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button
             href={whatsappLink()}
@@ -27,20 +61,43 @@ import { site, whatsappLink } from '@/config/site';
           >
             Chamar no WhatsApp
           </Button>
-          <Button href="#contato" size="lg" variant="secondary">
+          <Button href="#contato" size="lg" variant="secondary" class="cta-ghost">
             Preencher o formulário
           </Button>
         </div>
       </div>
-      <div
-        class="hidden justify-end pb-6 lg:col-span-4 lg:flex"
-        data-reveal
-        data-reveal-delay="150"
-      >
-        <LightDrop class="h-56 xl:h-64" />
-      </div>
     </div>
   </div>
+
+  <button
+    type="button"
+    class="absolute right-5 bottom-6 grid h-8 w-8 place-items-center rounded-[4px] border border-snow/25 text-snow/80 transition-colors hover:border-snow/60 hover:text-snow sm:right-8 lg:right-12"
+    data-cta-video-toggle
+    aria-label="Pausar vídeo de fundo"
+  >
+    <svg
+      data-icon="pause"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+      <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+    </svg>
+    <svg
+      data-icon="play"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill="currentColor"
+      aria-hidden="true"
+      class="hidden"
+    >
+      <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"></path>
+    </svg>
+  </button>
 </section>
 
 <style>
@@ -48,5 +105,45 @@ import { site, whatsappLink } from '@/config/site';
     font-size: clamp(2.3rem, 1.3rem + 4vw, 4.75rem);
     line-height: 1;
     letter-spacing: -0.04em;
+  }
+  [data-cta-video] video {
+    transition: opacity 1200ms ease;
+  }
+  /* O topo do vídeo tem a luz da superfície (muito clara): a camada escurece mais em cima
+     e à esquerda, onde está o texto, e funde as bordas com o fundo da página. */
+  .cta-shade {
+    background:
+      linear-gradient(90deg, rgb(5 7 13 / 0.72) 0%, rgb(5 7 13 / 0.38) 42%, rgb(5 7 13 / 0) 72%),
+      linear-gradient(
+        to bottom,
+        rgb(5 7 13 / 0.55) 0%,
+        rgb(5 7 13 / 0) 22%,
+        rgb(5 7 13 / 0) 70%,
+        rgb(5 7 13 / 0.85) 100%
+      );
+  }
+  @media (max-width: 767px) {
+    .cta-shade {
+      background: linear-gradient(
+        to bottom,
+        rgb(5 7 13 / 0.6) 0%,
+        rgb(5 7 13 / 0.45) 35%,
+        rgb(5 7 13 / 0.5) 75%,
+        rgb(5 7 13 / 0.88) 100%
+      );
+    }
+  }
+  .ruler-snow {
+    --tick: rgb(242 245 250 / 0.22);
+    --tick-strong: rgb(242 245 250 / 0.45);
+  }
+  .cta-ghost {
+    color: #f2f5fa;
+    border-color: rgb(242 245 250 / 0.3);
+    backdrop-filter: blur(6px);
+  }
+  .cta-ghost:hover {
+    border-color: rgb(242 245 250 / 0.7);
+    background: rgb(242 245 250 / 0.06);
   }
 </style>

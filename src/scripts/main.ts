@@ -12,13 +12,14 @@ import { initHeader, initMobileMenu, initScrollSpy, initFloatingWhatsApp } from 
 import { initReveal } from './reveal';
 import { initAnalytics } from './analytics';
 import { initContactForm } from './form';
-import { initHeroVideo } from './hero-video';
+import { initHeroVideo, initCtaVideo } from './hero-video';
 import { onFirstInteraction } from './interaction';
 
 initTheme();
 initMobileMenu();
 initReveal();
 initHeroVideo();
+initCtaVideo();
 
 requestAnimationFrame(() => {
   initHeader();
