@@ -13,23 +13,11 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import { splitWords } from './split';
 
 const reduced =
   matchMedia('(prefers-reduced-motion: reduce)').matches &&
   !new URLSearchParams(location.search).has('motion');
-
-/** Quebra o texto de um elemento em palavras mascaradas (mantém o texto acessível). */
-function splitWords(el: HTMLElement): HTMLElement[] {
-  if (el.dataset.split === 'done') return Array.from(el.querySelectorAll<HTMLElement>('.w > span'));
-  const text = el.textContent?.trim() ?? '';
-  el.setAttribute('aria-label', text);
-  el.innerHTML = text
-    .split(/\s+/)
-    .map((w) => `<span class="w" aria-hidden="true"><span>${w}</span></span>`)
-    .join(' ');
-  el.dataset.split = 'done';
-  return Array.from(el.querySelectorAll<HTMLElement>('.w > span'));
-}
 
 export function initMotion() {
   gsap.registerPlugin(ScrollTrigger);

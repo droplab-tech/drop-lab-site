@@ -301,3 +301,17 @@ html.lenis {
   content-visibility: auto;
   contain-intrinsic-size: auto 1000px;
 }
+
+/* Títulos grandes: letra acende no azul da marca ao passar o cursor (src/scripts/title-hover.ts) */
+.ch {
+  transition: color 900ms var(--ease-out-soft);
+}
+.ch:hover {
+  color: #0a6cff;
+  transition-duration: 60ms;
+}
+[data-theme='dark'] .ch:hover,
+#inicio .ch:hover,
+.cta-title .ch:hover {
+  color: #2f86ff;
+}

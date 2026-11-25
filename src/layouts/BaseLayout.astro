@@ -8,6 +8,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import WhatsAppFloat from '@/components/WhatsAppFloat.astro';
 import CookieBanner from '@/components/CookieBanner.astro';
+import Intro from '@/components/Intro.astro';
 import { site } from '@/config/site';
 
 interface Props {
@@ -144,6 +145,32 @@ const jsonLd = {
         d.classList.add('js');
       })();
     </script>
+    {isHome && <script is:inline>
+      // Intro: decidida antes da pintura. Não aparece para robôs, ao voltar na mesma
+      // visita ou com link para seção (#). /?intro força a exibição.
+      (function () {
+        try {
+          const d = document.documentElement;
+          const force = new URLSearchParams(location.search).has('intro');
+          const bot =
+            navigator.webdriver ||
+            /bot|crawl|spider|slurp|facebookexternalhit|whatsapp|telegram|preview/i.test(
+              navigator.userAgent,
+            );
+          if (force || (!bot && !location.hash && !sessionStorage.getItem('dl-intro'))) {
+            d.classList.add('intro-on', 'intro-hold');
+            const l = document.createElement('link');
+            l.rel = 'preload';
+            l.as = 'image';
+            l.href = '/video/intro-poster.webp';
+            l.fetchPriority = 'high';
+            document.head.appendChild(l);
+          }
+        } catch {
+          /* sem sessionStorage: abre o site direto */
+        }
+      })();
+    </script>}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -209,6 +236,7 @@ const jsonLd = {
   </head>
 
   <body class="min-h-dvh overflow-x-clip">
+    {isHome && <Intro />}
     <a
       href="#conteudo"
       class="fixed top-3 left-3 z-[100] -translate-y-24 rounded-[6px] bg-brand px-5 py-3 text-sm font-medium text-white shadow-lg transition-transform focus:translate-y-0"

@@ -8,6 +8,7 @@
  *    fica só a imagem de capa.
  */
 import { onFirstInteraction } from './interaction';
+import { afterIntro, introActive } from './intro';
 const FADE = 1.2; // segundos de transição entre as cópias
 
 type Schedule = (start: () => void) => void;
@@ -107,13 +108,16 @@ export function initHeroVideo() {
   const wrap = document.querySelector<HTMLElement>('[data-hero-video]');
   if (!wrap) return;
   setupLoopVideo(wrap, document.querySelector('[data-video-toggle]'), (start) => {
+    const hadIntro = introActive();
     const later = () => {
-      if (matchMedia('(max-width: 767px)').matches)
+      // Depois da intro o visitante já interagiu: o vídeo pode começar direto
+      if (matchMedia('(max-width: 767px)').matches && !hadIntro)
         onFirstInteraction(() => startIdle(start), 6000);
       else window.setTimeout(() => startIdle(start), 400);
     };
-    if (document.readyState === 'complete') later();
-    else window.addEventListener('load', later, { once: true });
+    // Com a intro aberta, o vídeo do hero só começa quando ela sai
+    if (document.readyState === 'complete') afterIntro(later);
+    else window.addEventListener('load', () => afterIntro(later), { once: true });
   });
 }
 

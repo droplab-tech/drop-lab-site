@@ -14,7 +14,10 @@ import { initAnalytics } from './analytics';
 import { initContactForm } from './form';
 import { initHeroVideo, initCtaVideo } from './hero-video';
 import { onFirstInteraction } from './interaction';
+import { initIntro, afterIntro } from './intro';
+import { initTitleHover } from './title-hover';
 
+initIntro();
 initTheme();
 initMobileMenu();
 initReveal();
@@ -35,6 +38,7 @@ whenIdle(() => {
   initAnalytics();
   initScrollSpy();
   initContactForm();
+  initTitleHover();
 });
 
 // Animações (GSAP + Lenis) num pacote separado, carregado só na primeira interação
@@ -53,8 +57,13 @@ const renderDeferred = (done: () => void) => {
   };
   next();
 };
-onFirstInteraction(() =>
-  renderDeferred(() => whenIdle(() => void import('./motion').then((m) => m.initMotion()))),
+// Com a intro aberta, espera ela terminar (a GPU e a rede ficam com a intro)
+afterIntro(
+  () =>
+    onFirstInteraction(() =>
+      renderDeferred(() => whenIdle(() => void import('./motion').then((m) => m.initMotion()))),
+    ),
+  'done',
 );
 
 // Links internos (#secao): renderiza tudo antes de rolar, para cair no lugar certo
