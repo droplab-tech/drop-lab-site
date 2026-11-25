@@ -146,7 +146,7 @@ export function initIntro() {
     window.setTimeout(() => {
       root.classList.add('intro-reveal');
       root.classList.remove('intro-hold');
-    }, 850);
+    }, 2100);
 
     const finish = () => {
       fluid?.stop();
@@ -161,7 +161,7 @@ export function initIntro() {
       document.dispatchEvent(new Event('intro:done'));
     };
     // Tempo da animação de saída (com folga), sem depender de animationend
-    window.setTimeout(finish, 2000);
+    window.setTimeout(finish, 4100);
   };
 
   const onKey = (e: KeyboardEvent) => {

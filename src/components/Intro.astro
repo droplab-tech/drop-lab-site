@@ -378,21 +378,21 @@ import { site } from '@/config/site';
     transform: translateX(3px);
   }
   /* ---------- saída: as escritas se dissolvem, a câmera "mergulha" e o site surge ---------- */
-  /* 0–0,9 s: textos somem suavemente (desfoque + subida), em sequência */
+  /* 0–2 s: textos somem suavemente (desfoque + subida), em sequência */
   .intro.is-out .intro-hello {
-    animation: intro-dissolve 700ms cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: intro-dissolve 1400ms cubic-bezier(0.4, 0, 0.2, 1) both;
   }
   .intro.is-out .intro-ch {
-    animation: intro-dissolve 750ms cubic-bezier(0.4, 0, 0.2, 1) calc(80ms + var(--i) * 35ms) both;
+    animation: intro-dissolve 1400ms cubic-bezier(0.4, 0, 0.2, 1) calc(200ms + var(--i) * 75ms) both;
   }
   .intro.is-out .intro-mark-wrap {
-    animation: intro-mark-out 900ms cubic-bezier(0.4, 0, 0.2, 1) 60ms both;
+    animation: intro-mark-out 1700ms cubic-bezier(0.4, 0, 0.2, 1) 120ms both;
   }
   .intro.is-out .intro-slogan {
-    animation: intro-dissolve 650ms cubic-bezier(0.4, 0, 0.2, 1) 200ms both;
+    animation: intro-dissolve 1300ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;
   }
   .intro.is-out .intro-foot {
-    animation: intro-foot-out 600ms cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: intro-foot-out 1100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms both;
   }
   .intro.is-out .intro-enter {
     border-color: #2f86ff;
@@ -421,7 +421,7 @@ import { site } from '@/config/site';
   }
   /* A água avança na direção de quem olha (mergulho) */
   .intro.is-out .intro-media {
-    animation: intro-dive 2s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation: intro-dive 4.2s cubic-bezier(0.65, 0, 0.35, 1) both;
   }
   @keyframes intro-dive {
     from {
@@ -431,17 +431,23 @@ import { site } from '@/config/site';
       transform: scale(1.22);
     }
   }
-  /* 0,9–1,9 s: a intro se desfaz e o site aparece por baixo */
+  /* 2,2–4 s: a intro se desfaz e o site aparece por baixo */
   .intro.is-out {
-    animation: intro-fade-out 1s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
+    animation: intro-fade-out 1.8s cubic-bezier(0.4, 0, 0.2, 1) 2.2s both;
   }
   /* O hero chega: vídeo assentando e textos surgindo do desfoque */
   html.intro-reveal [data-hero-media] {
-    animation: intro-hero-media 1.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation: intro-hero-media 2.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
   html.intro-reveal [data-hero-in] {
     animation-name: intro-hero-in;
-    animation-duration: 1.3s;
+    animation-duration: 1.9s;
+  }
+  html.intro-reveal [data-hero-in='1'] {
+    animation-delay: 250ms;
+  }
+  html.intro-reveal [data-hero-in='2'] {
+    animation-delay: 500ms;
   }
   @keyframes intro-hero-media {
     from {
