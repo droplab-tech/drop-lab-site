@@ -4,9 +4,10 @@
  *  - pausa sozinho quando sai da tela ou a aba fica oculta (economiza bateria)
  *  - botão de pausar/continuar (o visitante sempre pode parar o movimento)
  *  - performance: o vídeo só começa a baixar depois que a página terminou de carregar
- *    (a imagem de capa aparece na hora). Com economia de dados ligada ou conexão 2G,
+ *    (a imagem de capa aparece na hora); no celular, na primeira interação. Com economia de dados ligada ou conexão 2G,
  *    fica só a imagem de capa.
  */
+import { onFirstInteraction } from './interaction';
 const FADE = 1.2; // segundos de transição entre as cópias
 
 export function initHeroVideo() {
@@ -71,12 +72,15 @@ export function initHeroVideo() {
     b.src = b.dataset.src ?? '';
     resume();
   };
+  // Desktop: logo depois do carregamento. Celular: na primeira interação ou após 6 s,
+  // para não disputar processamento e rede com o carregamento inicial.
+  const startIdle = () => {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
+    else start();
+  };
   const later = () => {
-    const delay = matchMedia('(max-width: 767px)').matches ? 2500 : 400;
-    window.setTimeout(() => {
-      if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
-      else start();
-    }, delay);
+    if (matchMedia('(max-width: 767px)').matches) onFirstInteraction(startIdle, 6000);
+    else window.setTimeout(startIdle, 400);
   };
   if (document.readyState === 'complete') later();
   else window.addEventListener('load', later, { once: true });

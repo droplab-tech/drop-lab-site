@@ -13,6 +13,7 @@ import { initReveal } from './reveal';
 import { initAnalytics } from './analytics';
 import { initContactForm } from './form';
 import { initHeroVideo } from './hero-video';
+import { onFirstInteraction } from './interaction';
 
 initTheme();
 initMobileMenu();
@@ -35,10 +36,12 @@ whenIdle(() => {
   initContactForm();
 });
 
-// Animações (GSAP + Lenis) num pacote separado, carregado só depois que a página
-// terminou de carregar e o navegador ficou ocioso: não pesa na primeira pintura.
-// Antes, libera a renderização das seções adiadas (.cv-auto), uma por tarefa ociosa,
-// para que as medidas de rolagem usem as alturas reais.
+// Animações (GSAP + Lenis) num pacote separado, carregado só na primeira interação
+// (rolar, tocar, clicar): elas só agem na rolagem, então não precisam pesar no
+// carregamento. Antes, libera a renderização das seções adiadas (.cv-auto), uma por
+// tarefa ociosa, para que as medidas de rolagem usem as alturas reais.
+const renderAllNow = () =>
+  document.querySelectorAll('.cv-auto').forEach((el) => el.classList.remove('cv-auto'));
 const renderDeferred = (done: () => void) => {
   const pending = Array.from(document.querySelectorAll<HTMLElement>('.cv-auto'));
   const next = () => {
@@ -49,7 +52,16 @@ const renderDeferred = (done: () => void) => {
   };
   next();
 };
-const loadMotion = () =>
-  renderDeferred(() => whenIdle(() => void import('./motion').then((m) => m.initMotion())));
-if (document.readyState === 'complete') loadMotion();
-else window.addEventListener('load', loadMotion, { once: true });
+onFirstInteraction(() =>
+  renderDeferred(() => whenIdle(() => void import('./motion').then((m) => m.initMotion()))),
+);
+
+// Links internos (#secao): renderiza tudo antes de rolar, para cair no lugar certo
+document.addEventListener(
+  'click',
+  (e) => {
+    if ((e.target as Element | null)?.closest?.('a[href^="#"], a[href^="/#"]')) renderAllNow();
+  },
+  { capture: true },
+);
+if (location.hash) renderAllNow();
