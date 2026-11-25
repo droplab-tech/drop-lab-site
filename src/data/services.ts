@@ -17,9 +17,9 @@ export const services: Service[] = [
   },
   {
     icon: 'target',
-    title: 'Landing Pages',
+    title: 'Páginas de Conversão',
     description:
-      'Landing pages focadas em uma única ação, com textos persuasivos e estrutura pensada para campanhas e lançamentos.',
+      'Páginas focadas em uma única ação, com textos persuasivos e estrutura pensada para campanhas e lançamentos.',
     benefit: 'Mais leads com o mesmo investimento em anúncios',
   },
   {

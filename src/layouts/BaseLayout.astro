@@ -50,8 +50,8 @@ const services = [
     description: 'Criação e design de sites profissionais e institucionais sob medida.',
   },
   {
-    name: 'Landing pages',
-    description: 'Landing pages focadas em conversão para campanhas, lançamentos e captação.',
+    name: 'Páginas de conversão',
+    description: 'Páginas focadas em conversão para campanhas, lançamentos e captação.',
   },
   {
     name: 'Manutenção de sites',
@@ -83,7 +83,12 @@ const jsonLd = {
         { '@type': 'State', name: serviceArea.state },
       ],
       sameAs: Object.values(site.social).filter(Boolean),
-      knowsAbout: ['Criação de sites', 'Design de sites', 'Landing pages', 'Sites profissionais'],
+      knowsAbout: [
+        'Criação de sites',
+        'Design de sites',
+        'Páginas de conversão',
+        'Sites profissionais',
+      ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Serviços da DropLab',

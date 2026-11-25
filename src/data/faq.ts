@@ -7,7 +7,7 @@ export const faq: FaqItem[] = [
   {
     question: 'Quanto tempo leva para meu site ficar pronto?',
     answer:
-      'Uma landing page costuma ficar pronta entre 7 e 10 dias úteis. Um site institucional leva de 15 a 25 dias úteis. O prazo exato vai na proposta e depende principalmente da agilidade no envio de textos e imagens.',
+      'Uma página de conversão costuma ficar pronta entre 7 e 10 dias úteis. Um site institucional leva de 15 a 25 dias úteis. O prazo exato vai na proposta e depende principalmente da agilidade no envio de textos e imagens.',
   },
   {
     question: 'Quanto custa a criação de um site?',

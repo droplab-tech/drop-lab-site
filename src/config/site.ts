@@ -18,7 +18,7 @@ export function whatsappLink(message: string = whatsappDefaultMessage): string {
 export const site = {
   name: 'Droplab',
   legalName: 'Droplab', // ⚠️ PLACEHOLDER: razão social, se houver
-  slogan: 'Sites · Landing pages · Soluções web',
+  slogan: 'Sites · Páginas de conversão · Soluções web',
 
   /**
    * Domínio final, com https:// e sem barra no fim (ex.: 'https://www.seudominio.com.br').
@@ -30,7 +30,7 @@ export const site = {
   /** Título e descrição padrão (SEO) */
   title: 'DropLab | Criação e Design de Sites Profissionais',
   description:
-    'Criação e design de sites profissionais, landing pages e páginas para empresas. Transforme sua presença digital com a DropLab.',
+    'Criação e design de sites profissionais, páginas de conversão e páginas para empresas. Transforme sua presença digital com a DropLab.',
   ogImage: '/og-image.png',
   locale: 'pt_BR',
 
