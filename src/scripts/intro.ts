@@ -3,13 +3,12 @@
  *  - escolhe o vídeo pelo tamanho da tela (720p no computador, 360p no celular)
  *  - liga a simulação de fluido só em aparelhos que aguentam; nos mais simples,
  *    uma luz suave segue o cursor (CSS) e o vídeo roda normal
- *  - entra no site pelo botão, Enter/Esc, rolando/arrastando para cima, ou sozinha
+ *  - entra no site pelo botão, Enter/Esc ou rolando/arrastando para cima (sem tempo automático)
  *  - ao sair: libera a GPU, para o vídeo, remove a intro e avisa o resto do site
  *    (eventos 'intro:exit' no início da saída e 'intro:done' no fim)
  */
 import type { Fluid } from './intro-fluid';
 
-const AUTO_MS = 9100; // 2,9 s de entrada + 6,2 s da barra
 const BURST_MS = 1450; // momento em que a gota toca a água
 
 let phase: 'open' | 'exit' | 'done' = 'open';
@@ -56,7 +55,6 @@ export function initIntro() {
 
   let fluid: Fluid | null = null;
   let leaving = false;
-  let autoTimer = 0;
   const lite = () => el.classList.add('is-lite');
   if (weak) lite();
   else {
@@ -127,7 +125,6 @@ export function initIntro() {
   const leave = () => {
     if (leaving) return;
     leaving = true;
-    window.clearTimeout(autoTimer);
     window.clearTimeout(burstTimer);
     window.clearInterval(ambient);
     try {
@@ -183,16 +180,6 @@ export function initIntro() {
     },
     { passive: true },
   );
-
-  // Entra sozinha; se a aba estiver escondida, espera voltar
-  const schedule = (ms: number) => {
-    autoTimer = window.setTimeout(() => {
-      if (document.hidden) {
-        document.addEventListener('visibilitychange', () => schedule(1500), { once: true });
-      } else leave();
-    }, ms);
-  };
-  schedule(AUTO_MS);
 }
 
 /** Executa `cb` quando a intro começa a sair (ou já, se não houver intro). */

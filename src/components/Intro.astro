@@ -2,7 +2,7 @@
 /**
  * Tela de intro (só na página inicial, uma vez por visita):
  * vídeo debaixo d'água + simulação de fluido que segue o cursor (src/scripts/intro-fluid.ts),
- * a gota da logo cai na água, "Bem-vindo à Droplab" aparece e a tela sobe revelando o site.
+ * a gota da logo cai na água, "Bem-vindo à Droplab" aparece; o visitante entra pelo botão.
  *
  * Só aparece quando o script do <head> marca <html class="intro-on">: sem JavaScript,
  * para robôs de busca, ao voltar na mesma visita ou com link para uma seção (#), o site
@@ -78,7 +78,6 @@ import { site } from '@/config/site';
           stroke-linejoin="round"
         ></path>
       </svg>
-      <span class="intro-progress" aria-hidden="true"></span>
     </button>
   </div>
 </div>
@@ -92,7 +91,6 @@ import { site } from '@/config/site';
     overflow: hidden;
   }
   html.intro-on .intro {
-    --intro-auto: 6.2s; /* duração da barra até entrar sozinho */
     display: block;
     position: fixed;
     inset: 0;
@@ -379,23 +377,6 @@ import { site } from '@/config/site';
   .intro-enter:hover svg {
     transform: translateX(3px);
   }
-  /* Barra que enche até a intro entrar sozinha */
-  .intro-progress {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    width: 100%;
-    background: #2f86ff;
-    transform-origin: left;
-    animation: intro-progress var(--intro-auto) linear 2.9s both;
-  }
-  @keyframes intro-progress {
-    from {
-      transform: scaleX(0);
-    }
-  }
-
   /* ---------- saída: o conteúdo some e a tela sobe como uma onda ---------- */
   .intro.is-out .intro-center,
   .intro.is-out .intro-foot {
@@ -415,9 +396,6 @@ import { site } from '@/config/site';
     to {
       clip-path: inset(0 0 100% 0);
     }
-  }
-  .intro.is-out .intro-progress {
-    animation-play-state: paused;
   }
 
   /* Movimento reduzido: a intro é curta e pode ser pulada; só o zoom grande do vídeo
