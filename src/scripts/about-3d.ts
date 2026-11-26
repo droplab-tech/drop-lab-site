@@ -221,7 +221,12 @@ export function startAboutScene(host: HTMLElement): SeaScene | null {
 
   // Areia com cáusticas animadas
   const sandMat = new THREE.ShaderMaterial({
-    uniforms: { uTime: time, uFog: { value: new THREE.Color('#05203a') } },
+    uniforms: {
+      uTime: time,
+      uFog: { value: new THREE.Color('#05203a') },
+      uNear: { value: 6 },
+      uFar: { value: 22 },
+    },
     vertexShader: /* glsl */ `
       varying vec2 vUv; varying float vDist;
       void main() {
@@ -231,7 +236,7 @@ export function startAboutScene(host: HTMLElement): SeaScene | null {
         gl_Position = projectionMatrix * mv;
       }`,
     fragmentShader: /* glsl */ `
-      uniform float uTime; uniform vec3 uFog;
+      uniform float uTime; uniform vec3 uFog; uniform float uNear; uniform float uFar;
       varying vec2 vUv; varying float vDist;
       ${CAUSTIC_GLSL}
       void main() {
@@ -239,7 +244,7 @@ export function startAboutScene(host: HTMLElement): SeaScene | null {
         float c = caustic(p, uTime * 0.5);
         vec3 sand = mix(vec3(0.03, 0.12, 0.2), vec3(0.06, 0.2, 0.28), smoothstep(0.0, 1.0, vUv.y));
         vec3 col = sand + vec3(0.35, 0.75, 0.95) * c * 0.7;
-        float f = smoothstep(6.0, 22.0, vDist);
+        float f = smoothstep(uNear, uFar, vDist);
         gl_FragColor = vec4(mix(col, uFog, f), 1.0);
         #include <colorspace_fragment>
       }`,
@@ -337,19 +342,42 @@ export function startAboutScene(host: HTMLElement): SeaScene | null {
   // Teto de pixels desenhados (≈2 MP no computador, 0,9 MP no celular): telas grandes
   // e de alta densidade não multiplicam o trabalho da placa de vídeo
   const MAX_PIXELS = small ? 0.9e6 : 2e6;
+  const spotEl = host.closest('section')?.querySelector<HTMLElement>('[data-about-spot]');
+  // O espaço do "D" só existe no celular (no computador ele fica escondido)
+  let spot: HTMLElement | null = null;
   const resize = () => {
+    spot = spotEl && spotEl.offsetParent !== null ? spotEl : null;
     const w = Math.max(1, host.clientWidth);
     const h = Math.max(1, host.clientHeight);
     renderer.setPixelRatio(Math.min(pixelRatio, Math.sqrt(MAX_PIXELS / (w * h))));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // Telas estreitas: afasta a câmera para o logo caber
-    camera.userData.dist = (small ? 6.4 : 12.5) * Math.max(1, 1.25 / camera.aspect);
+    const halfTan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    if (spot) {
+      // Celular: a cena cobre a seção inteira (alta e estreita). O "D" ocupa ~62% da
+      // largura e é desenhado na altura do espaço entre o título e os parágrafos.
+      camera.userData.dist = 2.6 / 0.62 / (2 * halfTan * camera.aspect);
+      const hr = host.getBoundingClientRect();
+      const sr = spot.getBoundingClientRect();
+      const fy = (sr.top + sr.height / 2 - hr.top) / hr.height;
+      camera.setViewOffset(w, h, 0, (0.5 - fy) * h, w, h);
+    } else {
+      camera.userData.dist = 12.5 * Math.max(1, 1.25 / camera.aspect);
+      camera.clearViewOffset();
+    }
     camera.updateProjectionMatrix();
+    // A névoa da água começa um pouco depois do logo, seja qual for a distância da câmera
+    const d = camera.userData.dist as number;
+    const fog = scene.fog as THREE.Fog;
+    fog.near = d - 1;
+    fog.far = d + 16;
+    sandMat.uniforms.uNear.value = d - 2;
+    sandMat.uniforms.uFar.value = d + 14;
   };
   resize();
   const ro = new ResizeObserver(resize);
   ro.observe(host);
+  if (spotEl) ro.observe(spotEl);
 
   // ---------- cursor (só computador) ----------
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };

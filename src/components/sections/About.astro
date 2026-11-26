@@ -38,12 +38,17 @@ const mission =
       </p>
     </div>
 
-    <!-- Cena 3D: no celular é um bloco entre os textos; no computador, o fundo da seção -->
+    <!-- Cena 3D: fundo da seção inteira (celular e computador), atrás dos textos -->
     <div class="about-scene" data-about-3d aria-hidden="true">
       <div class="about-fallback">
         <LogoMark class="about-fallback-mark" />
       </div>
       <div class="about-shade"></div>
+    </div>
+
+    <!-- Celular: espaço entre o título e os parágrafos onde o "D" aparece -->
+    <div class="about-spot" data-about-spot aria-hidden="true">
+      <LogoMark class="about-fallback-mark" />
     </div>
 
     <div
@@ -80,29 +85,33 @@ const mission =
   }
 
   .about-scene {
-    position: relative;
-    margin-inline: -1.25rem;
-    aspect-ratio: 1 / 1;
-    max-height: 70svh;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     overflow: hidden;
     background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgb(14 90 122 / 0.55), transparent 70%),
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgb(14 90 122 / 0.55), transparent 70%),
       linear-gradient(to bottom, #06233f, #020814);
   }
-  @media (min-width: 640px) {
-    .about-scene {
-      margin-inline: -2rem;
-    }
+  /* Espaço do "D" no celular; a versão estática do logo fica nele até o 3D carregar */
+  .about-spot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    height: min(58svh, 30rem);
+    transition: opacity 1.2s ease;
   }
   @media (min-width: 1024px) {
-    .about-scene {
-      position: absolute;
-      inset: 0;
-      margin: 0;
-      aspect-ratio: auto;
-      max-height: none;
-      z-index: 0;
+    .about-spot {
+      display: none;
     }
+  }
+  .about-spot :global(svg) {
+    width: min(55%, 12rem);
+  }
+  :global(.about-sea:has(.is-3d)) .about-spot {
+    opacity: 0;
   }
   .about-scene :global(canvas) {
     position: absolute;
@@ -120,15 +129,22 @@ const mission =
   .about-fallback {
     position: absolute;
     inset: 0;
-    display: grid;
+    display: none;
     place-items: center;
     transition: opacity 1.2s ease;
+  }
+  @media (min-width: 1024px) {
+    .about-fallback {
+      display: grid;
+    }
   }
   .about-scene.is-3d .about-fallback {
     opacity: 0;
   }
-  .about-fallback-mark {
+  .about-fallback :global(svg) {
     width: min(38%, 15rem);
+  }
+  .about-fallback-mark {
     height: auto;
     filter: drop-shadow(0 0 60px rgb(34 211 238 / 0.35));
     animation: about-float 7s ease-in-out infinite;
@@ -140,13 +156,21 @@ const mission =
   }
 
   /* Camada escura para leitura: mais forte onde está o texto (alto à esquerda, base à direita) */
+  /* Celular: escuro atrás do título (alto) e dos parágrafos (base), claro no meio, onde
+     está o "D" */
   .about-shade {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background:
-      linear-gradient(to bottom, rgb(5 7 13 / 0.85) 0%, rgb(5 7 13 / 0) 18%),
-      linear-gradient(to top, rgb(5 7 13 / 0.7) 0%, rgb(5 7 13 / 0) 22%);
+    background: linear-gradient(
+      to bottom,
+      rgb(5 7 13 / 0.88) 0%,
+      rgb(5 7 13 / 0.6) 17%,
+      rgb(5 7 13 / 0) 27%,
+      rgb(5 7 13 / 0) 50%,
+      rgb(5 7 13 / 0.72) 60%,
+      rgb(5 7 13 / 0.85) 100%
+    );
   }
   @media (min-width: 1024px) {
     .about-shade {
