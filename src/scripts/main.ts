@@ -17,6 +17,7 @@ import { onFirstInteraction } from './interaction';
 import { initIntro, afterIntro } from './intro';
 import { initTitleHover } from './title-hover';
 import { initServicesFx } from './services-fx';
+import { initAbout3D } from './about-3d-loader';
 
 initIntro();
 initTheme();
@@ -41,6 +42,7 @@ whenIdle(() => {
   initContactForm();
   initTitleHover();
   initServicesFx();
+  initAbout3D();
 });
 
 // Animações (GSAP + Lenis) num pacote separado, carregado só na primeira interação
