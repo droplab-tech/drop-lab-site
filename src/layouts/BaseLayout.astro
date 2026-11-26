@@ -59,6 +59,20 @@ const services = [
     description: 'Atualizações, ajustes de conteúdo, backups e suporte depois da entrega.',
   },
 ];
+// Nome do site nos resultados do Google: bloco WebSite próprio, só na página inicial,
+// com o nome preferido, a variação e a URL canônica da home.
+const websiteLd = siteUrl
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: 'DropLab',
+      alternateName: 'Droplab',
+      url: `${siteUrl}/`,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${siteUrl}/#business` },
+    }
+  : undefined;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -109,14 +123,6 @@ const jsonLd = {
         areaServed: 'BR',
         availableLanguage: 'Portuguese',
       },
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
-      ...(siteUrl && { url: `${siteUrl}/` }),
-      name: 'DropLab',
-      inLanguage: 'pt-BR',
-      publisher: { '@id': `${siteUrl}/#business` },
     },
   ],
 };
@@ -200,10 +206,13 @@ const jsonLd = {
       />
     )}
 
-    <!-- Favicons -->
+    <!-- Favicons: URLs fixas na raiz (o Google usa o da página inicial; quadrados, múltiplos de 48 px) -->
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
+    <link rel="icon" href="/favicon-192x192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -234,6 +243,9 @@ const jsonLd = {
     )}
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {isHome && websiteLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(websiteLd)} />
+    )}
   </head>
 
   <body class="min-h-dvh overflow-x-clip">

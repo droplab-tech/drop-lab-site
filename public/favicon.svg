@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Ícone da DropLab simplificado para tamanhos pequenos: "D" de traço grosso com a gota no meio -->
   <defs>
     <linearGradient id="t" x1="8" y1="0" x2="56" y2="64" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#1F8BFF"/>
@@ -7,8 +8,6 @@
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="url(#t)"/>
-  <g transform="translate(6.6 3.1) scale(.0765)" fill="#fff">
-    <path d="M110 143q0-12 12-12h223a250.5 250.5 0 0 1 0 501H85q-12 0-12-12V452q0-8 6-14l154-151v200l-28 31h140a137.5 137.5 0 0 0 0-275H122q-12 0-12-12z"/>
-    <path d="M352 292c22 29 65 82 65 120a65 65 0 0 1-130 0c0-38 43-91 65-120z"/>
-  </g>
+  <path fill="#fff" fill-rule="evenodd" d="M14 12h17a20 20 0 0 1 0 40H14zm9 8.5v23h8a11.5 11.5 0 0 0 0-23z"/>
+  <path fill="#fff" d="M32 23.5c2.6 3.4 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 3.4-7.6 6-11z"/>
 </svg>

@@ -1,6 +1,8 @@
 /**
  * Gera os assets de marca a partir de public/favicon.svg e public/logo.png:
- *  - favicon.ico (16/32/48), apple-touch-icon.png, icon-512.png
+ *  - favicon.ico (16/32/48), favicon-48x48.png, favicon-96x96.png, favicon-192x192.png
+ *    (o Google pede ícones quadrados em múltiplos de 48 px), apple-touch-icon.png (180,
+ *    quadrado cheio: o iOS arredonda sozinho) e icon-512.png (logo dos dados estruturados)
  *
  * Uso:  npm run assets
  * Rode novamente sempre que trocar o logo ou o ícone.
@@ -14,11 +16,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const pub = (f) => path.join(root, 'public', f);
 
 const iconSvg = await readFile(pub('favicon.svg'));
+// Versão de cantos retos para o iOS (ele aplica a própria máscara arredondada)
+const squareSvg = Buffer.from(iconSvg.toString().replace(/ rx="\d+"/, ''));
 
 /** Renderiza o ícone num quadrado, com padding e fundo opcionais. */
-async function renderIcon(size, { padding = 0, background = null } = {}) {
+async function renderIcon(size, { padding = 0, background = null, svg = iconSvg } = {}) {
   const inner = Math.round(size * (1 - padding * 2));
-  const icon = await sharp(iconSvg, { density: 600 }).resize(inner, inner).png().toBuffer();
+  const icon = await sharp(svg, { density: 600 }).resize(inner, inner).png().toBuffer();
   return sharp({
     create: {
       width: size,
@@ -82,7 +86,9 @@ async function transparentLogo() {
 const icoPngs = [];
 for (const size of [16, 32, 48]) icoPngs.push({ size, data: await renderIcon(size) });
 await writeFile(pub('favicon.ico'), buildIco(icoPngs));
-await writeFile(pub('apple-touch-icon.png'), await renderIcon(180));
+for (const size of [48, 96, 192])
+  await writeFile(pub(`favicon-${size}x${size}.png`), await renderIcon(size));
+await writeFile(pub('apple-touch-icon.png'), await renderIcon(180, { svg: squareSvg }));
 await writeFile(pub('icon-512.png'), await renderIcon(512));
 console.log('✓ favicons');
 
