@@ -16,6 +16,7 @@ import { initHeroVideo, initCtaVideo } from './hero-video';
 import { onFirstInteraction } from './interaction';
 import { initIntro, afterIntro } from './intro';
 import { initTitleHover } from './title-hover';
+import { initServicesFx } from './services-fx';
 
 initIntro();
 initTheme();
@@ -39,6 +40,7 @@ whenIdle(() => {
   initScrollSpy();
   initContactForm();
   initTitleHover();
+  initServicesFx();
 });
 
 // Animações (GSAP + Lenis) num pacote separado, carregado só na primeira interação

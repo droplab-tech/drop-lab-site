@@ -14,6 +14,11 @@ export interface Fluid {
   /** Explosão radial (a gota caindo na água) */
   burst(x: number, y: number): void;
   stop(): void;
+  /** Para o laço sem liberar a GPU (para retomar depois) */
+  pause(): void;
+  resume(): void;
+  /** Reajusta o canvas depois de ele mudar de tamanho/lugar */
+  refit(): void;
 }
 
 interface Options {
@@ -22,6 +27,8 @@ interface Options {
   iterations: number;
   /** Escala do canvas em relação aos pixels CSS */
   scale: number;
+  /** Raio da pincelada em fração da altura² (padrão: proporcional à tela) */
+  splatRadius?: number;
   /** Chamado se o aparelho não aguentar: quem chamou mostra só o vídeo */
   onFail: () => void;
 }
@@ -302,6 +309,7 @@ export function startFluid(
     target.swap();
   };
   const aspectR = () => {
+    if (opts.splatRadius) return opts.splatRadius;
     const a = canvas.width / canvas.height;
     return a > 1 ? 0.0022 * a : 0.0022;
   };
@@ -394,8 +402,12 @@ export function startFluid(
   let slowTime = 0;
   let shown = false;
 
+  let paused = false;
   const loop = (now: number) => {
-    if (!running) return;
+    if (!running || paused) {
+      raf = 0;
+      return;
+    }
     raf = requestAnimationFrame(loop);
     const elapsed = now - last;
     last = now;
@@ -470,5 +482,17 @@ export function startFluid(
       }
     },
     stop,
+    pause() {
+      paused = true;
+    },
+    resume() {
+      if (!running) return;
+      paused = false;
+      if (!raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(loop);
+      }
+    },
+    refit: () => resize(),
   };
 }

@@ -4,7 +4,8 @@ import { whatsappLink } from '@/config/site';
 ---
 
 <!--
-  Botão flutuante do WhatsApp. Aparece depois de rolar um pouco (não cobre o Hero)
+  Botão flutuante do WhatsApp (só em celulares e tablets; no computador o WhatsApp fica
+  no menu). Aparece depois de rolar um pouco (não cobre o Hero)
   e respeita a área segura do iPhone. Tamanho de 56px para toque confortável.
 -->
 <a
@@ -25,6 +26,11 @@ import { whatsappLink } from '@/config/site';
 </a>
 
 <style>
+  @media (min-width: 1024px) {
+    .wa-float {
+      display: none !important;
+    }
+  }
   .wa-float {
     opacity: 0;
     visibility: hidden; /* fora da ordem de foco enquanto escondido */

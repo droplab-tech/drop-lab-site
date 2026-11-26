@@ -6,7 +6,7 @@
  * então a virada do fim para o começo não "pula".
  */
 import Button from '../ui/Button.astro';
-import { site, whatsappLink } from '@/config/site';
+import { site } from '@/config/site';
 
 const poster = '/video/hero-poster.webp';
 const src = '/video/hero.mp4';
@@ -63,7 +63,7 @@ const src = '/video/hero.mp4';
     <!-- Base: marcas à esquerda, ações à direita (como na referência) -->
     <div class="mt-auto pt-14" data-hero-in="2">
       <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-        <ul class="order-2 grid gap-3 sm:grid-cols-3 sm:gap-8 lg:order-1 lg:flex lg:gap-10">
+        <ul class="order-2 grid gap-3 sm:grid-cols-2 sm:gap-x-8 lg:order-1 lg:flex lg:gap-10">
           {site.copy.proofStrip.map((item, i) => (
             <li class="flex items-center gap-3 text-[0.95rem] text-snow">
               <span
@@ -75,16 +75,6 @@ const src = '/video/hero.mp4';
           ))}
         </ul>
         <div class="order-1 flex flex-col gap-3 sm:flex-row sm:items-center lg:order-2">
-          <Button
-            href={whatsappLink()}
-            external
-            size="lg"
-            arrow
-            class="justify-between sm:justify-center"
-            data-track-location="hero"
-          >
-            Fale no WhatsApp
-          </Button>
           <Button href="#processo" size="lg" variant="secondary" class="hero-ghost">
             Ver como trabalhamos
           </Button>

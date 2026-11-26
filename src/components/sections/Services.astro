@@ -1,7 +1,10 @@
 ---
 /**
  * Serviços como índice: cada linha é um serviço, com o benefício à direita.
- * No hover, a linha acende com a luz da marca.
+ * Fundo de cada linha: o vídeo (public/video/services.mp4) fica embaçado e escuro;
+ * ao passar o cursor, ele ganha nitidez e a fumaça segue o mouse (src/scripts/services-fx.ts).
+ * O embaçado é uma imagem minúscula ampliada (services-blur.webp, 0,5 KB): sem filtro de
+ * desfoque nem vídeo carregado até alguém passar o cursor. Em toque, fica só o embaçado.
  */
 import Section from '../ui/Section.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
@@ -16,13 +19,20 @@ import { services } from '@/data/services';
     description="Do primeiro clique ao pedido no WhatsApp: cada serviço resolve uma parte do caminho que o seu cliente percorre."
   />
 
-  <ul class="border-t border-line">
+  <ul class="border-t border-line" data-services>
     {services.map((s, i) => (
       <li
-        class="service group relative border-b border-line"
+        class="service group relative isolate overflow-hidden border-b border-line"
         data-reveal
         data-reveal-delay={i * 60}
+        data-service
+        style={`--bgpos: ${(i * 23) % 100}% ${(i * 37) % 100}%`}
       >
+        <div class="svc-media" aria-hidden="true">
+          <div class="svc-blur"></div>
+          <div class="svc-live" data-svc-live></div>
+          <div class="svc-shade"></div>
+        </div>
         <div class="grid gap-3 py-8 sm:py-10 lg:grid-cols-12 lg:items-baseline lg:gap-10">
           <h3 class="flex items-center gap-4 text-[1.6rem] leading-tight tracking-[-0.035em] sm:text-[2.1rem] lg:col-span-5">
             <Icon
@@ -48,6 +58,101 @@ import { services } from '@/data/services';
 </Section>
 
 <style>
+  /* ---------- fundo em vídeo ---------- */
+  .svc-media,
+  .svc-media > * {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .svc-media {
+    z-index: -2;
+  }
+  /* Embaçado: imagem de 64 px ampliada (o navegador suaviza sozinho, sem custo de filtro) */
+  .svc-blur {
+    inset: -8%;
+    background: url('/video/services-blur.webp') var(--bgpos, 50% 50%) / cover no-repeat;
+    opacity: 0.6;
+    transform: scale(1.05);
+    transition:
+      opacity 900ms var(--ease-out-soft),
+      transform 1400ms var(--ease-out-soft);
+  }
+  :global([data-theme='light']) .svc-blur {
+    opacity: 0.35;
+  }
+  /* Nítido: vídeo + fumaça, só na linha com o cursor */
+  .svc-live {
+    opacity: 0;
+    filter: blur(14px) brightness(1) saturate(1);
+    transform: scale(1.06);
+    transition:
+      opacity 700ms var(--ease-out-soft),
+      filter 900ms var(--ease-out-soft),
+      transform 1200ms var(--ease-out-soft);
+  }
+  .svc-live :global(video),
+  .svc-live :global(canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .svc-live :global(canvas) {
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+  .svc-live :global(canvas.is-on) {
+    opacity: 1;
+  }
+  .service.is-live .svc-live {
+    opacity: 1;
+    /* o vídeo é bem escuro: um pouco de brilho para a superfície da água aparecer */
+    filter: blur(0) brightness(1.45) saturate(1.15);
+    transform: none;
+  }
+  .service.is-live .svc-blur {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+  /* Camada escura, no mesmo padrão do hero e da chamada final: mais forte à esquerda
+     (onde está o título) e nas bordas; fica sempre, e no hover alivia um pouco no meio */
+  .svc-shade {
+    background:
+      linear-gradient(90deg, rgb(5 7 13 / 0.7) 0%, rgb(5 7 13 / 0.25) 45%, rgb(5 7 13 / 0.5) 100%),
+      linear-gradient(
+        to bottom,
+        rgb(5 7 13 / 0.35),
+        rgb(5 7 13 / 0) 30%,
+        rgb(5 7 13 / 0) 70%,
+        rgb(5 7 13 / 0.45)
+      );
+    opacity: 0.55;
+    transition: opacity 700ms var(--ease-out-soft);
+  }
+  .service.is-live .svc-shade {
+    opacity: 1;
+  }
+  /* Tema claro: em repouso a linha segue clara; no hover ela "apaga a luz" como o hero,
+     com o vídeo escuro e o texto claro */
+  :global([data-theme='light']) .svc-shade {
+    opacity: 0;
+  }
+  :global([data-theme='light']) .service.is-live .svc-shade {
+    opacity: 1;
+  }
+  :global([data-theme='light']) .service.is-live {
+    --heading: #f2f5fa;
+    --body: rgb(242 245 250 / 0.78);
+    --muted: rgb(242 245 250 / 0.6);
+    --accent-text: #5aa2ff;
+  }
+  .service :global(h3),
+  .service :global(p) {
+    transition: color 600ms var(--ease-out-soft);
+  }
+
   .service::before {
     content: '';
     position: absolute;

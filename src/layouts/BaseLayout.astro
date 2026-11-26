@@ -159,6 +159,7 @@ const jsonLd = {
             );
           if (force || (!bot && !location.hash && !sessionStorage.getItem('dl-intro'))) {
             d.classList.add('intro-on', 'intro-hold');
+            if (force) history.replaceState(null, '', location.pathname);
             const l = document.createElement('link');
             l.rel = 'preload';
             l.as = 'image';

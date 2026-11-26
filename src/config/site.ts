@@ -81,6 +81,7 @@ export const site = {
       'Design feito do zero',
       'Alta performance em qualquer conexão',
       'Pensado para converter',
+      'Suporte depois da entrega',
     ],
     finalCtaTitle: 'Seu próximo cliente já está procurando. Que ele encontre você pronto.',
     finalCtaText:
